@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>adet.modeling package &mdash; AdelaiDet 0.1.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="adet.utils package" href="utils.html" />
+    <link rel="prev" title="adet.layers package" href="layers.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AdelaiDet
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="checkpoint.html">adet.checkpoint package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html">adet.config package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data.html">adet.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layers.html">adet.layers package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">adet.modeling package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-adet.modeling.backbone">adet.modeling.backbone module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-adet.modeling.poolers">adet.modeling.poolers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-registries">Model Registries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">adet.utils package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AdelaiDet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">API Documentation</a> &raquo;</li>
+        
+      <li>adet.modeling package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/modules/modeling.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-adet.modeling">
+<span id="adet-modeling-package"></span><h1>adet.modeling package<a class="headerlink" href="#module-adet.modeling" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="adet.modeling.FCOS">
+<em class="property">class </em><code class="sig-prename descclassname">adet.modeling.</code><code class="sig-name descname">FCOS</code><span class="sig-paren">(</span><em class="sig-param">cfg, input_shape: Dict[str, detectron2.layers.shape_spec.ShapeSpec]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/fcos/fcos.html#FCOS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.FCOS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<p>Implement FCOS (<a class="reference external" href="https://arxiv.org/abs/1904.01355">https://arxiv.org/abs/1904.01355</a>).</p>
+<dl class="method">
+<dt id="adet.modeling.FCOS.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">images</em>, <em class="sig-param">features</em>, <em class="sig-param">gt_instances</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/fcos/fcos.html#FCOS.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.FCOS.forward" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>[</em><em>Tensor</em><em>] or </em><em>ImageList</em>) – images to be processed</p></li>
+<li><p><strong>targets</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>[</em><em>BoxList</em><em>]</em>) – ground-truth boxes present in the image (optional)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p><em>result (list[BoxList] or dict[Tensor])</em> –</p>
+<dl class="simple">
+<dt>the output from the model.</dt><dd><p>During training, it returns a dict[Tensor] which contains the losses.
+During testing, it returns list[BoxList] contains additional fields
+like <cite>scores</cite>, <cite>labels</cite> and <cite>mask</cite> (for Mask R-CNN models).</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="adet.modeling.FCOS.compute_locations">
+<code class="sig-name descname">compute_locations</code><span class="sig-paren">(</span><em class="sig-param">features</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/fcos/fcos.html#FCOS.compute_locations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.FCOS.compute_locations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="adet.modeling.FCOS.compute_locations_per_level">
+<code class="sig-name descname">compute_locations_per_level</code><span class="sig-paren">(</span><em class="sig-param">h</em>, <em class="sig-param">w</em>, <em class="sig-param">stride</em>, <em class="sig-param">device</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/fcos/fcos.html#FCOS.compute_locations_per_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.FCOS.compute_locations_per_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="adet.modeling.build_fcos_resnet_fpn_backbone">
+<code class="sig-prename descclassname">adet.modeling.</code><code class="sig-name descname">build_fcos_resnet_fpn_backbone</code><span class="sig-paren">(</span><em class="sig-param">cfg</em>, <em class="sig-param">input_shape: detectron2.layers.shape_spec.ShapeSpec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/backbone/fpn.html#build_fcos_resnet_fpn_backbone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.build_fcos_resnet_fpn_backbone" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> – a detectron2 CfgNode</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>backbone (Backbone)</em> – backbone module, must be a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">Backbone</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="adet.modeling.OneStageDetector">
+<em class="property">class </em><code class="sig-prename descclassname">adet.modeling.</code><code class="sig-name descname">OneStageDetector</code><span class="sig-paren">(</span><em class="sig-param">cfg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/one_stage_detector.html#OneStageDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.OneStageDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">detectron2.modeling.meta_arch.rcnn.ProposalNetwork</span></code></p>
+<p>Same as <a class="reference external" href="https://detectron2.readthedocs.io/modules/modeling.html#detectron2.modeling.ProposalNetwork" title="(in detectron2 v0.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">detectron2.modeling.ProposalNetwork</span></code></a>.
+Uses “instances” as the return key instead of using “proposal”.</p>
+<dl class="method">
+<dt id="adet.modeling.OneStageDetector.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">batched_inputs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/one_stage_detector.html#OneStageDetector.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.OneStageDetector.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-adet.modeling.backbone">
+<span id="adet-modeling-backbone-module"></span><h2>adet.modeling.backbone module<a class="headerlink" href="#module-adet.modeling.backbone" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-adet.modeling.poolers">
+<span id="adet-modeling-poolers-module"></span><h2>adet.modeling.poolers module<a class="headerlink" href="#module-adet.modeling.poolers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="adet.modeling.poolers.TopPooler">
+<em class="property">class </em><code class="sig-prename descclassname">adet.modeling.poolers.</code><code class="sig-name descname">TopPooler</code><span class="sig-paren">(</span><em class="sig-param">output_size</em>, <em class="sig-param">scales</em>, <em class="sig-param">sampling_ratio</em>, <em class="sig-param">pooler_type</em>, <em class="sig-param">canonical_box_size=224</em>, <em class="sig-param">canonical_level=4</em>, <em class="sig-param">assign_crit='area'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/poolers.html#TopPooler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.poolers.TopPooler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://detectron2.readthedocs.io/modules/modeling.html#detectron2.modeling.poolers.ROIPooler" title="(in detectron2 v0.1.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">detectron2.modeling.poolers.ROIPooler</span></code></a></p>
+<p>ROIPooler with option to assign level by max length. Used by top modules.</p>
+<dl class="method">
+<dt id="adet.modeling.poolers.TopPooler.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">box_lists</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/adet/modeling/poolers.html#TopPooler.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#adet.modeling.poolers.TopPooler.forward" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>[</em><em>Tensor</em><em>]</em>) – A list of feature maps of NCHW shape, with scales matching those
+used to construct this module.</p></li>
+<li><p><strong>box_lists</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>[</em><em>Boxes</em><em>] </em><em>| list</em><em>[</em><em>RotatedBoxes</em><em>]</em>) – A list of N Boxes or N RotatedBoxes, where N is the number of images in the batch.
+The box coordinates are defined on the original image and
+will be scaled by the <cite>scales</cite> argument of <code class="xref py py-class docutils literal notranslate"><span class="pre">ROIPooler</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><em>Tensor</em> –     A tensor of shape (M, C, output_size, output_size) where M is the total number of
+boxes aggregated over all N batch images and C is the number of channels in <cite>x</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="model-registries">
+<h2>Model Registries<a class="headerlink" href="#model-registries" title="Permalink to this headline">¶</a></h2>
+<p>These are different registries provided in modeling.
+Each registry provide you the ability to replace it with your customized component,
+without having to modify detectron2’s code.</p>
+<p>Note that it is impossible to allow users to customize any line of code directly.
+Even just to add one line at some place,
+you’ll likely need to find out the smallest registry which contains that line,
+and register your component to that registry.</p>
+<ul class="simple">
+<li><p>detectron2.modeling.META_ARCH_REGISTRY</p></li>
+<li><p>detectron2.modeling.BACKBONE_REGISTRY</p></li>
+<li><p>detectron2.modeling.PROPOSAL_GENERATOR_REGISTRY</p></li>
+<li><p>detectron2.modeling.RPN_HEAD_REGISTRY</p></li>
+<li><p>detectron2.modeling.ANCHOR_GENERATOR_REGISTRY</p></li>
+<li><p>detectron2.modeling.ROI_HEADS_REGISTRY</p></li>
+<li><p>detectron2.modeling.ROI_BOX_HEAD_REGISTRY</p></li>
+<li><p>detectron2.modeling.ROI_MASK_HEAD_REGISTRY</p></li>
+<li><p>detectron2.modeling.ROI_KEYPOINT_HEAD_REGISTRY</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utils.html" class="btn btn-neutral float-right" title="adet.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="layers.html" class="btn btn-neutral float-left" title="adet.layers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Hao Chen, Zhi Tian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
