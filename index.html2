@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" href="css/fonts_import.css"       type="text/css" />
+<link rel="stylesheet" href="css/cs.css"                 type="text/css" />
+<link rel="stylesheet" href="css/content.css"            type="text/css" />
+<!-- font family -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons/css/academicons.min.css">
+<title>AIM @Zhejiang University</title>
+</head>
+<body>
+<div id="layout-content">
+<h1>We are an AI Research Team at Zhejiang University</h1>
+<h2>Projects</h2>
+<ul>
+
+
+
+<li><p><a href="./FrozenRecon">3D reconstruction using pre-trained depth models</a></p>
+</li>
+
+<li><p><a href="./StoryTell">Generating comics using generative models</a> </p>
+</li>
+
+
+
+
+
+</ul>
+<div id="footer">
+<div id="footer-text">
+&copy; <b>.</b>
+&bull;
+last update: 2023-08-12 21:58:42 CST
+&bull;
+
+
+</div>
+</div>
+</div>
+</body>
+</html>
