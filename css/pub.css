@@ -1,0 +1,209 @@
+/*
+ * bibtex {display:none} 
+ */
+
+.bibtexError 
+{
+   color: rgb(250,100,100);
+   font-style: italic;
+}
+
+
+.person a:link, .person a:visited  
+{
+   color: rgb(100,100,0)
+}
+
+.person a:hover 
+{
+   color: #ccc
+}
+
+
+.note
+{ 
+  font-weight: bold;
+  color: #C80000;
+}
+
+.booktitle,.journal, .institution
+{ 
+/*    font-style:italic; */
+   font-weight: bold;
+   color:#777;
+   font-family: Palatino, Georgia, "Bitstream Vera", "Vera", "Trebuchet MS", Trebuchet, Tahoma, sans-serif;
+}
+
+.number, .volume, .pages
+{
+/* font-weight: bold;  */
+font-family: Trebuchet, Tahoma, sans, Georgia;
+color: rgb(200, 100, 10 );
+}
+
+.number
+{
+/* font-weight: bold; */
+color: navy;
+}
+
+
+
+.title 
+{
+   font-weight:bold;
+   color:darkgreen;
+   text-transform: capitalize; 
+   font-size: 102%; 
+}
+
+.author 
+{
+/* font-weight:bold; */
+font-family: Palatino, Georgia, "Trebuchet MS", Trebuchet, Tahoma, sans-serif, Georgia; 
+color: rgb(90,100,0);
+}
+
+
+
+ol 
+{
+list-style-type: decimal-leading-zero;
+
+border: 0px solid #000;
+	-moz-border-radius:    5px;
+	-webkit-border-radius: 5px;
+
+box-shadow:3px 3px 5px #888;
+-webkit-box-shadow:3px 3px 5px #888;
+/*
+-moz-box-shadow:3px 3px 5px #888;
+*/
+-moz-box-shadow:3px 3px 13px -3px #908381;
+
+background: #eee no-repeat;
+}
+
+ li 
+{ 
+   background: #ffe no-repeat;
+   margin-top:   0.15em; 
+   margin-bottom:0.15em;
+  
+   padding: 1px 0 3px 4px;
+/*
+   border-left:4px solid #ccc;
+*/
+ 
+}
+
+
+ li.nth-child(even) 
+{ 
+   background: #fee no-repeat;
+
+   border: 0px solid #000;
+   -moz-border-radius:    4px;
+   -webkit-border-radius: 4px;
+
+   /*
+   box-shadow:3px 3px 5px #999;
+-webkit-box-shadow:3px 3px 5px #999;
+-moz-box-shadow:3px 3px 5px #999;
+*/
+}
+
+ li.nth-child(odd)
+{ 
+   background: #eff no-repeat;
+   
+   border: 0px solid #000;
+   -moz-border-radius:    4px;
+   -webkit-border-radius: 4px;
+}
+
+
+a:link, a:visited 
+{
+      text-decoration: none;
+      color:darkgreen; 
+}
+
+a:hover
+{
+      text-decoration:  none;
+      background-color: none;
+      color: #ccc;
+}
+
+.pdf, .dvi, .ps, .arxiv
+{
+    color: gray;
+    font-size: 86%;
+    /* font-style: italic; */ 
+     font-weight: bold;   
+}
+
+
+
+.project
+{
+    color: blue;
+    font-size: 86%;
+    /* font-style: italic; */ 
+     font-weight: bold;   
+}
+
+
+/*
+.pdf:before { 
+   
+   display: marker;
+   content: url("icons/pfeil7.gif");
+   
+   padding-left: 22px;
+   padding-top: 5px;
+   padding-right: 5px;
+}
+*/
+
+pdf a:hover
+{
+      text-decoration: none;
+}
+
+
+ol li {
+list-style-type: decimal-leading-zero;    
+line-height:16px;
+margin-top:3px;
+}
+
+/*
+ * http://ryanfait.com/resources/custom-checkboxes-and-radio-buttons/
+ */
+ .select {
+	position: absolute;
+	width: 158px; /* With the padding included, the width is 190 pixels: the actual width of the image. */
+	height: 21px;
+	padding: 0 24px 0 8px;
+	color: #fff;
+	font-size:   12px/21px;
+    font-family: Palatino, Georgia, Trebuchet, Tahoma, sans, Georgia;
+	background: url(images/select.gif) no-repeat;
+	overflow: hidden;
+}
+
+.checkbox, .radio {
+	width: 19px;
+	height: 25px;
+	padding: 0 5px 0 0;
+	background: url(images/checkbox.gif) no-repeat;
+	display: block;
+	clear: left;
+	float: left;
+}
+.radio {
+	background: url(images/radio.gif) no-repeat;
+}
+

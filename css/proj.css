@@ -1,0 +1,286 @@
+/*
+ * bibtex {display:none} 
+ */
+
+@import url(link_icons.css);
+
+
+b {
+    font-weight:bold;
+    color:black;
+    font-family: 'EB Garamond', 'Palatino Linotype', 'Book Antiqua', Palatino,Serif;
+    font-size:110%;
+    line-height:110%;
+}
+
+
+i {
+    font-weight:bold; 
+    font-family: 'EB Garamond', 'Palatino Linotype', 'Book Antiqua', Palatino,Serif;
+  
+    font-style:normal;
+    color: darkgreen;
+    /*
+    text-decoration: underline;
+    */
+}
+
+
+.highlight 
+{
+    /*
+        background-color: #fff;
+        border-bottom: 1px solid red;
+    */
+    text-decoration:underline;
+    font-weight:bold;
+}
+
+
+p {
+  font-size: 100%;
+  color: black;
+  line-height: 140%;
+}
+
+
+
+.bibtexError 
+{
+   color: rgb(250,100,100);
+   font-style: italic;
+}
+
+
+.person a:link, .person a:visited  
+{
+   color: rgb(100,100,0)
+}
+
+.person a:hover 
+{
+   color: #ccc
+}
+
+
+.note
+{ 
+  font-weight: bold;
+  color: #C80000;
+}
+
+
+h1 {
+text-align: center;
+/* font-weight: bold; */
+font-size: 150%;
+color:black;
+border-bottom: .5px solid gray;
+}
+
+
+img {
+border: 0px solid gray;
+/*
+-moz-box-shadow:3px 3px 15px -3px #808381; 
+-webkit-box-shadow:3px 3px 10px #aaa;
+*/
+} 
+
+
+
+img:hover 
+{
+    border: 0px solid gray;
+} 
+
+td {
+padding: 0 1.2em;
+}
+
+#subtitle
+{ 
+   font-style:italic; 
+   font-weight: bold;
+   color:red;
+   font-family:"Bitstream Vera", "Vera", "Trebuchet MS", Trebuchet, Tahoma, sans-serif;
+
+}
+
+
+
+
+.booktitle,.journal, .institution
+{ 
+/*    font-style:italic; */
+   font-weight: bold;
+   color:#777;
+   font-family:"Bitstream Vera", "Vera", "Trebuchet MS", Trebuchet, Tahoma, sans-serif;
+}
+
+.number, .volume, .pages
+{
+/* font-weight: bold;  */
+font-family: Trebuchet, Tahoma, sans, Georgia;
+color: rgb(200, 100, 10 );
+}
+
+.number
+{
+/* font-weight: bold; */
+color: navy;
+}
+
+
+
+.title 
+{
+   font-weight:bold;
+   color:darkgreen;
+   text-transform: capitalize;  
+}
+
+.author 
+{
+/* font-weight:bold; */
+font-family:  "Trebuchet MS", Trebuchet, Tahoma, sans-serif, Georgia; 
+color: rgb(90,100,0);
+}
+
+IMG.disp {
+    display: block;
+    margin-left: auto;
+    margin-right: auto 
+
+}
+
+ol {
+list-style-type: decimal-leading-zero;
+}
+
+
+
+ li 
+{ 
+/*
+   background: #ffe no-repeat;
+*/
+   margin-bottom:1.15em;
+  
+   padding: px 0px 0px 5px;
+   line-height:16px;
+   margin-top:3px;
+
+/*
+   border-left:4px solid #ccc;
+*/
+
+}
+
+
+
+a:link, a:visited 
+{
+      text-decoration: none;
+      color:green;
+}
+
+a:hover
+{
+      text-decoration:  none;
+      background-color: none;
+      color: #333; 
+     
+      position: relative;
+      top: 0px;
+      -moz-transition: color 1s;
+}
+
+/*
+ol li 
+{
+    list-style-type: decimal-leading-zero;    
+    line-height:16px;
+    margin-top:3px;
+}
+*/
+
+p.copyright {
+
+    color: gray;
+    font-size:80%;
+    font-style:italic;
+
+}
+
+img.eqwl
+{ 
+    /*
+    padding: 0px;
+    border-top: 0px solid #ddd;
+    border-left: 0px solid #ddd;
+    border-bottom: 0px solid #c0c0c0;
+    border-right: 0px solid #c0c0c0;
+    */
+
+    display:block;
+    border: 0px;
+    margin-top: 6px;
+    margin-bottom: -5px;
+
+    margin-left:auto;
+    margin-right:auto; 
+}
+
+img.eq
+{
+    border: 0px;
+}
+
+pre {
+ 
+  font-family: monospace;
+  font-size: small;
+  border: 1px solid #DDDDDD;
+  white-space:pre;
+  background: none repeat scroll 0 0 #F5F5F5;  
+  padding:10px;
+
+}
+
+
+
+ li:nth-child(odd) 
+{ 
+   background: none;
+
+   border: 0px solid #dff;
+   border-radius: 2px;
+   -moz-border-radius:    2px;
+   -webkit-border-radius: 2px;
+   /*
+   box-shadow:5px 5px 1px #dee;
+   -webkit-box-shadow:5px 5px 1px #dee;
+   -moz-box-shadow:5px 5px 1px #dee;
+   */
+}
+
+ li:nth-child(even)
+{ 
+   background: none;
+   border: 0px solid #000;
+   border-radius: 2px;
+   -moz-border-radius:    2px;
+   -webkit-border-radius: 2px;
+}
+
+/* making the nested li to have the same background as its parent */
+ul ul li:nth-child(even)
+{
+    background: none;
+}
+ul ul li:nth-child(odd)
+{
+    background: none;
+}
+

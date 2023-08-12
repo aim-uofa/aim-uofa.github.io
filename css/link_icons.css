@@ -1,0 +1,23 @@
+
+
+a[href$=".pdf"] {
+	background: url('./famfamfam_silk_icons/icons/page_white_acrobat.png') no-repeat left center;
+	padding-left: 24px;
+}
+
+a[href$=".zip"] {
+	background: url('./famfamfam_silk_icons/icons/page_white_compressed.png') no-repeat left center;
+	padding-left: 24px;
+}
+
+a[href$=".bib"] {
+	background: url('./famfamfam_silk_icons/icons/note_edit.png') no-repeat left center;
+	padding-left: 24px;
+}
+
+
+a[href^="http://arxiv.org/"] {
+	background: url('./famfamfam_silk_icons/icons/page_white_acrobat.png') no-repeat left center;
+	padding-left: 24px;
+}
+

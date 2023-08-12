@@ -1,0 +1,136 @@
+
+html { 
+       background-color:#fff; 
+       /* background-image:url('images/bg.jpg');*/
+       background-attachment:fixed;
+
+       margin:0; padding:0; 
+     }
+
+body { 
+   
+    font-size:87%;
+    line-height:1.125em; /* 16×1.125=18 */
+
+    margin:0; 
+    padding:0;
+    
+    font-family:  Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica,  sans-serif, serif;
+
+    color: #333333;
+
+/*
+    color:#1a1a1a; 
+    font-family:  "Trebuchet MS", Helvetica, sans-serif;
+    */
+}
+
+
+
+#menu {
+
+	width: 100%;
+/*     padding-top: 25px;   */
+/*     padding-left: 15px;  */
+	height: 100px;
+    /*
+	background: transparent url(./images/header_fade.png) repeat-x left -5px;
+    background: transparent url(./images/bg.jpg) repeat-x left -5px fixed;
+    */
+	z-index: 999;
+}
+
+#menucontainer{
+	width: 100%;
+	margin:0 auto; 
+	position:relative;
+	top:-10px;
+}
+
+#logo{ 
+	float:left;
+	/*margin:0 auto; */
+	width:250px;
+	height:40px;
+	
+    /*
+    background:#fff url(./images/logo.png) no-repeat center center;
+    */
+
+    background:#fff;
+
+    padding:0px;
+	padding-top:15px; 
+}
+
+
+#logo h1{display:none;color:#fff;}
+
+#logo h2 span{font-weight:bold;}
+
+#nav {
+      float:right;	
+      position:relative;
+      top:-20px; 
+  }
+#nav li {margin: 0; padding: 0;display: inline;
+    list-style-type: none;
+    font-size: 15px;
+    text-decoration:none; 
+}
+
+#nav a:link, #nav a:visited {
+	float: left;
+	font-size: 17px;
+	line-height: 16px;
+    /*
+    font-weight: bold;
+    */
+    padding: 30px 12px 25px  12px; 
+	text-decoration: none;
+    
+    /*
+    color:#FF6A00;    
+    */
+    color: #444;
+     
+
+    /*
+	-moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft:  5px;
+	-khtml-border-radius-bottomright: 5px; 
+    -khtml-border-radius-bottomleft:  5px;
+	-webkit-border-radius-bottomright: 5px; 
+    -webkit-border-radius-bottomleft:  5px;
+	*/
+    border-radius: 3px;
+
+	background:#FFEBBF;
+	margin-left:2px;
+    font-family:
+    /* 'Comfortaa', */
+    'EB Garamond', Georgia, sans-serif, Serif;
+
+    -webkit-transition: color 1s;
+	-moz-transition: color 1s;
+	transition:color 1s;
+    
+    
+}
+
+
+#nav a:hover {
+    color: #fff;	
+    background:#FF6A00;
+
+    -webkit-transition: color 1s;
+	-moz-transition: color 1s;
+	transition: color 1s;
+
+    /*
+     * font-weight: bold;
+     */
+}
+#nav a:visited.active, #nav a:link.active {background-color: #fff;color: #FF6A00;}
+
+			

@@ -1,0 +1,483 @@
+/*
+@import url(http://fonts.googleapis.com/css?family=EB+Garamond);
+*/
+
+@import url(fonts_import.css);
+
+
+
+
+a:link, a:visited, a:hover
+{
+text-decoration:none;
+color:blue;
+-moz-transition: color .5s;
+}
+
+a:hover
+{
+text-decoration:none;
+color:darkgreen;
+
+position: relative;
+top: 2px;
+-moz-transition: color .5s;
+}
+
+
+div#toptitle
+{
+/* padding-bottom:.2em; */
+/* margin-bottom:1.5em; */
+border-bottom:0px solid #eff;
+}
+
+
+h1,h2,h3 {
+
+color:#527bbd;
+color:black;
+
+/*
+color:black;
+*/
+
+margin-top:.7em;
+margin-bottom:.3em;
+padding-bottom:.3em;
+line-height:1;
+padding-top:.5em;
+border-bottom:0px dashed #dee;
+}
+
+h1 {
+padding-top:.8em;
+font-size:125%;
+font-family:'EB Garamond', Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica,  sans-serif;
+text-align:left;
+
+text-shadow: 0 1px 1px rgba(0,0,0,.1);
+
+}
+
+h2 {
+padding-top:.8em;
+font-size:110%;
+font-family: 'EB Garamond', Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica,  sans-serif;
+
+text-shadow: 0 1px 1px rgba(0,0,0,.2);
+
+}
+
+h2 + h3 {
+padding-top:.2em;
+}
+
+h3 {
+
+font-size:100%;
+font-family: 'EB Garamond', Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica, sans-serif;
+border-bottom:none;
+
+text-shadow: 0 1px 1px rgba(0,0,0,.2);
+
+}
+
+div.codeblock,div.infoblock
+{
+ margin-right:0;
+ margin-top:1.2em;
+ margin-bottom:1.3em;
+}
+
+div.blocktitle
+{
+  font-weight:700;
+  color:#cd7b62;
+  margin-top:1.2em;
+  margin-bottom:.1em;
+/*
+ * font-family: "Trebuchet MS", Trebuchet, Tahoma, Georgia, sans-serif;
+ */
+}
+
+div.blockcontent {
+/* border:1px dashed silver; */
+padding-left:1em;
+padding-top:5px;
+padding-bottom:4px;
+
+border: 0px solid #000;
+/*
+-moz-border-radius-topleft: 10px;
+-webkit-border-top-left-radius: 10px;
+-moz-border-radius-topright: 10px;
+-webkit-border-top-right-radius: 10px;
+*/
+border-radius: 6px;
+font-family: 'EB Garamond', Palatino, Georgia, "Trebuchet MS", Trebuchet, Tahoma,  sans-serif;
+ }
+
+div.infoblock > div.blockcontent {
+/* background:#FFE; */
+background:#eee;
+font-size:13px;
+font-family: 'EB Garamond', Palatino, Georgia, "Trebuchet MS", Trebuchet, Tahoma,  sans-serif;
+}
+
+div.blockcontent p
+{
+padding-left:10px;
+margin-top:0;
+margin-bottom:0;
+}
+
+div.blockcontent p + ul,div.blockcontent p + ol {
+/* margin-top:.45em; */
+}
+
+
+
+div.infoblock li p,div.infoblock dd p {
+margin-bottom:.5em;
+}
+
+div.codeblock > div.blockcontent {
+background:#f6f6f6;
+}
+
+ul,ol,dl {
+    margin-top:.4em;
+    padding-top:0;
+    margin-bottom:.3em;
+}
+
+
+p + ul,p + ol {
+    margin-top:-.5em;
+}
+
+img {
+    border:none;
+}
+
+img.eq {
+    margin:0;
+    padding:0 .1em;
+}
+
+
+
+img.eqwl {
+padding-left:2em;
+padding-top:.6em;
+padding-bottom:.2em;
+margin:0;
+}
+table.imgtable,table.imgtable td {
+border:none;
+text-align:left;
+}
+
+
+ul {
+display:block;
+padding-left:15px;
+margin-left:10px;
+list-style-type:none;
+text-decoration:none;
+text-align:left;
+}
+
+
+ul li {
+
+margin-top:0px;
+margin-bottom:0px;
+
+padding-left:10px;
+
+line-height:8px;
+
+list-style-type: none;
+
+background-color: transparent;
+
+/*
+background-image: url("./images/dot.gif");
+background-repeat: no-repeat;
+background-position: 1pt 5pt;
+*/
+}
+
+
+ li:nth-child(odd)
+{
+
+   background: #eefefe no-repeat;
+
+   border: 0px solid #dff;
+   border-radius: 2px;
+   -moz-border-radius:    2px;
+   -webkit-border-radius: 2px;
+   /*
+   box-shadow:5px 5px 1px #dee;
+   -webkit-box-shadow:5px 5px 1px #dee;
+   -moz-box-shadow:5px 5px 1px #dee;
+   */
+}
+
+ li:nth-child(even)
+{
+   background: #eff no-repeat;
+   border: 0px solid #000;
+   border-radius: 2px;
+   -moz-border-radius:    2px;
+   -webkit-border-radius: 2px;
+}
+
+/* making the nested li to have the same background as its parent */
+ul ul li:nth-child(even)
+{
+    background: none;
+}
+ul ul li:nth-child(odd)
+{
+    background: none;
+}
+
+
+
+
+
+
+
+p {
+margin-top:0;
+margin-bottom:.8em;
+line-height:1.2;
+padding:0;
+}
+
+/*
+p:first-letter {
+font-weight: bold;
+}
+*/
+
+ul li,ol li{
+margin-top:-.4em;
+}
+
+/*
+ol li{
+list-style-type: none;
+}
+*/
+
+ b {
+    font-weight:bold;
+    color: darkgreen;
+}
+
+
+
+i {
+    font-weight:bold;
+    font-family: Serif;
+    font-style:italic;
+    color: black;
+    /*
+    text-decoration: underline;
+    */
+}
+
+
+
+#ticker {
+    height: 125px;
+    overflow: hidden;
+    font-size: 11px;
+    color: black;
+    /*font-family: Georgia;*/
+    /* font-style:italic; */
+}
+
+#ticker li {
+    height: 20px;
+
+    margin-top:0px;
+    margin-bottom:0px;
+
+    padding-left:0px;
+    list-style-type:disc;
+    background-color: transparent;
+    background-image: none;
+
+}
+
+
+/*http://www.webdesignerwall.com/demo/jquery-css3-rounded-img/*
+/* normal image */
+.normal-img {
+	background: #ccc;
+	border: solid 1px #000;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+.normal-img-2 {
+	display: inline-block;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .8), 0 1px 0 rgba(255, 255, 255, 1), 0 -1px 0 rgba(0, 0, 0, .6);
+	-moz-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .9), 0 -1px 0 rgba(0, 0, 0, .6);
+	box-shadow: inset 0 1px 5px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, 1), 0 -1px 0 rgba(0, 0, 0, .6);
+}
+
+/* rounded image styles */
+.rounded-img {
+	display: inline-block;
+	border: solid 1px #000;
+	overflow: hidden;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+.rounded-img2 {
+
+  /*height: 140px; */
+
+   width:  140px;
+
+
+	display: inline-block;
+	-webkit-border-radius: 6px;
+	-moz-border-radius:    6px;
+	border-radius:         6px;
+	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .7), 0 -1px 0 rgba(0, 0, 0, .5);
+	-moz-box-shadow: inset    0 1px 3px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .7), 0 -1px 0 rgba(0, 0, 0, .5);
+	box-shadow: inset         0 1px 3px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .7), 0 -1px 0 rgba(0, 0, 0, .5);
+}
+
+.left {
+	float: left;
+	margin-right: 20px;
+}
+
+.right {
+	float: right;
+    margin-top:   8px;
+	margin-right: 2px;
+}
+
+.proj_img_center {
+	float: left;
+	margin-left: 30%;
+    margin-right:70%;
+    margin-top:8px;
+    margin-bottom:10px;
+}
+
+.img_margin_top {
+
+  margin-top:15px;
+
+}
+
+
+
+
+#GraduatedStu
+{
+    width:100%;
+}
+
+#GraduatedStu td:nth-child(1)
+{
+    width:20%;
+}
+
+#GraduatedStu td:nth-child(2)
+{
+    width:90px;
+}
+
+
+#GraduatedStu  tr:nth-child(odd)
+{
+
+   background: #eeefee no-repeat;
+
+   border: 0px solid #dff;
+   border-radius: 5px;
+   -moz-border-radius:    5px;
+   -webkit-border-radius: 5px;
+
+   /*
+   box-shadow:5px 5px 1px #dee;
+   -webkit-box-shadow:5px 5px 1px #dee;
+   -moz-box-shadow:5px 5px 1px #dee;
+   */
+}
+
+#GraduatedStu  tr:nth-child(even)
+{
+   background: #eff no-repeat;
+   border: 0px solid #000;
+   border-radius: 5px;
+   -moz-border-radius:    5px;
+   -webkit-border-radius: 5px;
+}
+
+
+
+
+
+#tabteach
+{
+    width:100%;
+}
+#tabteach td:nth-child(1)
+{
+    width:80px;
+}
+#tabteach td:nth-child(2)
+{
+    width:400px;
+}
+#tabteach  tr:nth-child(odd)
+{
+   background: #eeefee no-repeat;
+
+   border: 0px solid #dff;
+   border-radius: 5px;
+   -moz-border-radius:    5px;
+   -webkit-border-radius: 5px;
+
+   /*
+   box-shadow:5px 5px 1px #dee;
+   -webkit-box-shadow:5px 5px 1px #dee;
+   -moz-box-shadow:5px 5px 1px #dee;
+   */
+}
+#tabteach tr:nth-child(even)
+{
+   background: #eff no-repeat;
+   border: 0px solid #000;
+   border-radius: 5px;
+   -moz-border-radius:    5px;
+   -webkit-border-radius: 5px;
+}
+
+
+
+
+

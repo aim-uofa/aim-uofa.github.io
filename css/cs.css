@@ -1,0 +1,77 @@
+@import url(menu_style.css);
+
+#layout-content
+{
+
+position:relative;
+
+background-color:#fff;
+/*background-image:url('images/bg.jpg');*/
+background-attachment:fixed;
+
+font-size:.98em;
+line-height:1.5em;
+width:900px;
+margin:0 auto;
+padding:55px 0px 50px 0;
+
+transition: width 0.2s ease-out;
+-moz-transition: width 0.2s ease-out;      /* Firefox 4 */
+-webkit-transition: width 0.2s ease-out;   /* Safari and Chrome */
+-o-transition: width 0.2s ease-out;       /* Opera */
+}
+
+div#footer {
+font-size:small;
+border-top:1px solid silver;
+padding-top:.1em;
+margin-top:1.5em;
+margin-bottom:2em;
+color:green;
+}
+
+div#footer a {
+color:#80a0b0;
+text-decoration: none;
+}
+
+div#footer a:hover {
+   color:#ccc;
+}
+
+div#footer-text {
+float:left;
+padding-bottom:8px;
+color:green;
+}
+
+table {
+
+    border: 0px solid gray ;
+    border-collapse: collapse;
+
+}
+
+td {
+    padding: .1px;
+    padding-left: 2.5em;
+    padding-right: 0.5em;
+    text-align: left;
+    border: 0px solid gray;
+}
+
+table + table {
+    margin-top: .1em;
+}
+
+tr.heading {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+}
+
+.chinese {
+    font-family:Microsoft JhengHei,Yuanti TC,Apple LiGothic,sans-serif;
+    font-weight: normal;
+    color:darkgreen;
+    pre{font-size:14px; line-height:1.5};
+}
