@@ -1,5 +1,5 @@
-#!/bin/bash 
+#!/bin/bash
 
 
 
-pandoc -s index.md --css pandoc.css  --metadata title="AIM: Zhejiang University AI Research" -o index.html 
+pandoc -s index.md --css "https://cshen.github.io/css/cs.css" -o index.html
