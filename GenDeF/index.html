@@ -1,0 +1,463 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>GenDeF</title>
+<link href="./config_files/style.css" rel="stylesheet">
+
+
+<style>
+  p.serif{
+    font-family:"Times New Roman", Times, serif;
+  }
+  p.sansserif{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+</style>
+  
+</head>
+
+<body>
+<div class="content">
+  <h1><strong>GenDeF: Learning Generative Deformation Field for Video Generation</strong></h1>
+  <p id="authors" class="serif">
+    <span style="font-size: 0.8em">
+      <a href="https://github.com/encounter1997">Wen Wang<sup>1*</sup></a>
+      <a href="https://scholar.google.com/citations?user=hMDQifQAAAAJ">Kecheng Zheng<sup>2</sup></a>
+      <a href="https://github.com/qiuyu96">Qiuyu Wang<sup>2</sup></a>
+      <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen<sup>1&dagger;</sup></a>
+      <a href="https://vivianszf.github.io/">Zifan Shi<sup>3,2*</sup></a>
+      <a href="https://ceyuan.me/">Ceyuan Yang<sup>4</sup></a>
+      <a href="https://shenyujun.github.io/">Yujun Shen<sup>2&dagger;</sup></a>
+      <a href="https://cshen.github.io/">Chunhua Shen<sup>1</sup></a>
+    </span>
+    <br>
+    <a style="font-size: 0.7em"><sup>*</sup>Intern at Ant Group</a>
+    <a style="font-size: 0.7em"><sup>&dagger;</sup>Corresponding Author</a>
+    <br>
+    <span style="font-size: 0.8em; margin-top: 0.5em">
+      HKUST
+      <a><sup>1</sup>Zhejiang University</a>
+      <a><sup>2</sup>Ant Group</a>
+      <a><sup>3</sup>HKUST</a>
+      <a><sup>4</sup>Shanghai Artificial Intellgence Laboratory</a>
+    </span>
+  </p>
+
+  <font size="+1">
+    <p style="text-align: center;" class="sansserif">
+      <a href="https://arxiv.org/abs/xxx" target="" style="font-weight: bold;">[arXiv Report]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="" target="" style="font-weight: bold;">[Code (comming soon)]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#bibtex" style="font-weight: bold;">[BibTeX]</a>
+    </p><br>
+  </font>
+
+  <div style="text-align:center;">
+    <img src="assets/framework.png" width="100%">
+  </div>
+
+</div>
+
+
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Abstract</p>
+  <p style="font-size: 1.2em; margin-left:5em; margin-right:5em;" class="serif">
+    We offer a new perspective on approaching the task of video generation. 
+    Instead of directly synthesizing a sequence of frames, 
+    we propose to render a video by warping one static image with a generative deformation field (GenDeF). 
+    Such a pipeline enjoys three appealing advantages. 
+    First, we can sufficiently reuse a well-trained image generator to synthesize the static image (also called canonical image), 
+    alleviating the difficulty in producing a video and thereby resulting in better visual quality. 
+    Second, we can easily convert a deformation field to optical flows, 
+    making it possible to apply explicit structural regularizations for motion modeling, 
+    leading to temporally consistent results. 
+    Third, the disentanglement between content and motion allows users to process a synthesized video through processing its corresponding static image without any tuning, 
+    facilitating many applications like video editing, keypoint tracking, and video segmentation. 
+    Both qualitative and quantitative results on three common video generation benchmarks demonstrate the superiority of our GenDeF method.
+  </p>
+</div>
+
+
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Overview Video</p>
+  <div style="text-align:center; margin-bottom:1em;">
+    <video class="clickplay" width="90%" controls>
+      <source src="assets/GenDeF.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Main Results</p>
+  <p style="text-align:center; font-size: 1.2em; color: orangered" class="serif"><i><b>Click to Play the Videos</b></i></p>
+  
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Video Geneartion on YouTube Driving</b></p>
+
+  <div class="row">
+    <div class="row">
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/ytb_stylegan_v_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleGAN-V</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/ytb_stylesv_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/ytb_stylesv_mtm_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV-MTM</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/ytb_gendef_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>GenDeF</b></p>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Video Geneartion on SkyTimelapse</b></p>
+
+  <div class="row">
+    <div class="row">
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/sky_stylegan_v_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleGAN-V</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/sky_stylesv_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/sky_stylesv_mtm_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV-MTM</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/sky_gendef_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>GenDeF</b></p>
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Video Geneartion on TaiChi-HD</b></p>
+
+  <div class="row">
+    <div class="row">
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/taichi_stylegan_v_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleGAN-V</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/taichi_stylesv_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/taichi_stylesv_mtm_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>StyleSV-MTM</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/main_results/taichi_gendef_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>GenDeF</b></p>
+      </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content">
+  <p style="text-align:center; font-size: 2em; font-weight: bold" class="sansserif">Applications</p>
+  <p style="text-align:center; font-size: 1.2em; color: orangered" class="serif"><i><b>Click to Play the Videos</b></i></p>
+
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Video Editing</b></p>
+  <div class="row">
+
+    <div class="row">
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_scribble_canonical.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Origin)</b></p>
+      </div>
+
+
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_scribble_canonical_edited.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Edited)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_scribble_video.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Origin)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_scribble_video_edited.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Edited)</b></p>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_robot_canonical.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Origin)</b></p>
+      </div>
+
+
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_robot_canonical_edited.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Edited)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_robot_video.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Origin)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_robot_video_edited.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Edited)</b></p>
+      </div>
+    </div>
+
+
+    
+
+    <div class="row">
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_style_canonical.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Origin)</b></p>
+      </div>
+
+
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/edit_style_canonical_edited.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Edited)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_style_video.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Origin)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/edit_style_video_edited.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Edited)</b></p>
+      </div>
+    </div>
+
+  
+  </div>
+
+
+
+
+
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Point Tracking</b></p>
+  <div class="row">
+
+    <div class="row">
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/track_canonical_1.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/video_tracking_0.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/track_canonical_2.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/video_tracking_1.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video</b></p>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Video Segmentation</b></p>
+  <div class="row">
+
+    
+    <div class="row">
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/seg_canonical.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Origin)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <img src="assets/videos/applications/seg_canonical_seged.png" style="width: 75%; border: 1px solid #000000;">
+        <p style="text-align: center; margin-top: 0; width: 100%;"><b>Canonical (Segmentation)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/seg_video.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Origin)</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/seg_video_seged.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video (Segmentation)</b></p>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+  
+  <p style="font-size: 1.25em" class="serif"><b style="font-size: 1.3em;">Diverse Motion Generation</b></p>
+  <div class="row">
+
+    <div class="row">
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/motion_sky_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video 1</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/motion_taichi_green_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video 2</b></p>
+      </div>
+
+      <div class="col-gallery" style="text-align:center;">
+        <video class="clickplay" width="75%" loop>
+          <source src="assets/videos/applications/motion_taichi_white_concat.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0;"><b>Video 3</b></p>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<div class="content" id="bibtex">
+  <p style="text-align:left; font-size: 2em; font-weight: bold" class="serif">BibTeX</p>
+  <code>
+  @misc{wang2023gendef,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;title={GenDeF: Learning Generative Deformation Field for Video Generation},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;author={Wen Wang and Kecheng Zheng and Qiuyu Wang and Hao Chen and Zifan Shi and Ceyuan Yang and Yujun Shen and Chunhua Shen},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;year={2023},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;eprint={2311.xxxx},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;archivePrefix={arXiv},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;primaryClass={cs.CV}<br>
+  }
+  </code>
+</div>
+
+<div class="content">
+  <p class="serif">
+    Project page template is borrowed from <a href="https://dreambooth.github.io/">DreamBooth</a>.
+  </p>
+</div>
+
+</body>
+
+<script>
+  var videos = document.getElementsByClassName("clickplay");
+  for (var i = 0; i < videos.length; i++) {
+    videos[i].addEventListener("click", function() {
+      this.play();
+    });
+    videos[i].addEventListener("ended", function() {
+      this.pause();
+      this.currentTime = 0;
+    });
+  }
+</script>
+
+</html>
