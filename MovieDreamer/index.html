@@ -92,7 +92,7 @@ that enriches scene descriptions with detailed character information and visual 
                 Existing long video generation methods typically focus on generating a long video clip with one image or text as input, ensuring high-quality results of tens of seconds. However, it is extremely computational intensive to scale them up to generate a long video of minutes, and almost impossible for hours. We address this problem from a different perspective, namely, by generating long videos in a hierarchical way. Specifically, we first generate keyframes, which serve as anchor frames to generate the long video. Moreover, our paradigm unifies long story generation and long video generation. Firstly, we surpass the existing methods in terms of the length of the generated content, both in story and video generation, while ensuring no degradation in quality. Secondly, our generation quality also exceeds the current state-of-the-art methods, which is demonstrated in the evaluation metrics. Lastly, our method is highly flexible, allowing the use of some of the current high-quality closed-source video generation models to create exceptionally high-quality long videos with rich narrative, with multiple-character consistency well-preserved.
             </div>
 
-            <h3>MovieDreamer + Luma - Video Clip</h3>
+            <h3>MovieDreamer + Luma</h3>
             <div class="video-grid">
                 <video controls>
                     <source src="videos/luma/long1.mp4" type="video/mp4">
@@ -235,7 +235,7 @@ that enriches scene descriptions with detailed character information and visual 
                 Inspired by movie industry, we design the multimodal script which helps the model to better understand the character, the scene, and the plot.
             </div>
             <div class="abs">
-                Our autoregressive model takes multimodal scripts as input and predicts the tokens for keyframes. These tokens are then rendered into images, forming anchor frames for extended video generation. The generated anchor frames can serve as the input for any image-to-video pipeline.
+                Our autoregressive model takes multimodal scripts as input and predicts the tokens for keyframes. These tokens are then rendered into images, forming anchor frames for extended video generation. For more details, please refer to our paper.
             </div>
             <div class="add-div" style="height: 440px;">
                 <image src="images/Method.png" height="440"/>
