@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- <script type="text/javascript" src="scroll.js"></script> -->
 </head>
 <body>
     <header>
@@ -53,17 +54,25 @@ that enriches scene descriptions with detailed character information and visual 
 
         </section>
 
-        <!-- <section class="section section-other">
-            <h2>Video Presentation</h2>
-            <div class="video">
-                <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </section> -->
-
         <section class="section section-other">
             <h2>Story Results</h2>
             <div class="abs">Our MovieDreamer is able to generate very long story results with multiple characters well preserved.</div>
-            <div class="add-div" style="height: 500px;">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <img src="images/add_story0.png">
+                    <img src="images/add_story1.png">
+                    <img src="images/add_story2.png">
+                    <img src="images/add_story3.png">
+                    <img src="images/add_story4.png">
+                    <img src="images/add_story5.png">
+                    <img src="images/add_story6.png">
+                </div>
+                <div class="carousel-buttons">
+                    <button id="prev">❮</button>
+                    <button id="next">❯</button>
+                </div>
+            </div>
+            <!-- <div class="add-div" style="height: 500px;">
                 <image src="images/add_story0.png" height="520"/>
             </div>
             <div class="add-div">
@@ -83,7 +92,7 @@ that enriches scene descriptions with detailed character information and visual 
             </div>
             <div class="add-div">
                 <image src="images/add_story6.png" height="700"/>
-            </div>
+            </div> -->
 
         </section>
         <section class="section section-other">
@@ -107,46 +116,8 @@ that enriches scene descriptions with detailed character information and visual 
                     <source src="videos/luma/long3.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <!-- <video controls>
-                    <source src="videos/luma/4.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/luma/5.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/luma/6.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/luma/7.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/luma/8.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/luma/9.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video> -->
             </div>
-            <!-- <h3>MovieDreamer + Pika - Video Clip</h3>
-            <div class="video-grid">
-                <video controls>
-                    <source src="videos/1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div> -->
+
             <h3>MovieDreamer + Our Video Model</h3>
             <div class="abs">
                 As a university lab, it is not feasible for us to achieve as good performance as companies in resource-intensive video generation. Nevertheless, we still introduce an improved model based on existing methods to generate longer video clips.
@@ -165,62 +136,7 @@ that enriches scene descriptions with detailed character information and visual 
                     <source src="videos/ours/long3.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <!-- <video controls>
-                    <source src="videos/ours/4.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/ours/5.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/ours/6.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/ours/7.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/ours/8.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/ours/9.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video> -->
             </div>
-            
-            <!-- <h3>MovieDreamer + Luma - Long Video</h3>
-            <div class="video-grid">
-                <video controls>
-                    <source src="videos/1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <h3>MovieDreamer + Pika - Long Video</h3>
-            <div class="video-grid">
-                <video controls>
-                    <source src="videos/1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <video controls>
-                    <source src="videos/3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div> -->
 
         </section>
         <section class="section section-other">
@@ -254,44 +170,36 @@ that enriches scene descriptions with detailed character information and visual 
             <div class="add-div" style="height: 200px; text-align: center ">
                 <image src="images/video_metrics.png" height="200"/>
             </div>
-            <div class="abs">
-                Existing methods can ensure good character consistency over short time sequences, but they fail to do so over long time sequences. Our method, however, can maintain both short-term and long-term consistency of multiple characters even as scenes change.
-            </div>
-            <div class="add-div" style="height: 1300px; text-align: center ">
-                <image src="images/compare.png" height="1300"/>
-            </div>
         </section>
-        <!-- <section class="section section-other">
-            <h2>Image Gallery</h2>
-            <div class="image-gallery">
-                <div class="image">
-                    <img src="image1.jpg" alt="Description of image 1">
-                </div>
-                <div class="image">
-                    <img src="image2.jpg" alt="Description of image 2">
-                </div>
-            </div>
-        </section> -->
-        <section class="section section-other">
-            <h2>Limitations</h2>
-            <div class="abs">
-                MovieDreamer sometimes confuses character IDs when there are many characters to generate in one keyframe. Furthermore, although MovieDreamer is capable of preserving character face ID, it fails to preserve additional attributes such as clothes and scenes. For more detailed analysis, please refer to our paper.
-            </div>
 
-            <div class="abs">
-                Most importantly, MovieDreamer has demonstrated the effectiveness of generating high-quality long stories and videos, significantly lowering the barrier for individuals to create desired visual appealing content. Consequently, it is imperative to emphasize the responsible and ethical utilization of our method, under the collective supervision and governance of community as a whole. 
-            </div>
-            <div class="add-div" style="height: 335px;">
-                <image src="images/limitations.png" height="335"/>
-            </div>
-            <!-- <div class="abs">Provide references or links to the full paper, supplementary materials, or other relevant resources.</div> -->
-            <!-- <a href="#" class="button">Download Full Paper</a> -->
-        </section>
         <section class="section section-other">
             <h2>Bibtex</h2>
-            <!-- <div class="abs">Provide references or links to the full paper, supplementary materials, or other relevant resources.</div> -->
-            <!-- <a href="#" class="button">Download Full Paper</a> -->
         </section>
     </div>
+    <script>
+        const images = document.querySelectorAll('.carousel img');
+        let currentIndex = 0;
+        const carouselInner = document.querySelector('.carousel-inner');
+
+        function showImage(index) {
+            const offset = -index * 100; // Assuming each image takes 100% of the container width
+            carouselInner.style.transform = `translateX(${offset}%)`;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            showImage(currentIndex);
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+            showImage(currentIndex);
+        });
+
+        // Optionally, you can add auto-play functionality:
+        setInterval(() => {
+            document.getElementById('next').click();
+        }, 8000); // Change image every 3 seconds
+    </script>
 </body>
 </html>

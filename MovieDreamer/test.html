@@ -3,57 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
     <style>
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+        .carousel {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
         }
-        .video-grid video {
+        .carousel img {
             width: 100%;
-            height: auto;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .carousel-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
         }
     </style>
-    <title>Video Grid</title>
 </head>
 <body>
-    <div class="video-grid">
-        <video controls>
-            <source src="video1.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video2.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video4.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video5.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video6.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video7.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video8.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <video controls>
-            <source src="video9.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+
+<div class="container main">
+    <div class="section section-other">
+        <!-- 其他内容可以放在这里 -->
+        <div class="carousel">
+            <img src="images/add_story1.png" class="active">
+            <img src="images/add_story2.png">
+            <img src="images/add_story3.png">
+            <img src="images/add_story4.png">
+            <img src="images/add_story5.png">
+            <img src="images/add_story6.png">
+            <img src="images/add_story7.png">
+            <div class="carousel-buttons">
+                <button id="prev">❮</button>
+                <button id="next">❯</button>
+            </div>
+        </div>
     </div>
+</div>
+
+<script>
+    const images = document.querySelectorAll('.carousel img');
+    let currentIndex = 0;
+
+    function showImage(index) {
+        images.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+        });
+    }
+
+    document.getElementById('prev').addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+        showImage(currentIndex);
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+        currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+        showImage(currentIndex);
+    });
+
+    // Optionally, you can add auto-play functionality:
+    setInterval(() => {
+        document.getElementById('next').click();
+    }, 3000); // Change image every 3 seconds
+</script>
+
 </body>
 </html>
