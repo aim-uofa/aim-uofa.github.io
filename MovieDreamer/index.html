@@ -28,6 +28,9 @@
     </header>
     <div class="container main">
         <section class="section section-abstract">
+            <div class="add-div" style="height: 150px;">
+                <image src="images/logo.png" height="150"/>
+            </div>
             <h2>Abstract</h2>
             <div class="abs">Recent advancements in video generation have primarily leveraged diffusion models for short-duration content. However, these approaches often fall short in modeling complex narratives and maintaining character consistency over extended periods, which is essential for long-form video production like movies. We propose MovieDreamer, a novel hierarchical framework that integrates the strengths of autoregressive models with diffusion-based rendering to pioneer long-duration video generation with intricate plot progressions and high visual fidelity. Our approach utilizes autoregressive models for global narrative coherence, predicting sequences of visual tokens that are subsequently transformed into high-quality video frames through diffusion rendering. This method is akin to traditional movie production processes, where complex stories are factorized down into manageable scene capturing. Further, we employ a multimodal script
 that enriches scene descriptions with detailed character information and visual style, enhancing continuity and character identity across scenes. We present extensive experiments across various movie genres, demonstrating that our approach not only achieves superior visual and narrative quality but also effectively extends the duration of generated content significantly beyond current capabilities. 
@@ -72,32 +75,11 @@ that enriches scene descriptions with detailed character information and visual 
                     <button id="next">❯</button>
                 </div>
             </div>
-            <!-- <div class="add-div" style="height: 500px;">
-                <image src="images/add_story0.png" height="520"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story1.png" height="700"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story2.png" height="700"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story3.png" height="700"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story4.png" height="700"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story5.png" height="700"/>
-            </div>
-            <div class="add-div">
-                <image src="images/add_story6.png" height="700"/>
-            </div> -->
 
         </section>
         <section class="section section-other">
             <h2>Video Results</h2>
-            <div class="abs">MovieDreamer is <b>ORTHOGONAL</b> to existing long video generation methods. </div>
+            <div class="abs">MovieDreamer is <b>ORTHOGONAL</b> to existing long video generation methods, but benefits from them. </div>
             <div class="abs">
                 Existing long video generation methods typically focus on generating a long video clip with one image or text as input, ensuring high-quality results of tens of seconds. However, it is extremely computational intensive to scale them up to generate a long video of minutes, and almost impossible for hours. We address this problem from a different perspective, namely, by generating long videos in a hierarchical way. Specifically, we first generate keyframes, which serve as anchor frames to generate the long video. Moreover, our paradigm unifies long story generation and long video generation. Firstly, we surpass the existing methods in terms of the length of the generated content, both in story and video generation, while ensuring no degradation in quality. Secondly, our generation quality also exceeds the current state-of-the-art methods, which is demonstrated in the evaluation metrics. Lastly, our method is highly flexible, allowing the use of some of the current high-quality closed-source video generation models to create exceptionally high-quality long videos with rich narrative, with multiple-character consistency well-preserved.
             </div>
@@ -120,8 +102,7 @@ that enriches scene descriptions with detailed character information and visual 
 
             <h3>MovieDreamer + Our Video Model</h3>
             <div class="abs">
-                As a university lab, it is not feasible for us to achieve as good performance as companies in resource-intensive video generation. Nevertheless, we still introduce an improved model based on existing methods to generate longer video clips.
-                We slow the fps down so that the quality of each frame can be seen more clearly.
+                As a university lab, it is not feasible for us to achieve as good performance as companies in resource-intensive video generation model training. Nevertheless, we still introduce an improved model based on existing methods to generate longer video clips.
             </div>
             <div class="video-grid">
                 <video controls>
