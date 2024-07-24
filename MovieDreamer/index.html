@@ -20,7 +20,7 @@
                 <a href="https://github.com/aim-uofa/MovieDreamer" target="_blank">
                     <i class="fab fa-github"></i> GitHub
                 </a>
-                <a href="https://arxiv.org/abs/paperid" target="_blank">
+                <a href="https://arxiv.org/abs/2407.16655" target="_blank">
                     <i class="fas fa-file-alt"></i> arXiv
                 </a>
             </div>
@@ -174,32 +174,76 @@ that enriches scene descriptions with detailed character information and visual 
 
         <section class="section section-other">
             <h2>Bibtex</h2>
+            <div class="bibtex-container">
+                <pre>
+                <p class="bib">
+@misc{zhao2024moviedreamerhierarchicalgenerationcoherent, <br>
+    title={MovieDreamer: Hierarchical Generation for Coherent Long Visual Sequence}, <br>
+    author={Canyu Zhao and Mingyu Liu and Wen Wang and Jianlong Yuan and Hao Chen and Bo Zhang and Chunhua Shen},<br>
+    year={2024},<br>
+    eprint={2407.16655},<br>
+    archivePrefix={arXiv},<br>
+    primaryClass={cs.CV},<br>
+    url={https://arxiv.org/abs/2407.16655}, 
+}
+                    </p>
+                </pre>
+            </div>
         </section>
     </div>
     <script>
+        const carouselInner = document.querySelector('.carousel-inner');
         const images = document.querySelectorAll('.carousel img');
         let currentIndex = 0;
-        const carouselInner = document.querySelector('.carousel-inner');
-
+        let autoPlayInterval;
+    
         function showImage(index) {
             const offset = -index * 100; // Assuming each image takes 100% of the container width
             carouselInner.style.transform = `translateX(${offset}%)`;
         }
-
-        document.getElementById('prev').addEventListener('click', () => {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-            showImage(currentIndex);
-        });
-
-        document.getElementById('next').addEventListener('click', () => {
+    
+        function nextImage() {
             currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
             showImage(currentIndex);
+            resetAutoPlay();
+        }
+    
+        function prevImage() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+            showImage(currentIndex);
+            resetAutoPlay();
+        }
+    
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(nextImage, 8000);
+        }
+    
+        document.getElementById('prev').addEventListener('click', prevImage);
+        document.getElementById('next').addEventListener('click', nextImage);
+    
+        // Initialize auto-play
+        autoPlayInterval = setInterval(nextImage, 8000);
+    
+        // Seamless transition between the last and first image
+        carouselInner.addEventListener('transitionend', () => {
+            if (currentIndex === images.length) {
+                carouselInner.style.transition = 'none';
+                currentIndex = 0;
+                showImage(currentIndex);
+                requestAnimationFrame(() => {
+                    carouselInner.style.transition = 'transform 1s ease';
+                });
+            }
+            if (currentIndex === -1) {
+                carouselInner.style.transition = 'none';
+                currentIndex = images.length - 1;
+                showImage(currentIndex);
+                requestAnimationFrame(() => {
+                    carouselInner.style.transition = 'transform 1s ease';
+                });
+            }
         });
-
-        // Optionally, you can add auto-play functionality:
-        setInterval(() => {
-            document.getElementById('next').click();
-        }, 8000); // Change image every 3 seconds
     </script>
 </body>
 </html>

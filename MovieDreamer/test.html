@@ -3,87 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Carousel</title>
+    <title>BibTeX Entry Display</title>
     <style>
-        .carousel {
-            position: relative;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .bibtex-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             max-width: 800px;
             margin: auto;
-            overflow: hidden;
         }
-        .carousel img {
-            width: 100%;
-            display: none;
+        h1 {
+            text-align: center;
+            color: #4CAF50;
         }
-        .carousel img.active {
-            display: block;
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
         }
-        .carousel-buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-        }
-        .carousel-buttons button {
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .carousel-buttons button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .bibtex-entry {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
         }
     </style>
 </head>
 <body>
 
-<div class="container main">
-    <div class="section section-other">
-        <!-- 其他内容可以放在这里 -->
-        <div class="carousel">
-            <img src="images/add_story1.png" class="active">
-            <img src="images/add_story2.png">
-            <img src="images/add_story3.png">
-            <img src="images/add_story4.png">
-            <img src="images/add_story5.png">
-            <img src="images/add_story6.png">
-            <img src="images/add_story7.png">
-            <div class="carousel-buttons">
-                <button id="prev">❮</button>
-                <button id="next">❯</button>
-            </div>
-        </div>
+    <h1>BibTeX Entries</h1>
+    <div class="bibtex-container" id="bibtex-container">
+        <!-- BibTeX entries will be injected here -->
     </div>
-</div>
 
-<script>
-    const images = document.querySelectorAll('.carousel img');
-    let currentIndex = 0;
+    <script>
+        const bibtexEntries = [
+            {
+                entryType: "article",
+                citationKey: "example2024",
+                fields: {
+                    author: "John Doe",
+                    title: "An Example Article",
+                    journal: "Journal of Examples",
+                    year: "2024",
+                    volume: "42",
+                    number: "3",
+                    pages: "123-456",
+                    month: "July",
+                    note: "An interesting note."
+                }
+            },
+            // Add more BibTeX entries here
+        ];
 
-    function showImage(index) {
-        images.forEach((img, i) => {
-            img.classList.toggle('active', i === index);
-        });
-    }
+        function formatBibTeX(entry) {
+            let formatted = `@${entry.entryType}{${entry.citationKey},\n`;
+            for (const [key, value] of Object.entries(entry.fields)) {
+                formatted += `  ${key} = {${value}},\n`;
+            }
+            formatted = formatted.trim().slice(0, -1); // Remove the last comma
+            formatted += `\n}`;
+            return formatted;
+        }
 
-    document.getElementById('prev').addEventListener('click', () => {
-        currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
-        showImage(currentIndex);
-    });
+        function displayBibTeX() {
+            const container = document.getElementById('bibtex-container');
+            bibtexEntries.forEach(entry => {
+                const pre = document.createElement('pre');
+                pre.classList.add('bibtex-entry');
+                pre.textContent = formatBibTeX(entry);
+                container.appendChild(pre);
+            });
+        }
 
-    document.getElementById('next').addEventListener('click', () => {
-        currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
-        showImage(currentIndex);
-    });
-
-    // Optionally, you can add auto-play functionality:
-    setInterval(() => {
-        document.getElementById('next').click();
-    }, 3000); // Change image every 3 seconds
-</script>
+        window.onload = displayBibTeX;
+    </script>
 
 </body>
 </html>
