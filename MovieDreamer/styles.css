@@ -108,7 +108,10 @@ h2 {
     left: 0;
 }
 .abs {
-    text-align: justify;
+    
+    /*text-align: justify;
+*/
+    
     line-height: 1.8;
     margin-bottom: 20px;
 }
