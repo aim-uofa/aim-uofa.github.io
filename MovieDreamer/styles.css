@@ -88,7 +88,7 @@ header .links a:hover {
     width: 900px;
 }
 .section-abstract h2, .section-abstract p {
-    text-align: center;
+    text-align: left;
 }
 h2 {
     color: #121212;
