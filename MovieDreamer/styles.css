@@ -259,10 +259,13 @@ h2 {
     margin: auto;
 }
 pre {
-    font-family: 'helvetica now';
+    
+    /*font-family: 'helvetica now';
+    */
+
     background: #f4f4f4;
     padding: 15px;
-    font-size: 1.5em;
+    font-size: 1.75em;
     border-radius: 5px;
     overflow-x: auto;
 }
