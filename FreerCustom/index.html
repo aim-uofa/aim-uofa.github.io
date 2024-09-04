@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FreeCustom</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!--  support TeX in .html file  -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      extensions: ["tex2jax.js"],
+      "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
+      tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno" },
+      TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } } },
+      messageStyle: "none"
+    });
+    </script>    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+  <!--  support TeX in .html file  -->
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">FreerCustom: Training-Free Multi-Concept Customization for Image and Video Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://volcverse.vercel.app">Canyu Zhao</a><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="https://dingangui.github.io">Ganggui Ding</a><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/encounter1997">Wen Wang</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhenyangcs.github.io/">Zhen Yang</a><sup></sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/zideliu">Zide Liu</a><sup></sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>†</sup>,
+            </span>
+			      <span class="author-block">
+              <a href="https://cshen.github.io/">Chunhua Shen</a><sup>†</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup></sup>CAD&CG, Zhejiang University, China</span>
+          </div>
+
+          <span class=""><sup>*</sup>Equal Contribution</span>
+          <span class=""><sup>†</sup>Corrsponding Author</span>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                    class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/aim-uofa/FreeCustom"
+                    class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Begin Teaser -->
+<div>
+  <div class="columns is-centered has-text-centered">
+    <h2 class="title is-3">Customized Image Results</h2>
+  </div>
+  </br>
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div> 
+
+        <img src="./static/images/results_of_multi_concept.png"
+        class="interpolation-image"
+        alt="Interpolate start reference image."/>
+        
+        <hr class="hr-solid">
+
+        <img src="./static/images/results_of_single_concept.png"
+        class="interpolation-image"
+        alt="Interpolate start reference image."/>
+        </div>
+
+        <hr class="hr-solid">
+        <div class="columns is-centered has-text-centered">
+          <h2 class="title is-3">Customized Video Results</h2>
+        </div>
+
+        <img src="./static/images/teaser.png"
+        class="interpolation-image"
+        alt="Interpolate start reference image."/>
+        <hr class="hr-solid">
+
+        <div class="video-grid">
+            <img src="./static/gifs/vid/1.gif"/>
+            <img src="./static/gifs/vid/2.gif"/>
+            <img src="./static/gifs/vid/3.gif"/>
+            <img src="./static/gifs/vid/4.gif"/>
+            <img src="./static/gifs/vid/5.gif"/>
+            <img src="./static/gifs/vid/6.gif"/>
+            <img src="./static/gifs/vid/7.gif"/>
+            <img src="./static/gifs/vid/8.gif"/>
+            <img src="./static/gifs/vid/9.gif"/>
+            <img src="./static/gifs/vid/10.gif"/>
+            <img src="./static/gifs/vid/11.gif"/>
+            <img src="./static/gifs/vid/12.gif"/>
+        </div>
+
+        <hr class="hr-solid">
+
+        <div class="columns is-centered has-text-centered">
+          <h2 class="title is-3">Add New Concepts and Remove Existing Concepts</h2>
+        </div>
+
+        <div class="video-grid">
+          <img src="./static/gifs/trans/1.gif"/>
+          <img src="./static/gifs/trans/2.gif"/>
+          <img src="./static/gifs/trans/3.gif"/>
+          <img src="./static/gifs/trans/4.gif"/>
+          <img src="./static/gifs/trans/5.gif"/>
+          <img src="./static/gifs/trans/6.gif"/>
+      </div>
+      <hr class="hr-solid">
+      <div class="hero-body">
+        <h2 class="subtitle has-text-justified">
+          <p>Our method supports both single-concept and multi-concept image and video generation. Our greatest advantage lies in being training-free and requiring minimal user input. The generated results are on par with and even surpass those of existing training-based methods.</p>
+        </h2>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End Teaser -->
+
+
+<!-- Begin abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <!-- <img src='static/images/method_overview.png' id="framework"><br><br> -->
+        <div class="content has-text-justified">
+          <p>
+            Benefiting from large-scale pre-trained text-to-image (T2I) generative models, impressive progress has been achieved in customized image generation, which aims to generate user-specified concepts.
+            Existing approaches have extensively focused on single-concept customization and still encounter challenges when it comes to complex scenarios that involve combining multiple concepts. These approaches often require retraining/fine-tuning using a few images, leading to time-consuming training processes and impeding their swift implementation. 
+            Furthermore, the reliance on multiple images to represent a singular concept increases the difficulty of customization.
+          </p>
+          <p>
+            To this end, we propose <b>FreerCustom</b>, a novel tuning-free method to generate customized images of multi-concept composition based on reference concepts, using only one image per concept as input. Specifically, we introduce a new multi-reference self-attention (MRSA) mechanism and a weighted mask strategy that enables the generated image to access and focus more on the reference concepts. In addition, MRSA leverages our key finding that input concepts are better preserved when providing images with context interactions.
+            Experiments show that our method's produced images are consistent with the given concepts and better aligned with the input text. 
+            Our method outperforms or performs on par with other training-based methods in terms of multi-concept composition and single-concept customization, but is simpler. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End abstract -->
+
+
+<!-- Begin method overview -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method Overview</h2>
+        <img src='static/images/method_overview.png' id="framework"><br>
+        <div class="content has-text-justified">
+          <p>
+            Given a set of reference images $ \mathcal{I} = \{I_1, I_2, I_3\} $ and their corresponding prompts $\mathcal{P} = \{P_1, P_2, P_3\}$, we generate a multi-concept customized composition image $I$ aligned to the target prompt $P$. Our method works entirely within the latent space. At each intermediate timestep $t$, we extract key and value features from input images that include contextual interactions. We then apply a weighted mask strategy to emphasize the relevant target features and filter out irrelevant content. The refined features are leveraged by our proposed MRSA to generate high-quality customized results.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method overview -->
+
+<!-- Begin Paradigm Comparison -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Paradigm Comparison</h2>
+        <img src='static/images/paradigm_comparison.png' id="framework"><br>
+        <div class="content has-text-justified">
+          <p>
+            Existing methods can be broadly categorized into two types: those that require fine-tuning on a small number of images and those that involve training on large-scale datasets. In contrast, our approach does not require any training and is able to produce results that are on par with, or even superior to these methods. Additionally, our method supports training-free video customization.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Paradigm Comparison -->
+
+<!-- Begin Qualitative Comparison -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Comparison</h2>
+        <img src='static/images/comparison_with_other_methods_multi.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            Comparisons of multi-concept composition.
+          </p>
+        </div>
+        <img src='static/images/comparison_with_other_methods_single.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            Comparisons of single-concept customization.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Qualitative Comparison -->
+
+
+<!-- Begin More Visual Results. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">More Visual Results</h2>
+        <img src='static/images/cat1_qualitative_results.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            <b>Single-concept customization.</b> Our method enables extensive customization of a single concept by inputting a single image
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End More Visual Results. -->
+
+
+<!-- Begin Appearance Transfer. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Appearance Transfer</h2>
+        <img src='static/images/appearance transfer.png' id="framework">
+        <img src='static/images/appearance transfer2.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            Our method generates objects with similar appearance and materials as the input image.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Appearance Transfer. -->
+
+
+<!-- Begin Empower other methods. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method Overview. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Empower Other Methods</h2>
+        <img src='static/images/blipdiffusion with ours.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            (a) BLIP Diffusion with Ours.
+          </p>
+        </div>
+        <img src='static/images/ControlNet with ours.png' id="framework">
+        <div class="content has-text-centered">
+          <p>
+            (b) ControlNet with Ours.
+          </p>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Our method can enhance ControlNet and BLIP Diffusion in a plug-and-play manner. (a) By using our method, the output of BLIP diffusion becomes more faithful to the input image and better aligned with the input text. (b) Furthermore, ControlNet can generate results that are consistent in layout and identity when combined with ours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Empower other methods. -->
+<br><br>
+<!-- End More Visual Results.-->
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="content has-text-centered">
+        <div class="content">
+          <p>
+            This website was modified from <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. We appreciate for sharing this perfect template!
+          </p>
+        </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+ 
