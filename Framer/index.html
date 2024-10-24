@@ -1,6 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<div class="column has-text-centered">
+<img src="static/framer.png" style="height:90px"></img>
+</div>
 <title>Framer: Interactive Video Interpolation</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 
@@ -13,6 +16,7 @@
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="./static/css/index.css">
+<link rel="icon" href="./static/framer.png">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -30,7 +34,7 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Framer: Interactive Video Interpolation</h1>
+            <h1 class="title is-1 publication-title">Framer: Interactive Frame Interpolation</h1>
             <div class="column is-full_width">
               <!-- <h2 class="title is-4">ICLR 2025</h2> -->
             </div>
@@ -41,10 +45,10 @@
             </div> -->
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="https://github.com/encounter1997">Wen Wang</a><sup>1</sup>,
+                <a href="https://github.com/encounter1997">Wen Wang</a><sup>1,2</sup>,
               </span>
               <span class="author-block">
-                  <a href="https://github.com/qiuyu96">Qiuyu Wang</a><sup>2</sup>,
+                  <a href="https://scholar.google.com/citations?user=VRsy9v8AAAAJ">Qiuyu Wang</a><sup>2</sup>,
               </span>
               <span class="author-block">
                 <a href="https://zkcys001.github.io">Kecheng Zheng</a><sup>2</sup>,
@@ -103,6 +107,7 @@
                     <span class="icon">
                         <i class="fab fa-youtube"></i>
                     </span>
+                    <span>Video</span>
                   </a>
                 </span>
 
@@ -153,10 +158,29 @@
 	
 
 
+    <!-- <p align="center">&nbsp;</p> -->
+	<a href="#top"></a>
+
+
+  <!--Video-->
+  <section style="padding: 0;margin-top: -25px;" class="section hero">
+    <div class="container is-max-desktop">
+          <div class="item">
+          <!-- <video poster="" id="tree" autoplay controls muted loop height="100%">
+            <source src="https://www.youtube.com/watch?v=PtW7hjCawbo"
+            type="video/mp4">
+          </video> -->
+          <div class="column-video" style="border-radius:10px;justify-content: center;align-items: center; font-size: 100px;">
+            <iframe width="960" height="540" src="https://www.youtube.com/embed/4MPGKgn7jRc?si=uF64l_N00qnS7VIZ" src="" class="frame" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+    </div>
+  </section>
+
   <!------------------ BEGIN SECTION ------------------>
   <p>&nbsp;</p>
   <hr>
-  <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases produced by our Framer</h2>
+  <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases</h2>
 
 
   <p style="font-size: 20px" align="center">
@@ -373,7 +397,7 @@
   
   <p style="font-size: 20px" align="center">
     <b> 
-        Novel view synthesis.
+        Novel View Synthesis.
     </b>
   </p>
     <table  width="1024" align="center">
@@ -419,7 +443,7 @@
         
     <p style="font-size: 20px" align="center">
       <b> 
-        Cartoon and sketch interpolation.
+        Cartoon and Sketch Interpolation.
       </b>
     </p>
     <table  width="1024" align="center">
@@ -478,7 +502,7 @@
 
     <p style="font-size: 20px" align="center">
       <b> 
-      Time-lapsing video generation.
+      Time-lapsing Video Generation.
       </b>
     </p>
     <table  width="1024" align="center">
@@ -522,7 +546,7 @@
         
     <p style="font-size: 20px" align="center">
       <b> 
-      Slow-motion video generation.
+      Slow-motion Video Generation.
       </b>
     </p>
     <table  width="1024" align="center">
@@ -569,7 +593,7 @@
     <!-- <hr> -->
 
     <p style="font-size: 20px" align="center">
-      <b> Image morphing (the input point trajectory is omitted). </b> 
+      <b> Image Morphing (the input point trajectory is omitted). </b> 
     </p>
     <table  width="1024" align="center">
       <tbody>
@@ -849,6 +873,8 @@
 
 
 
+
+
   // for carousel
   window.addEventListener('DOMContentLoaded', (event) => {
         const videoWrappers = document.querySelectorAll('.video-wrapper');
@@ -892,3 +918,26 @@
         carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
       });
 </script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://doubiiu.github.io/projects/ToonCrafter"> ToonCrafter</a> project page. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
