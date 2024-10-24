@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Framer: Interactive Video Interpolation</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="./static/css/index.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script defer src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container">
+  
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Framer: Interactive Video Interpolation</h1>
+            <div class="column is-full_width">
+              <!-- <h2 class="title is-4">ICLR 2025</h2> -->
+            </div>
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a>ICLR 2025 Anonymous Submition (Paper ID: 2116)</a>
+              </span>
+            </div> -->
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://github.com/encounter1997">Wen Wang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                  <a href="https://github.com/qiuyu96">Qiuyu Wang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://zkcys001.github.io">Kecheng Zheng</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://ken-ouyang.github.io/">Hao Ouyang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://github.com/Aziily">Zhekai Chen</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=BwdpTiQAAAAJ">Biao Gong</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://shenyujun.github.io">Yujun Shen</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://cshen.github.io">Chunhua Shen</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Zhejiang University,</span>&nbsp;
+              <span class="author-block"><sup>2</sup>Ant Group</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2410.xxxxx"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/aim-uofa/Framer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=4MPGKgn7jRc"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/spaces/TODO"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img style="max-width: 100%;" src="static/hf.png" alt="Hugging Face Demo">
+                    </span>
+                    <span>Hugging Face Demo (Coming Soon)</span>
+                  </a>
+                </span>
+
+
+              </div>
+
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Showcases</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>              
+              
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+	
+
+
+  <!------------------ BEGIN SECTION ------------------>
+  <p>&nbsp;</p>
+  <hr>
+  <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases produced by our Framer</h2>
+
+
+  <p style="font-size: 20px" align="center">
+    <b> 
+    Video Interpolation with User-Interative Point Trajectory Control.
+    </b>
+  </p>
+
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Start Image</th>
+        <th style="font-size: 16px">Input Trajectory & Interpolation Results &nbsp;&nbsp;</th>
+        <th style="font-size: 16px">End Image</th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/real_dog_00/temp_1_20240925-165335_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_1.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/real_dog_01/temp_1_20240925-165555_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_1.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/real_dog_02/temp_1_20240925-170223_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/dog_1.png" alt=""/></th>
+      </tr>
+
+      <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Start Image</th>
+        <th style="font-size: 16px">Input Trajectory & Interpolation Results &nbsp;&nbsp;</th>
+        <th style="font-size: 16px">End Image</th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame1.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/toon_00/temp_1_20240927-125618_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame1.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/toon_01/temp_1_20240924-122331_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame1.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/toon_02/temp_1_20240927-124704_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/Japan_v2_2_062266_s2_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Start Image</th>
+        <th style="font-size: 16px">Input Trajectory & Interpolation Results &nbsp;&nbsp;</th>
+        <th style="font-size: 16px">End Image</th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0001.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/sketch_00/temp_1_20240925-135222_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0016.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0001.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/sketch_01/temp_1_20240925-142446_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0016.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0001.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./001_results_drag/sketch_02/temp_1_20240925-142256_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./001_results_drag/input_frames/sketch2_frame0016.png" alt=""/></th>
+      </tr>
+
+      <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+
+  <p style="font-size: 20px" align="center">
+    <b> 
+    Image Morphing with User-Interative Point Trajectory Control.
+    </b>
+  </p>
+
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Start Image</th>
+        <th style="font-size: 16px">Input Trajectory & Interpolation Results &nbsp;&nbsp;</th>
+        <th style="font-size: 16px">End Image</th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/dragon1.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/dragon12/temp_1_20240921-112645_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/dragon2.png" alt=""/></th>
+      <
+      
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/dragon2.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/dragon23/temp_1_20240921-111112_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/dragon3.png" alt=""/></th>
+      </tr>
+      
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/squirtle-X2.jpg" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/turtle/temp_1_20240924-120253_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/wartortle-X2.jpg" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/lupin.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/luping_wolf/temp_1_20240923-204326_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/lupin_wolf.PNG" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/Banner_1024.jpg" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/hulk/temp_1_20240924-134802_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/Hulk_1024.jpg" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/dagu.jpg" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/altman/temp_1_20240924-133615_mode2.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/Dijia.jpg" alt=""/></th>
+      </tr>
+
+      <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+
+    <!------------------ BEGIN SECTION: w/o interaction ------------------>
+    <p>&nbsp;</p>
+    <hr>
+
+    <h2 id="applications_container" align="left"><a name="image-results" id="image-results"></a>Applications</h2>
+
+
+    
+  <p style="font-size: 20px" align="center">
+    <b> 
+    Video Interpolation without User-Input Control.
+    </b>
+  </p>
+
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Start Image</th>
+        <th style="font-size: 16px">Interpolation results</th>
+        <th style="font-size: 16px">End Image</th>
+      </tr>
+
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/movie_0.jpg" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./003_direct_interp/laugh.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/movie_1.jpg" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/mokey_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./003_direct_interp/monkey_eating_interp_16-43_wocontrol.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/mokey_1.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/car_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./003_direct_interp/pexels_10739357_car_interp_6-33_controlscale1.0.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/car_1.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/plane_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./003_direct_interp/ss_1056182372_airplane_interp_34-61_wocontrol.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/plane_1.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/cat_0.png" alt=""/></th>
+        <th rowspan="1"><video  class="media-border" width="340" src="./003_direct_interp/cat_piano_interp_24-51_controlscale1.0.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_morph_rec media-border" src="./003_direct_interp/input_images/cat_1.png" alt=""/></th>
+      </tr>
+
+        <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+  <p>&nbsp;</p>
+  <!-- <hr> -->
+  
+  <p style="font-size: 20px" align="center">
+    <b> 
+        Novel view synthesis.
+    </b>
+  </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/000001.jpg" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./004_results_nvs/scan.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/stone01_1start.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./004_results_nvs/data_nvs_stone01_2end.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/000002.jpg" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/stone01_2end.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/road_0.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./004_results_nvs/data_nvs_dynamic_road_24.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/train_0.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./004_results_nvs/data_nvs_dynamic_train1_13.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/road_24.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./004_results_nvs/input_images/train_13.png" alt=""/></th>
+        </tr>
+        
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <!------------------ BEGIN SECTION: Cartoon and sketch interpolation ------------------>
+    <p>&nbsp;</p>
+    <!-- <hr> -->
+        
+    <p style="font-size: 20px" align="center">
+      <b> 
+        Cartoon and sketch interpolation.
+      </b>
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/Japan_v2_1_060306_s2_frame1.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/data_tooncraft_Japan_v2_1_060306_s2_frame3.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/74880_401.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/tooncarft_car.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/Japan_v2_1_060306_s2_frame3.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/74880_401.mp4_00-01.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/Japan_v2_1_121331_s3_frame1.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/data_tooncraft_Japan_v2_1_121331_s3_frame3.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/74845_304_frame1.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/tooncraft_74845_304_frame1.png_to_tooncraft_74845_304_frame3.png.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/Japan_v2_1_121331_s3_frame3.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/74845_304_frame3.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/sketch3_frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/data_tooncraft_sketch3_frame0016.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/sketcg1_frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./005_results_toon/tooncraft_sketcg1_frame0001.png_to_tooncraft_sketch1_frame0016.png.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/sketch3_frame0016.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./005_results_toon/input_images/sketch1_frame0016.png" alt=""/></th>
+        </tr>
+
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+
+    <!------------------ BEGIN SECTION: Time-lapsing video generation------------------>
+    <p>&nbsp;</p>
+    <!-- <hr> -->
+
+    <p style="font-size: 20px" align="center">
+      <b> 
+      Time-lapsing video generation.
+      </b>
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_2_1/0.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./006_results_chron/A_2_1_0.png_to_A_2_1_65.png.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_2_0/0.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./006_results_chron/A_2_0_0.png_to_A_2_0_14.png.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_2_1/65.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_2_0/14.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_3_2/0.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./006_results_chron//A_3_2_0.png_to_A_3_2_17.png.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/fafa1.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./006_results_chron/fafa12.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/A_3_2/27.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./006_results_chron/inputs/fafa2.png" alt=""/></th>
+        </tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <!------------------ BEGIN SECTION: Slow-motion video generation ------------------>
+    <p>&nbsp;</p>
+    <!-- <hr> -->
+        
+    <p style="font-size: 20px" align="center">
+      <b> 
+      Slow-motion video generation.
+      </b>
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+
+
+         <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Mequon/frame07.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./007_resutls_slow_motion/Mequon_frame07.png_to_Mequon_frame08.png.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Schefflera/frame08.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./007_resutls_slow_motion/Schefflera_frame08.png_to_Schefflera_frame09.png.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Mequon/frame08.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Schefflera/frame09.png" alt=""/></th>
+        </tr>
+
+         <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Teddy/frame10.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./007_resutls_slow_motion/Teddy_frame10.png_to_Teddy_frame11.png.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Dumptruck/frame07.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./007_resutls_slow_motion/Dumptruck_frame07.png_to_Dumptruck_frame08.png.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Teddy/frame11.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout_rectan media-border" src="./007_resutls_slow_motion/inputs/Dumptruck/frame08.png" alt=""/></th>
+        </tr>
+
+
+        
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <!------------------ BEGIN SECTION: Image morphing ------------------>
+    <p>&nbsp;</p>
+    <!-- <hr> -->
+
+    <p style="font-size: 20px" align="center">
+      <b> Image morphing (the input point trajectory is omitted). </b> 
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input Image1</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input Image2</th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/van_jeep_0.png" alt=""/></th>
+          <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/car_change.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/van_jeep_1.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/jay_0.png" alt=""/></th>
+          <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/jay_elon.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/Musk_Trump_0.png" alt=""/></th>
+        </tr>
+  
+        <tr>
+          <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/pika1.png" alt=""/></th>
+          <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/pika12.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_morph_rec media-border" src="./002_results_morphing/input_frames/pika2.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/wukong_11.png" alt=""/></th>
+          <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/wukong1.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/wukong_12.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/wukong_21.png" alt=""/></th>
+          <th rowspan="1"><video  class="media-border" width="340" src="./002_results_morphing/wukong2.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_morph media-border" src="./002_results_morphing/input_frames/wukong_22.png" alt=""/></th>
+        </tr>
+
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <!-- Comparison -->
+    <!-- ---------------- BEGIN SECTION ---------------- -->
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="comparison_with_baseline_container" align="left"><a name="image-results" id="image-results"></a>Comparisons with previous methods</h2>
+    <table  width="1024" align="center">
+      <tbody>
+        
+          <tr>
+            <th style="font-size: 16px">Input</th>
+            <th style="font-size: 16px">AMT</th>
+            <th style="font-size: 16px">RIFE</th>
+            <th style="font-size: 16px">FLAVR</th>
+            <th style="font-size: 16px">FILM</th>
+          </tr>
+          <tr>
+            <th><img class="input_image_topdownlayout" width="20" src="./009_results_comparison/data/DAVIS-7/0049/frame_000.png" alt=""/></th>
+            <th rowspan="2"><video  width="240" src="./009_results_comparison/amt/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+            <th rowspan="2"><video  width="240" src="./009_results_comparison/rife/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+            <th rowspan="2"><video  width="240" src="./009_results_comparison/flavr/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+            <th rowspan="2"><video  width="240" src="./009_results_comparison/film/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+          </tr>
+          <tr>
+            <th><img class="input_image_topdownlayout" src="./009_results_comparison/data/DAVIS-7/0049/frame_008.png" alt=""/></th>
+          </tr>
+
+          <th style="font-size: 16px"></th>
+          <th style="font-size: 16px">LDMVFI</th>
+          <th style="font-size: 16px">DynamiCrafter</th>
+          <th style="font-size: 16px">SVDKFI</th>
+          <th style="font-size: 16px">Framer (Ours)</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/ldmvfi/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/dynamiccrafter/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/svdkfi/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/ours/DAVIS-7/0049.mp4" autoplay loop controls muted/></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <table  width="1024" align="center">
+      <tbody>
+                
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">AMT</th>
+          <th style="font-size: 16px">RIFE</th>
+          <th style="font-size: 16px">FLAVR</th>
+          <th style="font-size: 16px">FILM</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" width="20" src="./009_results_comparison/data/DAVIS-7/0187/frame_000.png" alt=""/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/amt/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/rife/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/flavr/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/film/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./009_results_comparison/data/DAVIS-7/0187/frame_008.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">LDMVFI</th>
+        <th style="font-size: 16px">DynamiCrafter</th>
+        <th style="font-size: 16px">SVDKFI</th>
+        <th style="font-size: 16px">Framer (Ours)</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ldmvfi/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/dynamiccrafter/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/svdkfi/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ours/DAVIS-7/0187.mp4" autoplay loop controls muted/></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+
+
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <table  width="1024" align="center">
+      <tbody>
+
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">AMT</th>
+          <th style="font-size: 16px">RIFE</th>
+          <th style="font-size: 16px">FLAVR</th>
+          <th style="font-size: 16px">FILM</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" width="20" src="./009_results_comparison/data/DAVIS-7/0068/frame_000.png" alt=""/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/amt/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/rife/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/flavr/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/film/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./009_results_comparison/data/DAVIS-7/0068/frame_008.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">LDMVFI</th>
+        <th style="font-size: 16px">DynamiCrafter</th>
+        <th style="font-size: 16px">SVDKFI</th>
+        <th style="font-size: 16px">Framer (Ours)</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ldmvfi/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/dynamiccrafter/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/svdkfi/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ours/DAVIS-7/0068.mp4" autoplay loop controls muted/></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+
+
+        
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    
+    <table  width="1024" align="center">
+      <tbody>
+        
+
+
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">AMT</th>
+          <th style="font-size: 16px">RIFE</th>
+          <th style="font-size: 16px">FLAVR</th>
+          <th style="font-size: 16px">FILM</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" width="20" src="./009_results_comparison/data/DAVIS-7/0102/frame_000.png" alt=""/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/amt/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/rife/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/flavr/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="240" src="./009_results_comparison/film/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./009_results_comparison/data/DAVIS-7/0102/frame_008.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">LDMVFI</th>
+        <th style="font-size: 16px">DynamiCrafter</th>
+        <th style="font-size: 16px">SVDKFI</th>
+        <th style="font-size: 16px">Framer (Ours)</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ldmvfi/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/dynamiccrafter/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/svdkfi/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="240" src="./009_results_comparison/ours/DAVIS-7/0102.mp4" autoplay loop controls muted/></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+        
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+</div>
+
+
+<script>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const hoverImage = document.querySelector('.hover-image');
+  const caption = document.querySelector('.caption');
+
+  videoContainer.addEventListener('mouseenter', () => {
+      video.pause();
+      hoverImage.style.display = 'block';
+      caption.style.display = 'block';
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+      video.play();
+      hoverImage.style.display = 'none';
+      caption.style.display = 'none';
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-PYVRSFMDRL');
+
+
+
+
+
+  // for carousel
+  window.addEventListener('DOMContentLoaded', (event) => {
+        const videoWrappers = document.querySelectorAll('.video-wrapper');
+      
+        videoWrappers.forEach(wrapper => {
+          const defaultVideo = wrapper.querySelector('.default-video');
+          const aspectRatio = defaultVideo.videoWidth / defaultVideo.videoHeight;
+          const height = wrapper.offsetWidth / aspectRatio;
+      
+          wrapper.style.height = `${height}px`;
+      
+          wrapper.addEventListener('mouseenter', () => {
+            defaultVideo.pause();
+            hoverVideo.play();
+          });
+      
+          wrapper.addEventListener('mouseleave', () => {
+            defaultVideo.play();
+            hoverVideo.pause();
+          });
+        });
+      }); 
+      $(document).ready(function() {
+        var carouselItems = $('.carousel .item');
+        var numItems = carouselItems.length;
+        var numVideos = 5;
+        var currentIndex = 0;
+    
+        $('.carousel').on('click', function() {
+          currentIndex++;
+          if (currentIndex + numVideos <= numItems) {
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          } else {
+            currentIndex = 0;
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          }
+        });
+    
+        carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+      });
+</script>
