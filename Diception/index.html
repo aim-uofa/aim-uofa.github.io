@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<div class="column has-text-centered">
+<img src="static/diception.png" style="height:200px"></img>
+</div>
+<title>DICEPTION: A Generalist Diffusion Model for Vision Perception</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="./static/css/index.css">
+<link rel="icon" href="./static/diception.png">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script defer src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+</head>
+
+<!-- <body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container"> -->
+  
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DICEPTION: A Generalist Diffusion Model for Vision Perception</h1>
+            <div class="column is-full_width">
+              <!-- <h2 class="title is-4">ICLR 2025</h2> -->
+            </div>
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a>ICLR 2025 Anonymous Submition (Paper ID: 2116)</a>
+              </span>
+            </div> -->
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://github.com/volcverse">Canyu Zhao</a><sup>1,*</sup>,
+              </span>
+              <span class="author-block">
+                  <a href="https://mingyulau.github.io/">Mingyu Liu</a><sup>1,2,*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Huanyi Zheng</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=064gBH4AAAAJ&hl=zh-CN&oi=ao">Muzhi Zhu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Zhiyue Zhao</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com.hk/citations?user=kWADCMUAAAAJ&hl=zh-CN">Tong He</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://cshen.github.io">Chunhua Shen</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Zhejiang University,</span>&nbsp;
+              <span class="author-block"><sup>2</sup>Shanghai AI Laboratory</span>
+            </div>
+            <span class="author-block"><sup>*</sup>Equal Contribution</span>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://github.com/aim-uofa/Diception"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code (soon)</span>
+                    </a>
+                </span>
+
+                <!-- <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=4MPGKgn7jRc"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+                <!-- <span class="link-block">
+                  <a href="https://huggingface.co/spaces/wwen1997/Framer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img style="max-width: 100%;" src="static/hf.png" alt="Hugging Face Demo">
+                    </span>
+                    <span>Hugging Face Demo</span>
+                  </a>
+                </span> -->
+
+
+              </div>
+<!-- 
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Showcases</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>              
+              
+              </div> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+	
+
+
+    <!-- <p align="center">&nbsp;</p> -->
+	<a href="#top"></a>
+
+
+  <!--Video-->
+  <!-- <section style="padding: 0;margin-top: -25px;" class="section hero">
+    <div class="container is-max-desktop">
+          <div class="item">
+
+          <div class="column-video" style="border-radius:10px;justify-content: center;align-items: center; font-size: 100px;">
+            <iframe width="960" height="540" src="https://www.youtube.com/embed/4MPGKgn7jRc?si=uF64l_N00qnS7VIZ" src="" class="frame" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+    </div>
+  </section> -->
+
+  <!------------------ BEGIN SECTION ------------------>
+  <!-- <p>&nbsp;</p> -->
+  <!-- <hr> -->
+  <!-- <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases</h2> -->
+
+
+
+
+    <!------------------ BEGIN SECTION: w/o interaction ------------------>
+    <p>&nbsp;</p>
+    <hr>
+
+    <h2 id="applications_container" align="Center"><a name="image-results" id="image-results"></a>Results of Our Generalist Model</h2>
+    <p style="font-size: 20px" align="center">
+      <b> 
+      <b style="font-size: 30px; color:brown;">One single model</b> solves multiple perception tasks, on par with SOTA.
+  
+      <!-- We achieve results on par with SAM-vit-h using only 0.06% of their data (e.g., 600Kvs. 1B pixel-level annotated images). -->
+      </b>
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Monocular Depth Estimation</th>
+          <th style="font-size: 16px">Normal Estimation</th>
+          <th style="font-size: 16px">Entity Segmentation</th>
+        </tr>
+  
+        <tr>
+          <th><img class="input_image_morph_rec" src="images/depth/depth-1.png" alt=""/></th>
+          <th><img class="input_image_morph_rec" src="images/normal/normal-1.png" alt=""/></th>
+          <th><img class="input_image_morph_rec" src="images/entity/entity-1.png" alt=""/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 16px">Pose Estimation</th>
+          <th style="font-size: 16px">Semantic Segmentation</th>
+          <th style="font-size: 16px">Point Segmentation</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_morph_rec" src="images/pose/pose-1.png" alt=""/></th>
+          <th><img class="input_image_morph_rec" src="images/seman/seman-1.png" alt=""/></th>
+          <th><img class="input_image_morph_rec" src="images/seg/image.png" alt=""/></th>
+        </tr>
+  
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <p>&nbsp;</p>
+    <hr>
+    <h2 id="applications_container" align="Center"><a name="image-results" id="image-results"></a>Compare with SAM-vit-h</h2>
+    <p style="font-size: 20px" align="center">
+      <b> 
+      We achieve results on par with SAM-vit-h using only <b style="font-size:60px; color:rgb(42, 165, 65);">0.06%</b> of their data (600K vs. 1B pixel-level annotated images).
+      </b>
+    </p>
+    <p style="font-size: 20px" align="center">
+      <b> 
+        SAM-vit-h only shows a clear advantage on certain <b style="color:brown">out-of-distribution datasets</b> that are outside the scope of our model's training, such as WoodScape fisheye dataset.
+      </b>
+    </p>
+    <div align="center">
+      <img class="input_image_morph_rec_1" src="images/metrics_sam.png" alt=""/>
+    </div>
+    <p>&nbsp;</p>
+    
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">
+            1-point Comparison
+            <p style="font-size: 14px">Input-Ours-SAM</p>
+          </th>
+          <th style="font-size: 16px">
+            5-point Comparison
+            <p style="font-size: 14px">Input-Ours-SAM</p>
+          </th>
+        </tr>
+  
+        <tr>
+          <th><img class="input_image_morph_rec_2" src="images/sam_1p/sam_1p-1.png" alt=""/></th>
+          <th><img class="input_image_morph_rec_2" src="images/sam_5p/sam_5p-1.png" alt=""/></th>
+        </tr>
+  
+        <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <p style="font-size: 20px" align="center">
+      <b> 
+        DICEPTION preserves fine details in segmentation, such as hair.
+      </b>
+    </p>
+
+    <div align="center">
+      <img class="input_image_morph_rec_1" src="images/fur/fur-1.png" alt=""/>
+    </div>
+
+
+    <p>&nbsp;</p>
+    <hr>
+
+    <h2 id="applications_container" align="Center"><a name="image-results" id="image-results"></a>Small Data But Good Performance on Multiple Tasks with One Single Model</h2>
+  <p style="font-size: 20px" align="center">
+    <b style="color: brown;"> 
+      DICEPTION achieves good performance without carefully cherry-picking
+      extremely high-quality data or by using an exceptionally
+      large amount of data. 
+    </b>
+  </p>
+
+  <div align="center">
+    <img class="input_image_morph_rec_1" src="images/metrics_depth.png" alt=""/>
+  </div>
+
+  <div align="center">
+    <img class="input_image_morph_rec_3" src="images/metrics_normal.png" alt=""/>
+  </div>
+
+  <p>&nbsp;</p>
+  <hr>
+  <h2 id="applications_container" align="Center"><a name="image-results" id="image-results"></a>Adaptation with Minimal Overhead</h2>
+
+  <p style="font-size: 20px" align="center">
+    <b> 
+      Even with minimal trainable parameters <b style="color: brown; font-size: 30px">(~1%)</b> and a very small dataset <b style="color: brown; font-size: 30px">(50 data samples)</b>, the finetuned model produces high-quality results.
+    </b>
+  </p>
+
+  <div align="center">
+    <p style="font-size: 16px" align="center">
+      <b> 
+        Image Highlighting
+      </b>
+    </p>
+    <img class="input_image_morph_rec_4" src="images/lol/lol-1.png" alt=""/>
+    <p style="font-size: 16px" align="center">
+      <b> 
+        Medical Segmentation
+      </b>
+    </p>
+    <img class="input_image_morph_rec_4" src="images/medical/medical-1.png" alt=""/>
+  </div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  
+</div>
+
+
+<script>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const hoverImage = document.querySelector('.hover-image');
+  const caption = document.querySelector('.caption');
+
+  videoContainer.addEventListener('mouseenter', () => {
+      video.pause();
+      hoverImage.style.display = 'block';
+      caption.style.display = 'block';
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+      video.play();
+      hoverImage.style.display = 'none';
+      caption.style.display = 'none';
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-PYVRSFMDRL');
+
+
+
+
+
+
+
+  // for carousel
+  window.addEventListener('DOMContentLoaded', (event) => {
+        const videoWrappers = document.querySelectorAll('.video-wrapper');
+      
+        videoWrappers.forEach(wrapper => {
+          const defaultVideo = wrapper.querySelector('.default-video');
+          const aspectRatio = defaultVideo.videoWidth / defaultVideo.videoHeight;
+          const height = wrapper.offsetWidth / aspectRatio;
+      
+          wrapper.style.height = `${height}px`;
+      
+          wrapper.addEventListener('mouseenter', () => {
+            defaultVideo.pause();
+            hoverVideo.play();
+          });
+      
+          wrapper.addEventListener('mouseleave', () => {
+            defaultVideo.play();
+            hoverVideo.pause();
+          });
+        });
+      }); 
+      $(document).ready(function() {
+        var carouselItems = $('.carousel .item');
+        var numItems = carouselItems.length;
+        var numVideos = 5;
+        var currentIndex = 0;
+    
+        $('.carousel').on('click', function() {
+          currentIndex++;
+          if (currentIndex + numVideos <= numItems) {
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          } else {
+            currentIndex = 0;
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          }
+        });
+    
+        carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+      });
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://doubiiu.github.io/projects/ToonCrafter"> ToonCrafter</a> project page. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
