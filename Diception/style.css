@@ -231,6 +231,11 @@ hr {
   height:400px;
 }
 
+.demo{
+  width: 1805px; /* Set the desired width */
+  height:1050px;
+}
+
 .input_image_morph_rec_2{
   width: 700px; /* Set the desired width */
   height:800px;
