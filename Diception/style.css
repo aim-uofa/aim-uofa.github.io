@@ -20,7 +20,11 @@ td {
 
 
 body {
+	/*
     font-family: 'Noto Sans', sans-serif;
+*/
+	font-family:  Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica,  sans-serif, serif;
+	
   }
 
 
