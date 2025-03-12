@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SegAgent enables multimodal large language models (MLLMs) to perform pixel-level segmentation by imitating human annotators. Accepted to Arxiv 2024."/>
+    <title>SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories</title>
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        background: #fdfcf9 no-repeat fixed top left;
+        font-family:'Open Sans', sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+      <div class="jumbotron text-center">
+        <div class="container">
+          <h2 style="font-size:30px;">🎯 SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories</h2>
+          <h4 style="color:#6e6e6e;">CVPR 2025</h4>
+          <hr>
+          <h6>
+            Muzhi Zhu<sup>1,2</sup>, Yuzhuo Tian<sup>1</sup>, <a href="https://stan-haochen.github.io/">Hao Chen</a><sup>1*</sup>, Chunluan Zhou<sup>2</sup>, Qingpei Guo<sup>2*</sup>, Yang Liu<sup>1</sup>, Ming Yang<sup>2</sup>, <a href="https://cshen.github.io/">Chunhua Shen</a><sup>1*</sup>
+          </h6>
+          <p>
+            <sup>1</sup>Zhejiang University &nbsp;&nbsp; <sup>2</sup>Ant Group
+            <br>
+            <sup>*</sup> Corresponding authors
+          </p>
+          <div class="row justify-content-center">
+            <div class="column">
+              <a class="btn btn-large btn-light" href="https://arxiv.org/pdf/2503.08625" target="_blank">
+                📄 Paper
+              </a>
+              <a class="btn btn-large btn-light" href="https://github.com/aim-uofa/SegAgent" target="_blank">
+                <i class="fa fa-github-alt"></i> Code
+              </a>
+              <!-- <a class="btn btn-large btn-light" href="" target="_blank">
+                <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face Model(coming soon)" style="width:18px; margin-bottom:4px;"> Hugging Face
+              </a> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h3>Abstract</h3>
+            <hr>
+            <p class="text-justify">
+              While MLLMs have demonstrated adequate image understanding capabilities, they still struggle with pixel-level comprehension. We propose the Human-Like Mask Annotation Task (HLMAT), enabling MLLMs to mimic human annotators through interactive segmentation tools. SegAgent, fine-tuned on generated annotation trajectories, demonstrates strong segmentation and refinement capabilities without additional architecture changes or implicit tokens. HLMAT provides a robust protocol for assessing pixel-level visual understanding and enhances multi-step visual reasoning capabilities in MLLMs.
+            </p>
+            <img class="img-fluid" src="images/segact-demo_00.png" alt="SegAgent Demo">
+          </div>
+        </section>
+
+        <section>
+          <div class="container">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h3>Methodology</h3>
+                <hr>
+                <p class="text-justify">
+                  SegAgent trains MLLMs using annotation trajectories simulated from interactive segmentation tools. To enhance performance, we implement a StaR-based policy improvement (StaR+) and integrate Process Reward Modeling (PRM) with heuristic greedy search to improve segmentation robustness.
+                </p>
+                <img class="img-fluid" src="images/framework.png" alt="SegAgent framework">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="container">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h3>Datasets and Evaluation</h3>
+                <hr>
+                <p class="text-justify">
+                  We evaluate SegAgent on standard segmentation benchmarks (refCOCO, refCOCO+, refCOCOg) and introduce a new High-quality Referring Expression Segmentation (HRES) dataset, which includes challenging annotations requiring more precise and multi-step segmentation.
+                </p>
+                <img class="img-fluid" src="images/mask-quality-comapre_00.png" alt="SegAgent Datasets">
+                <img class="img-fluid" src="images/table.png" alt="SegAgent table">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <h3>Citation</h3>
+                <hr>
+                <pre>
+@article{zhu2025segagent,
+  title={SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories},
+  author={Zhu, Muzhi and Tian, Yuzhuo and Chen, Hao and Zhou, Chunluan and Guo, Qingpei and Liu, Yang and Yang, Ming and Shen, Chunhua},
+  journal={arXiv preprint arXiv:2503.08625},
+  year={2025},
+  url={https://arxiv.org/abs/2503.08625}
+}
+                  
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="container text-center">
+          <hr>
+          Thanks to <a href="https://aim-uofa.github.io/FrozenRecon/">FrozenRecon</a> for the template.
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+      </body>
+    </html>
