@@ -1,0 +1,970 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+td {
+  font-size: 20px;
+}
+
+.page-container {
+  width: 1200px;
+  min-height: 1000px;
+  margin: 0 auto;
+  /* top and bottom, right and left */
+  text-align: left;
+  /* top, right, bottom, left */
+  padding-top: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+
+
+body {
+  /*
+    font-family: 'Noto Sans', sans-serif;
+*/
+  font-family: Palatino, Georgia, 'Palatino Linotype', 'Book Antiqua', 'Lucida Grande', helvetica, sans-serif, serif;
+
+}
+
+
+th.afhq {
+  width: 200px;
+}
+
+th {
+  text-align: center;
+}
+
+.intra-link {
+  color: #4488ff;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #4488ff;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #4488ff;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #ff0000;
+  text-decoration: none;
+}
+
+.reference {
+  font-size: 80%;
+}
+
+.emph {
+  color: #B1FF00;
+}
+
+.comparison-img {
+  width: 150px !important;
+}
+
+hr {
+  background-color: white;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.video-wrapper {
+  display: inline-block;
+  position: relative;
+  width: 48%;
+  /* height: 350px; /* Set the desired width */
+  /* padding-bottom: 350px; */
+  /* overflow: hidden; */
+}
+
+
+.video-wrapper video {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-wrapper .hover-video {
+  display: none;
+}
+
+.video-wrapper .overlay-text {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 18px;
+  font-family: "Chalkduster";
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+}
+
+.video-wrapper:hover .default-video {
+  display: none;
+}
+
+.video-wrapper:hover .hover-video {
+  display: block;
+}
+
+.video-wrapper:hover .overlay-text {
+  opacity: 1;
+}
+
+
+.video-wrapper video::-webkit-media-controls {
+  display: none !important;
+}
+
+.video-wrapper video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+.video-wrapper video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+.video-wrapper video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+
+
+
+.video-grid-wide {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Adjust the number of columns as needed */
+  gap: 1px;
+  /* Adjust the gap between videos as needed */
+}
+
+.video-warpper-wide {
+  position: relative;
+  width: 350px;
+  /* Set the desired width */
+  height: 350px;
+  overflow: hidden;
+}
+
+.video-warpper-wide video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-warpper-wide .hover-video {
+  display: none;
+}
+
+.caption-vid {
+  display: inline-block;
+}
+
+.video-warpper-wide .overlay-text {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 18px;
+  font-family: "Chalkduster";
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+}
+
+.video-warpper-wide:hover .default-video {
+  display: none;
+}
+
+.video-warpper-wide:hover .hover-video {
+  display: block;
+}
+
+.video-warpper-wide:hover .overlay-text {
+  opacity: 1;
+}
+
+/* Add by me */
+.container {
+  display: block;
+  text-align: center;
+}
+
+.gif {
+  display: block;
+  margin: 10px auto;
+  max-width: 800px;
+  /* You can change this value to control the width of the video_comparison */
+}
+
+.input_image {
+  width: 256px;
+  /* Set the desired width */
+  height: 256px;
+}
+
+.input_image_morph {
+  width: 340px;
+  /* Set the desired width */
+  height: 340px;
+}
+
+.input_image_morph_rec_small {
+  width: 220px;
+  /* Set the desired width */
+  height: 140px;
+}
+
+.input_image_morph_rec {
+  width: 600px;
+  /* Set the desired width */
+  height: 700px;
+}
+
+.input_image_morph_rec_3 {
+  width: 1405px;
+  /* Set the desired width */
+  height: 400px;
+}
+
+.demo {
+  width: 1805px;
+  /* Set the desired width */
+  height: 1050px;
+}
+
+.input_image_morph_rec_2 {
+  width: 700px;
+  /* Set the desired width */
+  height: 800px;
+}
+
+.input_image_morph_rec_4 {
+  width: 700px;
+  /* Set the desired width */
+  height: 600px;
+}
+
+.input_image_morph_rec_1 {
+  width: 1405px;
+  /* Set the desired width */
+  height: 800px;
+}
+
+.input_image_ablation1 {
+  width: 200px;
+  /* Set the desired width */
+  height: 200px;
+}
+
+.input_image_loop {
+  width: 512px;
+  /* Set the desired width */
+  height: 320px;
+}
+
+.input_image_frameinterp {
+  width: 256px;
+  /* Set the desired width */
+}
+
+.input_image_normal {
+  width: 340px;
+  /* Set the desired width */
+}
+
+.input_image_topdownlayout {
+  width: 120px;
+  /* Set the desired width */
+}
+
+.input_image_topdownlayout_rectan {
+  width: 160px;
+  /* Set the desired width */
+}
+
+.input_image_motion {
+  width: 200px;
+}
+
+.input_image_story {
+  width: 150px;
+}
+
+.media-border {
+  /* border: 1px solid #808080; */
+  border: 1px solid rgb(177, 174, 174);
+
+}
+
+
+.video-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.video-container:hover {
+  z-index: 2;
+  /* Add this line to increase the z-index when hovering */
+}
+
+.hover-image {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+}
+
+.video-container:hover .hover-image {
+  display: block;
+}
+
+.caption {
+  display: none;
+  position: absolute;
+  /* bottom: -30px; Adjust this value to change the position of the caption */
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.video-container:hover .caption {
+  display: block;
+}
+
+/* Enhanced styles for ACTIVE-o3 */
+
+/* Hero section background */
+.hero {
+  background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+  padding: 3rem 0;
+}
+
+/* Fix for title and subtitle overlap issues */
+.hero .title.is-1.publication-title {
+  margin-bottom: 1.5rem !important;
+  line-height: 1.3 !important;
+  padding-bottom: 0.5rem;
+  color: white;
+}
+
+.hero .publication-authors {
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+  color: #f8f9fa;
+}
+
+.hero .publication-authors a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero .publication-links {
+  margin-top: 1.5rem !important;
+}
+
+.hero .column.is-full_width {
+  margin: 0.5rem 0 !important;
+}
+
+/* Fix section title spacing */
+.section .title.is-3 {
+  margin-bottom: 1.5rem !important;
+  padding-top: 0.5rem;
+}
+
+.section .subtitle {
+  margin-top: 0 !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Ensure proper spacing between elements */
+.visual-examples-section .title.is-4 {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced hero section */
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.hero .title {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero .publication-authors a {
+  color: white !important;
+  transition: color 0.3s ease;
+}
+
+.hero .publication-authors a:hover {
+  color: #ffd700;
+}
+
+/* Additional fixes for author text color - ensure white color */
+.hero .publication-authors,
+.hero .publication-authors span,
+.hero .publication-authors .author-block {
+  color: white !important;
+}
+
+.hero .publication-authors a,
+.hero .publication-authors .author-block a {
+  color: white !important;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero .publication-authors a:hover,
+.hero .publication-authors .author-block a:hover {
+  color: #ffd700 !important;
+  text-decoration: underline;
+}
+
+/* Ensure sup elements (for numbers like 1,*) are also white */
+.hero .publication-authors sup {
+  color: white !important;
+}
+
+/* Enhanced boxes with hover effects */
+.box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Image hover effects */
+.content img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 8px;
+}
+
+.content img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced button styles */
+.button.is-rounded {
+  transition: all 0.3s ease;
+}
+
+.button.is-rounded:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Code block styling */
+pre code {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Section dividers */
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+/* Enhanced notifications */
+.notification.is-light {
+  background-color: #f8f9fa;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.notification.is-light:hover {
+  background-color: #e9ecef;
+  transform: translateX(5px);
+}
+
+/* Back to top button */
+#backToTop {
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#backToTop:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading animation for sections - Fixed to prevent layout issues */
+.section:not(.hero) {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+/* Disable animations that might cause overlapping */
+.section.hero {
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* Enhanced Visual Examples Section */
+.visual-examples-section {
+  padding: 2rem 0;
+}
+
+.example-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.example-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.example-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.example-card:hover .example-image {
+  transform: scale(1.05);
+}
+
+.example-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 2rem 1.5rem 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.example-card:hover .example-overlay {
+  transform: translateY(0);
+}
+
+.example-content h4 {
+  margin-bottom: 0.5rem !important;
+}
+
+.example-content p {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.example-content .tag {
+  font-size: 0.75rem;
+}
+
+/* Single Column Full-Width Visual Examples */
+.single-column-examples {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.example-row {
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.example-row:last-child {
+  margin-bottom: 0;
+}
+
+.example-card-fullwidth {
+  position: relative;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 400px;
+}
+
+.example-card-fullwidth:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.example-image-fullwidth {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.example-card-fullwidth:hover .example-image-fullwidth {
+  transform: scale(1.03);
+}
+
+.example-overlay-fullwidth {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  padding: 3rem 2rem 2rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.example-card-fullwidth:hover .example-overlay-fullwidth {
+  transform: translateY(0);
+}
+
+.example-overlay-fullwidth .example-content h4 {
+  margin-bottom: 0.8rem !important;
+  font-size: 1.5rem !important;
+}
+
+.example-overlay-fullwidth .example-content p {
+  margin-bottom: 1.2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.example-overlay-fullwidth .example-content .tag {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Enhanced responsive design for full-width layout */
+@media (max-width: 1024px) {
+  .example-card-fullwidth {
+    min-height: 350px;
+  }
+
+  .example-image-fullwidth {
+    min-height: 350px;
+  }
+
+  .example-overlay-fullwidth {
+    padding: 2.5rem 1.5rem 1.5rem;
+  }
+
+  .example-overlay-fullwidth .example-content h4 {
+    font-size: 1.3rem !important;
+  }
+
+  .example-overlay-fullwidth .example-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .example-card-fullwidth {
+    min-height: 300px;
+  }
+
+  .example-image-fullwidth {
+    min-height: 300px;
+  }
+
+  .example-row {
+    margin-bottom: 2rem;
+  }
+
+  .example-overlay-fullwidth {
+    transform: translateY(0);
+    background: rgba(0, 0, 0, 0.75);
+    padding: 1.5rem 1rem;
+  }
+
+  .example-overlay-fullwidth .example-content h4 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .example-overlay-fullwidth .example-content p {
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .example-overlay-fullwidth .example-content .tag {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .example-card-fullwidth {
+    min-height: 250px;
+    border-radius: 8px;
+  }
+
+  .example-image-fullwidth {
+    min-height: 250px;
+  }
+
+  .example-overlay-fullwidth {
+    padding: 1rem 0.8rem;
+  }
+
+  .example-overlay-fullwidth .example-content h4 {
+    font-size: 1rem !important;
+  }
+
+  .example-overlay-fullwidth .example-content p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Animation for page load - Fixed timing */
+.section:not(.hero) {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Hero section should not animate to prevent title overlap */
+.section.hero {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.section:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.section:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.section:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.section:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.section:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Modal Styles for Full-Screen Image Viewing */
+.modal {
+  z-index: 1000;
+}
+
+.modal.is-active {
+  display: flex !important;
+}
+
+.modal-background {
+  background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 95vw !important;
+  max-height: 95vh !important;
+  width: auto !important;
+  margin: 0 auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.modal-content .image {
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content img {
+  max-width: 95vw !important;
+  max-height: 95vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-caption {
+  position: absolute;
+  bottom: -60px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  border-radius: 0 0 8px 8px;
+}
+
+.modal-caption h4 {
+  margin-bottom: 0.5rem !important;
+  color: white;
+}
+
+.modal-caption p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+}
+
+.modal-close {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50%;
+  width: 50px !important;
+  height: 50px !important;
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: scale(1.1);
+}
+
+.modal-close::before,
+.modal-close::after {
+  background-color: white !important;
+  width: 3px !important;
+  height: 25px !important;
+}
+
+/* Responsive modal adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 98vw !important;
+    max-height: 98vh !important;
+  }
+
+  .modal-content img {
+    max-width: 98vw !important;
+    max-height: 98vh !important;
+  }
+
+  .modal-caption {
+    bottom: -50px;
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .modal-caption h4 {
+    font-size: 1.2rem !important;
+  }
+
+  .modal-caption p {
+    font-size: 0.9rem;
+  }
+
+  .modal-close {
+    width: 40px !important;
+    height: 40px !important;
+    top: 15px !important;
+    right: 15px !important;
+  }
+
+  .modal-close::before,
+  .modal-close::after {
+    height: 20px !important;
+  }
+}
+
+/* Additional fixes for hero section layout stability */
+.hero .hero-body {
+  padding: 3rem 1.5rem 4rem 1.5rem !important;
+}
+
+.hero .container.is-max-desktop {
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+.hero .columns.is-centered {
+  margin: 0 !important;
+}
+
+.hero .column.has-text-centered {
+  padding: 0 0.75rem !important;
+}
+
+/* Prevent any unwanted transforms on the hero section */
+.hero * {
+  transform: none !important;
+}

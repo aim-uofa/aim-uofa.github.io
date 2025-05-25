@@ -1,0 +1,742 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- <div class="column has-text-centered">
+    <img src="static/diception.png" style="height:200px"></img>
+  </div> -->
+  <title>ACTIVE-O3: EmpoweringMultimodal Large
+    Language Models with Active Perception via GRPO*</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./images/logo.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<!-- <body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container"> -->
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <div class="column has-text-centered" style="margin-bottom: 1rem;">
+            <img src="./images/logo.png" style="height: 120px; margin-bottom: 1rem;" alt="ACTIVE-O3 Logo">
+          </div>
+          <h1 class="title is-1 publication-title" style="margin-bottom: 2rem;">ACTIVE-O3: Empowering Multimodal Large
+            Language Models with Active Perception via GRPO</h1>
+          <div class="column is-full_width" style="margin: 1rem 0;">
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 1.5rem; margin-bottom: 1rem;">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=064gBH4AAAAJ&hl=zh-CN&oi=ao">Muzhi
+                Zhu</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Hao Zhong</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/volcverse">Canyu Zhao</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Zongze Du</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Zheng Huang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://mingyulau.github.io/">Mingyu Liu</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Cheng Zou</a><sup>2,</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Jingdong Chen</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Ming Yang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://cshen.github.io">Chunhua Shen</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+            <span class="author-block"><sup>1</sup>Zhejiang University, China</span>&nbsp;
+          </div>
+          <div class="is-size-5 publication-authors" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+            <span class="author-block"><sup>2</sup>Ant Group, China</span>&nbsp;
+          </div>
+          <div class="column has-text-centered" style="margin-top: 1.5rem;">
+            <div class="publication-links">
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+              <!-- <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=4MPGKgn7jRc"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img style="max-width: 100%;" src="static/hf.png" alt="Model Weights">
+                  </span>
+                  <span>Model Weights</span>
+                </a>
+              </span>
+
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="publication-links" style="margin-top: 1rem;">
+              <span class="link-block">
+                <a href="#abstract" class="external-link button is-normal is-rounded">
+                  <span>Abstract</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#model" class="external-link button is-normal is-rounded">
+                  <span>Model</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#results" class="external-link button is-normal is-rounded">
+                  <span>Results</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#performance" class="external-link button is-normal is-rounded">
+                  <span>Performance</span>
+                </a>
+              </span>
+
+              <!-- <span class="link-block">
+                <a href="#features" class="external-link button is-normal is-rounded">
+                  <span>Features</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="#bibtex" class="external-link button is-normal is-rounded">
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+            <!-- 
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Showcases</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>              
+              
+              </div> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <p align="center">&nbsp;</p> -->
+<a href="#top"></a>
+
+
+<!--Video-->
+<!-- <section style="padding: 0;margin-top: -25px;" class="section hero">
+    <div class="container is-max-desktop">
+          <div class="item">
+
+          <div class="column-video" style="border-radius:10px;justify-content: center;align-items: center; font-size: 100px;">
+            <iframe width="960" height="540" src="https://www.youtube.com/embed/4MPGKgn7jRc?si=uF64l_N00qnS7VIZ" src="" class="frame" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+    </div>
+  </section> -->
+
+<!------------------ BEGIN SECTION: Abstract ------------------>
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Active vision, also known as active perception, refers to the process of actively
+            selecting where and how to look in order to gather task-relevant information. It
+            is a critical component of efficient perception and decision-making in humans
+            and advanced embodied agents. Recently, the use of Multimodal Large Language
+            Models (MLLMs) as central planning and decision-making modules in robotic
+            systems has gained extensive attention. However, despite the importance of active
+            perception in embodied intelligence, there is little to no exploration of how MLLMs
+            can be equipped with or learn active perception capabilities. In this paper, we first
+            provide a systematic definition of MLLM-based active perception tasks. We
+            point out that the recently proposed GPT-o3 model's zoom-in search strategy
+            can be regarded as a special case of active perception; however, it still suffers
+            from low search efficiency and inaccurate region selection. To address these
+            issues, we propose <strong>ACTIVE-O3</strong>, a purely reinforcement learning-based training
+            framework built on top of GRPO, designed to equip MLLMs with active perception
+            capabilities. We further establish a comprehensive benchmark suite to evaluate
+            ACTIVE-O3 across both general open-world tasks—such as small-object and dense
+            object grounding—and domain-specific scenarios, including small object detection
+            in remote sensing and autonomous driving, as well as fine-grained interactive
+            segmentation.
+            Experimental results demonstrate that ACTIVE-O3 significantly enhances active
+            perception capabilities compared to Qwen-VL2.5-CoT. For example, Figure 1
+            shows an example of zero-shot reasoning on the V* benchmark, where ACTIVE-
+            O3 successfully identifies the number on the traffic light by zooming in on the
+            relevant region, while Qwen2.5-VL fails to do so. Moreover, across all downstream
+            tasks, ACTIVE-O3 consistently improves performance under fixed computational
+            budgets. We hope that our work here can provide a simple codebase and evaluation
+            protocol to facilitate future research on active perception MLLM.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Model Overview ------------------>
+<section class="section" id="model">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Model Architecture</h2>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <img src="images/vis/main_intro.jpg" alt="ACTIVE-o3 Model Architecture"
+            style="width: 100%; max-width: 1200px;" />
+          <p class="has-text-grey">
+            <strong>Figure 1:</strong> Overview of the ACTIVE-o3 architecture and working pipeline.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Results ------------------>
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Visual Results Demo</h2>
+    <p class="subtitle has-text-centered">
+      <strong>ACTIVE-o3</strong> demonstrates superior performance across diverse active perception tasks.
+    </p>
+
+    <!-- Visual Examples with single-column full-width layout -->
+    <div class="visual-examples-section">
+      <div class="column is-full">
+        <h3 class="title is-4 has-text-centered" style="margin-bottom: 2rem;">Active Perception Examples</h3>
+      </div>
+
+      <!-- Two-column grid layout -->
+      <div class="columns is-multiline">
+        <!-- Row 1 -->
+        <div class="column is-half">
+          <div class="example-card" onclick="openModal('modal1')"
+            style="position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <figure class="image">
+              <img src="images/vis/vstar/1.jpg" alt="Active Perception Example 1" style="width: 100%; height: auto;" />
+            </figure>
+            <div class="example-overlay"
+              style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 1rem;">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Active Perception Example 1</h4>
+                <p class="has-text-white">ACTIVE-o3 demonstrates effective active perception strategies for improved
+                  performance.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="example-card" onclick="openModal('modal2')"
+            style="position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <figure class="image">
+              <img src="images/vis/vstar/2.jpg" alt="Active Perception Example 2" style="width: 100%; height: auto;" />
+            </figure>
+            <div class="example-overlay"
+              style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 1rem;">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Active Perception Example 2</h4>
+                <p class="has-text-white">Our method shows intelligent sample selection and learning efficiency.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="column is-half">
+          <div class="example-card" onclick="openModal('modal3')"
+            style="position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <figure class="image">
+              <img src="images/vis/vstar/3.jpg" alt="Active Perception Example 3" style="width: 100%; height: auto;" />
+            </figure>
+            <div class="example-overlay"
+              style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 1rem;">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Active Perception Example 3</h4>
+                <p class="has-text-white">ACTIVE-o3 demonstrates robust performance across different scenarios.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="example-card" onclick="openModal('modal4')"
+            style="position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <figure class="image">
+              <img src="images/vis/vstar/4.jpg" alt="Active Perception Example 4" style="width: 100%; height: auto;" />
+            </figure>
+            <div class="example-overlay"
+              style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 1rem;">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Active Perception Example 4</h4>
+                <p class="has-text-white">Our approach shows superior adaptation and learning capabilities.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Three Visual Comparisons - Full Width Section -->
+      <div class="columns" style="margin-top: 3rem;">
+        <div class="column">
+          <h3 class="title is-4 has-text-centered" style="margin-bottom: 2rem;">Comprehensive Visual Analysis</h3>
+          <div class="example-card" onclick="openModal('modal5')"
+            style="position: relative; cursor: pointer; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <figure class="image">
+              <img src="images/vis/three_vis.jpg" alt="Three Visual Comparisons" style="width: 100%; height: auto;" />
+            </figure>
+            <div class="example-overlay"
+              style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; justify-content: center; padding: 1rem;">
+              <div class="example-content" style="text-align: center;">
+                <h4 class="title is-5 has-text-white">Comprehensive Visual Analysis</h4>
+                <p class="has-text-white">Detailed comparison results showcasing ACTIVE-o3's performance across multiple
+                  evaluation scenarios and benchmarks.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Performance Metrics ------------------>
+<section class="section" id="performance">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Performance Evaluation</h2>
+
+    <!-- Budget Analysis Results -->
+    <div class="columns is-centered">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">Budget Analysis</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/budget.png" alt="Budget Analysis Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 2:</strong> Performance analysis across different budget constraints.
+            ACTIVE-o3 achieves better results as zoom-in budget grows.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LVIS Benchmark Results -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">LVIS Benchmark</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/lvis.png" alt="LVIS Benchmark Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 3:</strong> Results on LVIS benchmark demonstrating
+            superior performance in long-tail object detection.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SODA Benchmark Results -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">SODA Benchmark</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/soda.png" alt="SODA Benchmark Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 4:</strong> Performance on SODA benchmark showing ACTIVE-o3's
+            excellence in active perception scenarios.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Key Features ------------------>
+<!-- <section class="section" id="features">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Key Features</h2>
+
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">🎯 Active Perception</h4>
+          <p>
+            Advanced active perception strategies that intelligently select the most informative
+            samples for annotation to maximize learning efficiency.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">🧠 Intelligent Sampling</h4>
+          <p>
+            Smart sampling techniques that identify uncertainty and diversity in data
+            to optimize the annotation process and improve model performance.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">📊 Budget Efficiency</h4>
+          <p>
+            Optimized for limited annotation budgets, achieving superior performance
+            with minimal human labeling effort across diverse tasks.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">⚡ Scalable Architecture</h4>
+          <p>
+            Efficient and scalable design that adapts to different datasets
+            and maintains high performance across various learning scenarios.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!------------------ BEGIN SECTION: BibTeX ------------------>
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <div class="content">
+      <pre><code>@article{activeo3,
+  title={ACTIVE-o3: Efficient Active Perception for Computer Vision},
+  author={To be updated},
+  journal={arXiv preprint arXiv:2024.xxxxx},
+  year={2024}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- Modals for full-size images -->
+<div id="modal1" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/vstar/1.jpg" alt="Active Perception Example 1 - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Active Perception Example 1</h4>
+      <p class="has-text-white">ACTIVE-o3 demonstrates effective active perception strategies for improved performance.
+      </p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal2" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/vstar/2.jpg" alt="Active Perception Example 2 - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Active Perception Example 2</h4>
+      <p class="has-text-white">Our method shows intelligent sample selection and learning efficiency.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal3" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/vstar/3.jpg" alt="Active Perception Example 3 - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Active Perception Example 3</h4>
+      <p class="has-text-white">ACTIVE-o3 demonstrates robust performance across different scenarios.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal4" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/vstar/4.jpg" alt="Active Perception Example 4 - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Active Perception Example 4</h4>
+      <p class="has-text-white">Our approach shows superior adaptation and learning capabilities.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal5" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/three_vis.jpg" alt="Three Visual Comparisons - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Comprehensive Visual Analysis</h4>
+      <p class="has-text-white">Detailed comparison results showcasing ACTIVE-o3's performance across multiple
+        evaluation scenarios and benchmarks.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<script>
+  // Add hover effects for example cards
+  document.addEventListener('DOMContentLoaded', function () {
+    const exampleCards = document.querySelectorAll('.example-card');
+
+    exampleCards.forEach(card => {
+      const overlay = card.querySelector('.example-overlay');
+
+      card.addEventListener('mouseenter', function () {
+        this.style.transform = 'translateY(-5px)';
+        if (overlay) {
+          overlay.style.opacity = '1';
+        }
+      });
+
+      card.addEventListener('mouseleave', function () {
+        this.style.transform = 'translateY(0)';
+        if (overlay) {
+          overlay.style.opacity = '0';
+        }
+      });
+    });
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-PYVRSFMDRL');
+
+  // Smooth scrolling for navigation links
+  document.addEventListener('DOMContentLoaded', function () {
+    const links = document.querySelectorAll('a[href^="#"]');
+
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+          targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+
+    backToTopButton.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Add fade-in animation to sections when they come into view
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections except the hero
+    const sections = document.querySelectorAll('section:not(.hero)');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Modal functionality for image zoom
+    const modals = document.querySelectorAll('.modal');
+    const modalCloses = document.querySelectorAll('.modal-close, .modal-background');
+
+    modalCloses.forEach(close => {
+      close.addEventListener('click', function () {
+        modals.forEach(modal => {
+          modal.classList.remove('is-active');
+        });
+      });
+    });
+
+    // Close modal with escape key
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        modals.forEach(modal => {
+          modal.classList.remove('is-active');
+        });
+      }
+    });
+  });
+
+  // Function to open specific modal
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('is-active');
+    }
+  }
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+              Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want
+            to reuse
+            their <a href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them
+            appropriately.
+          </p>
+          <p class="has-text-centered" style="margin-top: 2rem;">
+            <strong>© 2024 Zhejiang University. All rights reserved.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top button -->
+<button id="backToTop" class="button is-primary is-rounded"
+  style="position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;">
+  <span class="icon">
+    <i class="fas fa-arrow-up"></i>
+  </span>
+  <span>Top</span>
+</button>
+</body>
+
+</html>

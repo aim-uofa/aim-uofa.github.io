@@ -1,0 +1,725 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- <div class="column has-text-centered">
+    <img src="static/diception.png" style="height:200px"></img>
+  </div> -->
+  <title>Omni-R1: Reinforcement Learning for Omnimodal Reasoning via Two-System Collaboration</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/diception.png"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<!-- <body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container"> -->
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="margin-bottom: 2rem;">Omni-R1: Reinforcement Learning for
+            Omnimodal Reasoning via
+            Two-System Collaboration</h1>
+          <div class="column is-full_width" style="margin: 1rem 0;">
+            <!-- <h2 class="title is-4">ICLR 2025</h2> -->
+          </div>
+          <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a>ICLR 2025 Anonymous Submition (Paper ID: 2116)</a>
+              </span>
+            </div> -->
+          <div class="is-size-5 publication-authors" style="margin-top: 1.5rem; margin-bottom: 1rem;">
+            <span class="author-block">
+              <a href="#">Hao Zhong</a><sup>1,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=064gBH4AAAAJ&hl=zh-CN&oi=ao">Muzhi
+                Zhu</a><sup>1,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Zongze Du</a><sup>1,*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Zheng Huang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/volcverse">Canyu Zhao</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://mingyulau.github.io/">Mingyu Liu</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/encounter1997">Wen Wang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://cshen.github.io">Chunhua Shen</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 1rem; margin-bottom: 0.5rem;">
+            <span class="author-block"><sup>1</sup>Zhejiang University,</span>&nbsp;
+          </div>
+          <span class="author-block" style="margin-bottom: 1.5rem; display: block;"><sup>*</sup>Equal
+            Contribution</span>
+
+          <div class="column has-text-centered" style="margin-top: 1.5rem;">
+            <div class="publication-links">
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://github.com/aim-uofa/Omni-R1" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+
+              <!-- <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=4MPGKgn7jRc"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img style="max-width: 100%;" src="static/hf.png" alt="Model Weights">
+                  </span>
+                  <span>Model Weights</span>
+                </a>
+              </span>
+
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="publication-links" style="margin-top: 1rem;">
+              <span class="link-block">
+                <a href="#abstract" class="external-link button is-normal is-rounded">
+                  <span>Abstract</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#model" class="external-link button is-normal is-rounded">
+                  <span>Model</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#results" class="external-link button is-normal is-rounded">
+                  <span>Results</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#performance" class="external-link button is-normal is-rounded">
+                  <span>Performance</span>
+                </a>
+              </span>
+
+              <!-- <span class="link-block">
+                <a href="#features" class="external-link button is-normal is-rounded">
+                  <span>Features</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="#bibtex" class="external-link button is-normal is-rounded">
+                  <span>BibTeX</span>
+                </a>
+              </span>
+            </div>
+            <!-- 
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Showcases</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>              
+              
+              </div> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <p align="center">&nbsp;</p> -->
+<a href="#top"></a>
+
+
+<!--Video-->
+<!-- <section style="padding: 0;margin-top: -25px;" class="section hero">
+    <div class="container is-max-desktop">
+          <div class="item">
+
+          <div class="column-video" style="border-radius:10px;justify-content: center;align-items: center; font-size: 100px;">
+            <iframe width="960" height="540" src="https://www.youtube.com/embed/4MPGKgn7jRc?si=uF64l_N00qnS7VIZ" src="" class="frame" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+    </div>
+  </section> -->
+
+<!------------------ BEGIN SECTION: Abstract ------------------>
+<section class="section" id="abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Long-horizon video-audio reasoning and fine-grained pixel understanding impose conflicting requirements on
+            omnimodal models: dense temporal coverage demands many low-resolution frames, whereas precise grounding
+            calls for high-resolution inputs. We tackle this trade-off with a <strong>two-system architecture
+            </strong>: a
+            <strong>Global Reasoning System</strong> selects informative keyframes and rewrites the task at low
+            spatial
+            cost,
+            while a <strong>Detail Understanding System</strong> performs pixel-level grounding on the selected
+            high-resolution
+            snippets.
+            Because optimal keyframe selection and reformulation are ambiguous and hard to supervise, we formulate
+            them
+            as a reinforcement-learning (RL) problem and present <strong>Omni-R1</strong>, an end-to-end RL framework
+            built on Group Relative Policy Optimization.
+            <strong>Omni-R1</strong> trains the Global Reasoning System through hierarchical rewards obtained via online
+            collaboration
+            with the Detail Understanding System, requiring only one epoch of RL on small task splits.
+            Experiments on two challenging benchmarks, Referring Audio-Visual Segmentation (RefAVS) and Reasoning
+            Video
+            Object Segmentation (REVOS), show that Omni-R1 not only surpasses strong supervised baselines but also
+            outperforms specialized state-of-the-art models, while substantially improving out-of-domain
+            generalization
+            and mitigating multimodal hallucination.
+
+            Our results demonstrate the first successful application of RL to large-scale omnimodal reasoning and
+            highlight a scalable path toward universally foundation models.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Model Overview ------------------>
+<section class="section" id="model">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Model Architecture</h2>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <img src="images/model/main_intro.png" alt="Omni-R1 Model Architecture"
+            style="width: 100%; max-width: 1200px;" />
+          <p class="has-text-grey">
+            <strong>Figure 1:</strong> Overview of the Omni-R1 architecture featuring two-system collaboration
+            for omnimodal reasoning with reinforcement learning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Results ------------------>
+<section class="section" id="results">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">VOS Visualization Demo</h2>
+    <p class="subtitle has-text-centered">
+      <strong>Omni-R1</strong> demonstrates superior performance across diverse temporal reasoning tasks.
+    </p>
+
+    <!-- Visual Examples with single-column full-width layout -->
+    <div class="visual-examples-section">
+      <div class="column is-full">
+        <h3 class="title is-4 has-text-centered" style="margin-bottom: 2rem;">Visual Reasoning Examples</h3>
+      </div>
+
+      <!-- Single Column Full-Width Images -->
+      <div class="single-column-examples">
+        <!-- Example 1 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal1')">
+            <figure class="image">
+              <img src="images/vis/omni_full/1.jpg" alt="Simple Scene Mask Quality" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Simple Scene Mask Quality</h4>
+                <p class="has-text-white">Omni-R1 preserves mask quality compared to other methods that incorporating
+                  SAM decoder fine-tuning.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 2 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal2')">
+            <figure class="image">
+              <img src="images/vis/omni_full/2.jpg" alt="Video Context Understanding" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Video Context Understanding</h4>
+                <p class="has-text-white">Our method comprehends video context and segments the predicted bottles to be
+                  picked up after video ends.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 3 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal3')">
+            <figure class="image">
+              <img src="images/vis/omni_full/3.jpg" alt="Detail Reasoning" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Detail Reasoning</h4>
+                <p class="has-text-white">Omni-R1 is capable of fine-grained understanding as System 1, yet delegates
+                  decision-making to System 2 by preserving the recaption process.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 4 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal4')">
+            <figure class="image">
+              <img src="images/vis/omni_full/4.jpg" alt="Temporal Understanding and Reasoning"
+                class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Temporal Understanding and Reasoning</h4>
+                <p class="has-text-white">Omni-R1 shows sequential event understanding and temporal reasoning by
+                  successfully identifying the fastest moving object in the video.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Example 5 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal5')">
+            <figure class="image">
+              <img src="images/vis/omni_full/5.jpg" alt="Abstract Reasoning" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">Abstract Reasoning</h4>
+                <p class="has-text-white">Omni-R1 remains excellent general video understanding and reasoning
+                  capabilities and knowledge.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Performance Metrics ------------------>
+<section class="section" id="performance">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Performance Evaluation</h2>
+
+    <!-- General Benchmark Results -->
+    <div class="columns is-centered">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">General Benchmark Results</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/general_bench.png" alt="General Benchmark Results"
+            style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 2:</strong> Performance comparison on general reasoning benchmarks.
+            Omni-R1 achieves state-of-the-art results across multiple evaluation metrics.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVH Benchmark Results -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">Audio-Visual-Hallucination Benchmark</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/avhbench.png" alt="AVH Benchmark Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 3:</strong> Results on AVHBench demonstrating
+            superior multimodal integration capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RefAVS Benchmark Results -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">RefAVS Benchmark</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/refavs.png" alt="RefAVS Benchmark Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 4:</strong> Performance on RefAVS benchmark showing Omni-R1's
+            excellence in referring audio-visual segmentation tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVOS Benchmark Results -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <h3 class="title is-4 has-text-centered">REVOS Benchmark</h3>
+        <div class="content has-text-centered">
+          <img src="images/metrics/revos.png" alt="REVOS Benchmark Results" style="width: 100%; max-width: 800px;" />
+          <p class="has-text-grey">
+            <strong>Figure 5:</strong> Results on REVOS benchmark demonstrating superior
+            performance in referring expression video object segmentation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!------------------ BEGIN SECTION: Key Features ------------------>
+<!-- <section class="section" id="features">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Key Features</h2>
+
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">🧠 Two-System Collaboration</h4>
+          <p>
+            Combines fast intuitive processing (System 1) with deliberative reasoning (System 2)
+            for comprehensive understanding across modalities.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">🔄 Reinforcement Learning</h4>
+          <p>
+            Advanced RL framework that learns optimal reasoning strategies through
+            interaction and feedback across different task domains.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">🎯 Omnimodal Processing</h4>
+          <p>
+            Seamlessly integrates text, images, audio, and video for holistic
+            understanding and reasoning across multiple modalities.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-half">
+        <div class="box">
+          <h4 class="title is-5">⚡ Efficient Architecture</h4>
+          <p>
+            Optimized design that balances computational efficiency with
+            high-quality reasoning performance across diverse tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+<!------------------ BEGIN SECTION: BibTeX ------------------>
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <div class="content">
+      <pre><code>@article{zhong2024omnir1,
+  title={Omni-R1: Reinforcement Learning for Omnimodal Reasoning via Two-System Collaboration},
+  author={Zhong, Hao and Zhu, Muzhi and Du, Zongze and Huang, Zheng and Zhao, Canyu and Liu, Mingyu and Wang, Wen and Chen, Hao and Shen, Chunhua},
+  journal={arXiv preprint arXiv:2024.xxxxx},
+  year={2024}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+
+<!-- Modals for full-size images -->
+<div id="modal1" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/1.jpg" alt="Simple Scene Mask Quality - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Simple Scene Mask Quality</h4>
+      <p class="has-text-white">Omni-R1 preserves mask quality compared to other methods that incorporating
+        SAM decoder fine-tuning.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal2" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/2.jpg" alt="Video Context Understanding - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Video Context Understanding</h4>
+      <p class="has-text-white">Our method comprehends video context and segments the predicted bottles to be
+        picked up after video ends.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal3" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/3.jpg" alt="Detail Reasoning - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Detail Reasoning</h4>
+      <p class="has-text-white">Omni-R1 is capable of fine-grained understanding as System 1, yet delegates
+        decision-making to System 2 by preserving the recaption process.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal4" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/4.jpg" alt="Temporal Understanding and Reasoning - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Temporal Understanding and Reasoning</h4>
+      <p class="has-text-white">Omni-R1 shows sequential event understanding and temporal reasoning by
+        successfully identifying the fastest moving object in the video.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<div id="modal5" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/5.jpg" alt="Abstract Reasoning - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">Abstract Reasoning</h4>
+      <p class="has-text-white">Omni-R1 remains excellent general video understanding and reasoning
+        capabilities and knowledge.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+<script>
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-PYVRSFMDRL');
+
+  // Smooth scrolling for navigation links
+  document.addEventListener('DOMContentLoaded', function () {
+    const links = document.querySelectorAll('a[href^="#"]');
+
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+          targetSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 300) {
+        backToTopButton.style.display = 'block';
+      } else {
+        backToTopButton.style.display = 'none';
+      }
+    });
+
+    backToTopButton.addEventListener('click', function () {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Add fade-in animation to sections when they come into view
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections except the hero
+    const sections = document.querySelectorAll('section:not(.hero)');
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Modal functionality for image zoom
+    const modals = document.querySelectorAll('.modal');
+    const modalCloses = document.querySelectorAll('.modal-close, .modal-background');
+
+    modalCloses.forEach(close => {
+      close.addEventListener('click', function () {
+        modals.forEach(modal => {
+          modal.classList.remove('is-active');
+        });
+      });
+    });
+
+    // Close modal with escape key
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        modals.forEach(modal => {
+          modal.classList.remove('is-active');
+        });
+      }
+    });
+  });
+
+  // Function to open specific modal
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('is-active');
+    }
+  }
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+              href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+              Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want
+            to reuse
+            their <a href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them
+            appropriately.
+          </p>
+          <p class="has-text-centered" style="margin-top: 2rem;">
+            <strong>© 2024 Zhejiang University. All rights reserved.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top button -->
+<button id="backToTop" class="button is-primary is-rounded"
+  style="position: fixed; bottom: 20px; right: 20px; display: none; z-index: 1000;">
+  <span class="icon">
+    <i class="fas fa-arrow-up"></i>
+  </span>
+  <span>Top</span>
+</button>
+</body>
+
+</html>
