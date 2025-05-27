@@ -340,30 +340,11 @@
             </div>
           </div>
         </div>
-
         <!-- Example 4 -->
         <div class="example-row">
           <div class="example-card-fullwidth" onclick="openModal('modal4')">
             <figure class="image">
-              <img src="images/vis/omni_full/4.jpg" alt="Temporal Understanding and Reasoning"
-                class="example-image-fullwidth" />
-            </figure>
-            <div class="example-overlay-fullwidth">
-              <div class="example-content">
-                <h4 class="title is-5 has-text-white">Temporal Understanding and Reasoning</h4>
-                <p class="has-text-white">Omni-R1 shows sequential event understanding and temporal reasoning by
-                  successfully identifying the fastest moving object in the video.</p>
-                <span class="tag is-primary">Click to view full size</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Example 5 -->
-        <div class="example-row">
-          <div class="example-card-fullwidth" onclick="openModal('modal5')">
-            <figure class="image">
-              <img src="images/vis/omni_full/5.jpg" alt="Abstract Reasoning" class="example-image-fullwidth" />
+              <img src="images/vis/omni_full/4.jpg" alt="Abstract Reasoning" class="example-image-fullwidth" />
             </figure>
             <div class="example-overlay-fullwidth">
               <div class="example-content">
@@ -375,6 +356,39 @@
             </div>
           </div>
         </div>
+        <!-- Example 5 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal5')">
+            <figure class="image">
+              <img src="images/vis/omni_full/5.png" alt="AVS the cello" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">AVS the cello</h4>
+                <p class="has-text-white">Omni-R1 demonstrates exceptional audio-visual segmentation capabilities,
+                  accurately identifying the cello in the audio.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Example 6 -->
+        <div class="example-row">
+          <div class="example-card-fullwidth" onclick="openModal('modal6')">
+            <figure class="image">
+              <img src="images/vis/omni_full/6.png" alt="AVS the violin" class="example-image-fullwidth" />
+            </figure>
+            <div class="example-overlay-fullwidth">
+              <div class="example-content">
+                <h4 class="title is-5 has-text-white">AVS the violin</h4>
+                <p class="has-text-white">Omni-R1 demonstrates exceptional audio-visual segmentation capabilities,
+                  accurately identifying the violin making the fastest rhythm in the audio.</p>
+                <span class="tag is-primary">Click to view full size</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -560,27 +574,48 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <p class="image">
-      <img src="images/vis/omni_full/4.jpg" alt="Temporal Understanding and Reasoning - Full Size">
-    </p>
-    <div class="modal-caption">
-      <h4 class="title is-4 has-text-white">Temporal Understanding and Reasoning</h4>
-      <p class="has-text-white">Omni-R1 shows sequential event understanding and temporal reasoning by
-        successfully identifying the fastest moving object in the video.</p>
-    </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
-</div>
-
-<div id="modal5" class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <p class="image">
-      <img src="images/vis/omni_full/5.jpg" alt="Abstract Reasoning - Full Size">
+      <img src="images/vis/omni_full/4.jpg" alt="Abstract Reasoning - Full Size">
     </p>
     <div class="modal-caption">
       <h4 class="title is-4 has-text-white">Abstract Reasoning</h4>
       <p class="has-text-white">Omni-R1 remains excellent general video understanding and reasoning
         capabilities and knowledge.</p>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<div id="modal5" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/5.png" alt="Abstract Reasoning - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">AVS the cello</h4>
+      <p class="has-text-white">Omni-R1 demonstrates exceptional audio-visual segmentation capabilities,
+        accurately identifying the cello in the audio.</p>
+      <audio id="cello-audio" controls style="margin-top: 1rem; width: 100%;">
+        <source src="images/audio/cello.wav" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<div id="modal6" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image">
+      <img src="images/vis/omni_full/6.png" alt="Abstract Reasoning - Full Size">
+    </p>
+    <div class="modal-caption">
+      <h4 class="title is-4 has-text-white">AVS the violin</h4>
+      <p class="has-text-white">Omni-R1 demonstrates exceptional audio-visual segmentation capabilities,
+        accurately identifying the violin making the fastest rhythm in the audio.</p>
+      <audio id="violin-audio" controls style="margin-top: 1rem; width: 100%;">
+        <source src="images/audio/violin.wav" type="audio/wav">
+        Your browser does not support the audio element.
+      </audio>
     </div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
@@ -664,6 +699,12 @@
       close.addEventListener('click', function () {
         modals.forEach(modal => {
           modal.classList.remove('is-active');
+          // Stop audio when closing modal
+          const audio = modal.querySelector('audio');
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
         });
       });
     });
@@ -673,6 +714,12 @@
       if (event.key === 'Escape') {
         modals.forEach(modal => {
           modal.classList.remove('is-active');
+          // Stop audio when closing modal
+          const audio = modal.querySelector('audio');
+          if (audio) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
         });
       }
     });
@@ -683,6 +730,19 @@
     const modal = document.getElementById(modalId);
     if (modal) {
       modal.classList.add('is-active');
+
+      // Auto-play audio for AVS examples (modal5 and modal6)
+      if (modalId === 'modal5') {
+        const celloAudio = document.getElementById('cello-audio');
+        if (celloAudio) {
+          celloAudio.play().catch(e => console.log('Audio play failed:', e));
+        }
+      } else if (modalId === 'modal6') {
+        const violinAudio = document.getElementById('violin-audio');
+        if (violinAudio) {
+          violinAudio.play().catch(e => console.log('Audio play failed:', e));
+        }
+      }
     }
   }
 </script>
