@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!--Include Bootstrap's JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <!-- Custom JS for this template -->
+    <script src="js/copyText.js"></script>
+    <!-- Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+
+
+
+    <!--Include the icon fonts stylesheet-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!--Include Bootstrap's CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous">
+    <!--Local Icon-->
+    <link rel="stylesheet" href="icons/style.css">
+    <!--Local Fonts-->
+    <link rel="stylesheet" href="fonts/avenir-next/stylesheet.css">
+    <link rel="stylesheet" href="fonts/segoe-print/stylesheet.css">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="style.css">
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Website Title -->
+    <title>Time Is a Feature: Exploiting Temporal Dynamics in Diffusion Language Models</title>
+    <!-- <title>GUI-G^2: Gaussian Reward Modeling for GUI Grounding</title> -->
+    <!-- <h1>GUI-G<sup>2</sup>: Gaussian Reward Modeling for GUI Grounding</h1> -->
+    <!-- The description that appears when you share the link -->
+    <meta property="og:description" content="Time Is a Feature: Exploiting Temporal Dynamics in Diffusion Language Models"/>
+    <!-- Used to display page descriptions in search results -->
+    <meta name="description" content="Time Is a Feature, Temporal Dynamics, Diffusion Language Models">
+    <!-- favicon -->
+    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <style>
+        .author {
+            margin: 2rem 0;
+        }
+        .author-name {
+            display: inline-block;
+            margin: 0.3rem 1rem;
+            white-space: nowrap;
+        }
+        .author-name a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .author-name a:hover {
+            color: #007bff;
+        }
+        .author-name sup {
+            font-size: 0.8em;
+            margin-left: 2px;
+        }
+        .organization {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 1rem;
+        }
+        .footnote {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .author-name {
+                display: block;
+                margin: 0.2rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="container">
+    <hr>
+    <!-- Paper Title -->
+    <div class="container text-center">
+        <span class="title-font x-gradient-font">Time Is a Feature:</span>
+        <a class="title-font text-body-emphasis"
+           href="#">
+            <!-- TODO: fix arvix url -->
+            Exploiting Temporal Dynamics in Diffusion Language Models
+        </a>
+    </div>
+    <hr>
+    <!-- author list -->
+    <div class="container author text-center">
+        <!-- authors arranged in neat rows -->
+        <div class="row">
+            <div class="col-12">
+                <div class="author-name">
+                    <a href="https://github.com/encounter1997"><strong>Wen Wang</strong></a><sup>1,2,*</sup>
+                </div>
+                <div class="author-name">
+                    <a href="#"><strong>Bozhen Fang</strong></a><sup>1,*</sup>
+                </div>
+                <div class="author-name">
+                    <a href="#"><strong>Chenchen Jing</strong></a><sup>1,3</sup>
+                </div>
+                <div class="author-name">
+                    <a href="#"><strong>Yongliang Shen</strong></a><sup>1</sup>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="author-name">
+                    <a href="#"><strong>Yangyi Shen</strong></a><sup>4</sup>
+                </div>
+                <div class="author-name">
+                    <a href="#"><strong>Qiuyu Wang</strong></a><sup>2</sup>
+                </div>
+                <div class="author-name">                                                                                                                                    
+                     <a href="#"><strong>Hao Ouyang</strong></a><sup>2</sup>
+                 </div>
+                <div class="author-name">
+                    <a href="#"><strong>Yujun Shen</strong></a><sup>2</sup>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                 <div class="author-name">
+                    <a href="#"><strong>Hao Chen</strong></a><sup>1</sup>
+                 </div> 
+                <div class="author-name">
+                    <a href="#"><strong>Chunhua Shen</strong></a><sup>1,3,2,†</sup>
+                </div>
+            </div>
+        </div>
+        <!-- author organization -->
+        <div class="row mt-3">
+            <div class="col-12 organization">
+                <sup>1</sup>Zhejiang University &nbsp;&nbsp;
+                <sup>2</sup>Ant Group &nbsp;&nbsp;
+                <sup>3</sup>Zhejiang University of Technology &nbsp;&nbsp;
+                <sup>4</sup>Stanford University &nbsp;&nbsp;
+                <!-- <sup>†</sup>Corresponding author -->
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 footnote">
+                <sup>*</sup>Equal contribution
+                <sup>†</sup>Corresponding author
+            </div>
+        </div>
+    <!-- paper status -->
+    <div class="text-center" style="margin-top: 20px">
+        <h3>Under Review</h3>
+    </div>
+    <!-- links -->
+    <div class="text-center">
+        <div class="row justify-content-md-center">
+            <div id="links">
+                <!-- TODO fix urls -->
+                <div class="col col-lg-2">
+                    <a id="arxiv" href="#">Arxiv</a>
+                </div>
+                <div class="col col-lg-2">
+                    <a id="code" href="#">Code</a>
+                </div>
+                <div class="col col-lg-2">
+                    <a id="demo" href="#">Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- teaser -->
+    <!-- <div class="text-center">
+        <figure class="figure">
+            <img src="./assets/motivation.png" class="img-thumbnail figure-img img-fluid rounded"
+                 alt="GUI-G<sup>2</sup> Performance Comparison and Human Click Behavior">
+            <figcaption class="figure-caption">
+                <strong>GUI grounding performance and human click behavior.</strong> Left: Performance comparison of various models on ScreenSpot-Pro across different parameter scales. Right: Human click distribution from AITW reveals natural Gaussian patterns around target centers (μ = 0.111, σ = 0.429), validating our design choice of continuous Gaussian rewards over discrete binary feedback.
+            </figcaption>
+        </figure>
+    </div> -->
+
+</header>
+<br>
+
+<main class="container">
+    <!-- Motivation -->
+    <div class="card">
+        <div class="card-body x-gradient-block">
+            <h2 class="card-title text-center card-title-margin">Motivation</h2>
+            <p class="card-text">
+                Diffusion large language models (dLLM) have recently emerged as a promising alternative to the auto-regressive (AR) large language models. However. current dLLMs typically adopt a decoding strategy that mirrors AR models: solely relying on the sequence predicted in the final denoising step as the final answer, and discarding all the intermediate predictions. This greedy decoding strategy ignores rich temporal dynamics that dLLMs possess in sampling process. 
+                In our analysis of two metrics for widely used mathematical benchmark datasets,  a consistent and significant discrepancy emerges between two key metrics. the first metric, final pass rate, measures the accuracy of the final output, while the second, ever-pass rate, captures how often a correct answer appears at any intermediate decoding step. This discrepancy highlights that correct predictions made during early iterations are frequently overwritten of lost in later stages. 
+                This insight motivates our two complementary methods that leverage temporal dynamics. 1) <strong>Temporal Majority Voting</strong>, a test-time decoding strategy that aggregates predictions across sampling steps. 2) <strong>Temporal Consistency Reinforcement</strong>, a post-training approach designed to encourage stable and consistent generations.
+            </p>
+            
+            <div class="text-center mt-4">
+                <figure class="figure">
+                    <img src="./assets/temporal_oscillation.png" class="img-thumbnail figure-img img-fluid rounded"
+                         alt="Illustration of temporal oscillation during sampling">
+                    <figcaption class="figure-caption">
+                        <strong>Illustration of temporal oscillation during sampling.</strong>
+                        (a) Across four datasets, a significant gap is observed between the <strong>final answer's pass rate</strong> and the <strong>ever-pass rate at any intermediate step</strong>. This gap reveals the phenomenon we refer to as temporal oscillation, where correct intermediate answers are sometimes overwritten or lost as the generation proceeds.
+                        (b) Example of temporal oscillation: For a given math problem, the model initially gives the correct answer, 25, at an intermediate step (e.g., timestep 55), aligning with the ground truth.However, by the final timestep, this correct answer is replaced with an incorrect one: 2.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Abstract -->
+    <div class="card">
+        <div class="card-body x-gradient-block">
+            <h2 class="card-title text-center card-title-margin">Abstract</h2>
+            <p class="card-text">
+                Diffusion large language models (dLLMs) generate text through iterative denoising, yet current decoding strategies discard rich intermediate predictions in favor of the final output. Our work here reveals a critical phenomenon---<strong>temporal oscillation</strong>---where correct answers often emerge in the middle process, but are overwritten in later denoising steps. To address this issue, we introduce two complementary methods that exploit temporal consistency: 1) <strong>Temporal Majority Voting</strong>, a training-free, test-time decoding strategy that aggregates predictions across denoising steps to select the most consistent output; and 2) a post-training method termed <strong>Temporal Consistency Reinforcement</strong>, which uses negative Temporal Semantic Entropy (TSE) as a reward signal to encourage stable generations without ground-truth supervision. Our experiments across several benchmarks demonstrate that these approaches significantly improve accuracy and reliability. Our findings underscore the untapped potential of temporal dynamics in dLLMs and offer two simple yet effective tools to harness them.
+            </p>
+        </div>
+    </div>
+    <br>
+
+    <!-- Methodology -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Methodology</h2>
+            <hr class="body-hr"/>
+            <h4>Temporal Self-Consistency Voting</h4>
+            <p class="card-text">
+                Relying solely on the final prediction thus risks discarding better intermediate outputs.To address this, we propose a method that aggregates predictions across timesteps through a weighted voting mechanism. Formally, given a diffusion sampling trajectory \(\left\{x_0^t\right\}_{t=1}^{T}\), our method selects the final answer \(a^*\) according to a weighted vote over all timesteps:
+                $$
+                a^* = \arg \max _a \sum_{t=1}^T f(t) \cdot \mathbb{1} \left(\text { meaning }\left(x_0^t\right) = a\right).
+                $$
+                Here, \(\mathbb{1}(\cdot)\) is the indicator function that returns 1 if the decoded meaning of \(x_0^t\) matches the candidate answer \(a\), and \(f(t)\) is a weighting function over timesteps. Since the accuracy of predictions generally tends to improve as the sampling step increases (or diffusion step decreases), we design \(f(t)\) to be a monotonically decreasing function of diffusion step \(t\). In experiments, we explore three types of weighting schemes: constant, linear decay, and exponential decay.
+            </p>
+            <h4>Post-Training with Temporal Semantic Entropy</h4>
+            <p class="card-text">
+                We introduce a metric called Temporal Semantic Entropy, which captures the distribution of semantic variations in answers generated at each step of the iterative denoising process. During decoding, we obtain a sequence of \(T\) intermediate answers, denoted by \(\{x_0^t\}_{t=1}^{T}\). We group these answers into clusters based on their semantic meaning, forming a set of semantic clusters \(\mathcal{C} = \{C_1, C_2, \ldots, C_K\}\), where each cluster \(C_k = \{x_0^t : \text{meaning}(x_0^t) = k\}\) contains all answers with equivalent semantics (outcome equals \(k\)).
+                We then define the temporal semantic entropy (TSE) of a trajectory as:
+                $$
+                \operatorname{TSE}(\left\{x_0^t\right\}_{t=1}^{T})=-\sum_{C_k}\left(\left[\sum_{x_0^t \in C_k} p\left(x_0^t\right)\right] \log \left[\sum_{x_0^t \in C_k} p\left(x_0^t\right)\right]\right),
+                $$
+                which quantifies the uncertainty in the semantic content of answers over the decoding steps. In our analysis we observe that high temporal semantic entropy may serve as a signal for model uncertainty. Thus we propose a post-training approach designed to encourage temporal consistency in model outputs. we define the reward \(r_i\) as the negative Temporal Semantic Entropy of response \(o_i\), <i>i.e.</i>, \(r_i = -\text{TSE}(o_i)\).This reward encourages outputs whose intermediate token representations maintain semantic stability throughout the generation process, thereby promoting temporal semantic consistency.
+            </p>
+        </div>
+    </div>
+    <br>
+
+    <!-- Experimental Results -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Experimental Results</h2>
+            <hr class="body-hr"/>
+            <div class="table-container">
+                <h4>Temporal Voting Results</h4>
+                <p class="text-muted">
+                    Performance of temporal majority voting on mathematics benchmarks.
+                    <strong>Bold numbers</strong> indicate the highest performance within each group, while
+                    <span style="color:#228B22;">green values</span> represent improvements over the baseline.
+                </p>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover compact-table">
+                        <thead class="table-primary">
+                            <tr>
+                                <th rowspan="2" colspan="2" class="text-center align-middle"><strong>Method</strong></th>
+                                <th colspan="3" class="text-center"><strong>GSM8K</strong></th>
+                                <th colspan="3" class="text-center"><strong>MATH500</strong></th>
+                                <th colspan="3" class="text-center"><strong>SVAMP</strong></th>
+                                <th colspan="3" class="text-center"><strong>Countdown</strong></th>
+                            </tr>
+                            <tr>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>LLaDA-8B-Instruct</strong></td>
+                                <td>baseline</td>
+                                <td>68.5</td> <td>76.3</td> <td>78.2</td> 
+                                <td>27.4</td> <td>33.4</td> <td>35.8</td> 
+                                <td>84.0</td> <td>83.3</td> <td>84.7</td> 
+                                <td>20.3</td> <td>21.5</td> <td><b>16.4</b></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4" class="align-middle">+ Temporal Voting</td>
+                                <td>Fixed Weighting</td>
+                                <td>68.0</td> <td>73.4</td> <td>78.3</td> 
+                                <td>26.6</td> <td>30.8</td> <td>34.2</td> 
+                                <td><b>87.0</b></td> <td>84.3</td> <td>84.3</td> 
+                                <td>22.7</td> <td>18.8</td> <td>11.3</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Weighting</td>
+                                <td>70.0</td> <td>78.0</td> <td>78.8</td>
+                                <td>28.0</td> <td>34.4</td> <td>34.6</td> 
+                                <td><b>87.0</b></td> <td>84.3</td> <td>84.3</td> 
+                                <td>24.2</td> <td>21.9</td> <td>16.0</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="align-middle">Exp. Weighting</td>
+                                <td><b>70.1</b></td> <td><b>78.7</b></td> <td><b>78.9</b></td> 
+                                <td><b>28.4</b></td> <td><b>35.6</b></td> <td><b>36.2</b></td> 
+                                <td>86.0</td> <td><b>84.3</b></td> <td><b>84.7</b></td> 
+                                <td><b>25.0</b></td> <td><b>23.4</b></td> <td><b>16.4</b></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:#228B22;">+1.6</span></td> 
+                                <td><span style="color:#228B22;">+2.4</span></td> 
+                                <td><span style="color:#228B22;">+0.7</span></td> 
+                                <td><span style="color:#228B22;">+1.0</span></td> 
+                                <td><span style="color:#228B22;">+2.2</span></td> 
+                                <td><span style="color:#228B22;">+0.4</span></td> 
+                                <td><span style="color:#228B22;">+2.0</span></td> 
+                                <td><span style="color:#228B22;">+1.0</span></td> 
+                                <td><span style="color:gray;">+0.0</span></td> 
+                                <td><span style="color:#228B22;">+4.7</span></td> 
+                                <td><span style="color:#228B22;">+1.9</span></td> 
+                                <td><span style="color:gray;">+0.0</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>LLaDA-1.5</strong></td>
+                                <td>baseline</td>
+                                <td>69.8</td> <td>79.4</td> <td><b>81.1</b></td> 
+                                <td><b>29.0</b></td> <td>32.4</td> <td>35.4</td> 
+                                <td>85.3</td> <td>86.3</td> <td>83.3</td> 
+                                <td>21.5</td> <td>21.1</td> <td>20.7</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="4" class="align-middle">+ Temporal Voting</td>
+                                <td>Fixed Weighting</td>
+                                <td>68.8</td> <td>75.7</td> <td>80.3</td> 
+                                <td>27.3</td> <td>30.8</td> <td>34.6</td> 
+                                <td><b>87.3</b></td> <td>85.3</td> <td>84.0</td> 
+                                <td>23.4</td> <td>22.3</td> <td>18.8</td>
+                            </tr>
+                            <tr>
+                                <td>Linear Weighting</td>
+                                <td><b>71.0</b></td> <td><b>79.8</b></td> <td>81.0</td> 
+                                <td>29.2</td> <td>32.8</td> <td>35.8</td> 
+                                <td>86.0</td> <td>87.0</td> <td>84.0</td> 
+                                <td>24.2</td> <td>23.4</td> <td>19.1</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="align-middle">Exp. Weighting</td>
+                                <td>70.7</td> <td><b>79.8</b></td> <td><b>81.1</b></td> 
+                                <td><b>29.0</b></td> <td><b>33.2</b></td> <td><b>36.2</b></td> 
+                                <td>85.7</td> <td><b>87.7</b></td> <td><b>84.3</b></td> 
+                                <td><b>26.2</b></td> <td><b>25.0</b></td> <td><b>21.1</b></td>
+                            </tr>
+                            <tr>
+                                <td><span style="color:#228B22;">+1.9</span></td>
+                                <td><span style="color:#228B22;">+0.4</span></td>
+                                <td><span style="color:gray;">+0.0</span></td>
+                                <td><span style="color:gray;">+0.0</span></td>
+                                <td><span style="color:#228B22;">+0.8</span></td>
+                                <td><span style="color:#228B22;">+0.8</span></td>
+                                <td><span style="color:#228B22;">+0.4</span></td>
+                                <td><span style="color:#228B22;">+1.4</span></td>
+                                <td><span style="color:#228B22;">+1.0</span></td>
+                                <td><span style="color:#228B22;">+4.7</span></td>
+                                <td><span style="color:#228B22;">+3.9</span></td>
+                                <td><span style="color:#228B22;">+0.4</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- Performance Comparison Chart -->
+            <div class="table-container">
+                <h4>Post-Training with Temporal Semantic Entropy Results</h4>
+                <p class="text-muted">
+                    Performance of reinforcement fine-tuning on mathematics benchmarks.
+                    <strong>Bold numbers</strong> indicate the highest performance within each group, while
+                    <span style="color:#228B22;">green values</span> represent improvements over the baseline.
+                </p>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover compact-table">
+                        <thead class="table-primary">
+                            <tr>
+                                <th rowspan="2" colspan="2" class="text-center align-middle"><strong>Method</strong></th>
+                                <th colspan="3" class="text-center"><strong>GSM8K</strong></th>
+                                <th colspan="3" class="text-center"><strong>MATH500</strong></th>
+                                <th colspan="3" class="text-center"><strong>SVAMP</strong></th>
+                                <th colspan="3" class="text-center"><strong>Countdown</strong></th>
+                            </tr>
+                            <tr>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                                <th><strong>128</strong></th>
+                                <th><strong>256</strong></th>
+                                <th><strong>512</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>LLaDA-8B-Instruct</strong></td>
+                                <td>SFT on s1k</td>
+                                <td>70.2</td> <td>78.7</td> <td>80.1</td> 
+                                <td>23.8</td> <td>34.4</td> <td>36.8</td> 
+                                <td>81.7</td> <td>83.3</td> <td>82.7</td> 
+                                <td>21.5</td> <td>19.9</td> <td>21.5</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" class="align-middle">+ RFT</td>
+                                <td>d1 (w/GT)</td>
+                                <td>71.7</td> <td>78.3</td> <td><b>82.3</b></td> 
+                                <td><b>31.0</b></td> <td><b>36.0</b></td> <td><b>40.4</b></td> 
+                                <td><b>85.7</b></td> <td>88.0</td> <td><b>88.7</b></td> 
+                                <td>34.8</td> <td>35.5</td> <td>37.9</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="align-middle">ours (NTSE reward)</td>
+                                <td><b>72.2</b></td> <td><b>78.8</b></td> <td>80.2</td> 
+                                <td>30.6</td> <td>34.6</td> <td>38.0</td> 
+                                <td>84.3</td> <td><b>89.0</b></td> <td><b>88.7</b></td> 
+                                <td><b>38.6</b></td> <td><b>53.5</b></td> <td><b>44.9</b></td>
+                            </tr>
+
+                            <tr>
+                                <td><span style="color:#228B22;">+2.0</span></td>
+                                <td><span style="color:#228B22;">+0.1</span></td>
+                                <td><span style="color:#228B22;">+0.1</span></td>
+                                <td><span style="color:#228B22;">+6.8</span></td>
+                                <td><span style="color:#228B22;">+0.2</span></td>
+                                <td><span style="color:#228B22;">+1.2</span></td>
+                                <td><span style="color:#228B22;">+2.6</span></td>
+                                <td><span style="color:#228B22;">+5.7</span></td>
+                                <td><span style="color:#228B22;">+6.0</span></td>
+                                <td><span style="color:#228B22;">+17.1</span></td>
+                                <td><span style="color:#228B22;">+33.6</span></td>
+                                <td><span style="color:#228B22;">+23.4</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>LLaDA-1.5</strong></td>
+                                <td>SFT on s1k</td>
+                                <td>69.8</td> <td>79.4</td> <td>81.1</td> 
+                                <td>29.0</td> <td>32.4</td> <td>35.4</td> 
+                                <td>85.3</td> <td>86.3</td> <td>83.3</td> 
+                                <td>21.5</td> <td>21.1</td> <td>20.7</td>
+
+                            </tr>
+                            <tr>
+                                <td rowspan="3" class="align-middle">+ RFT</td>
+                                <td>d1 (w/GT)</td>
+                                <td><b>70.6</b></td> <td>78.5</td> <td><b>81.4</b>
+                                </td><td><b>29.6</b></td> <td>34.2</td> <td><b>39.2</b></td>
+                                <td>85.0</td> <td><b>88.0</b></td> <td>88.3</td>
+                                <td>32.8</td> <td>25.8</td> <td>39.5</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="align-middle">ours (NTSE reward)</td>
+                                 <td>70.3</td> <td><b>79.5</b></td> <td><b>81.4</b></td> 
+                                 <td>29.2</td> <td><b>35.6</b></td> <td>39.0</td> 
+                                 <td><b>86.0</b></td> <td><b>88.0</b></td> <td><b>88.7</b></td> 
+                                 <td><b>34.0</b></td> <td><b>48.8</b></td> <td><b>49.5</b></td>
+
+                            </tr>
+
+                            <tr>
+                                <td style="color:#228822;">+0.5</td>
+                                <td style="color:#228822;">+0.1</td>
+                                <td style="color:#228822;">+0.3</td>
+                                <td style="color:#228822;">+0.2</td>
+                                <td style="color:#228822;">+3.2</td>
+                                <td style="color:#228822;">+3.6</td>
+                                <td style="color:#228822;">+0.7</td>
+                                <td style="color:#228822;">+1.7</td>
+                                <td style="color:#228822;">+5.4</td>
+                                <td style="color:#228822;">+12.5</td>
+                                <td style="color:#228822;">+27.7</td>
+                                <td style="color:#228822;">+28.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-container">
+            <h4>Analysis</h4>
+            <!-- Analysis Figures -->
+            <img src="./assets/rl_analysis.png" class="img-fluid rounded" alt="Analysis">
+            <figcaption class="figure-caption">
+                (a) Ablations on \(\alpha\) value selection in temporal voting with exponential weighting.
+                (b) Negative temporal semantic entropy reward curve during reinforcement fine-tuning.
+            </figcaption>
+        </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Key Insights -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Key Insights</h2>
+            <hr class="body-hr"/>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Temporal Dynamics</h5>
+                    <p>We conduct an in-depth analysis of diffusion-based large language models (dLLMs), uncovering the underexplored potential of temporal dynamics. Our findings highlight that the evolving intermediate states during the sampling process carry rich semantic signals that can be leveraged to enhance both reasoning performance and model robustness.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Temporal Majority Voting</h5>
+                    <p>A training-free test-time  decoding strategy that aggregates predictions across denoising steps and selects the most consistent output, considerably improving accuracy with negligible computational overhead.</p>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h5>Temporal Semantic Entropy</h5>
+                    <p>We introduced a metric called Temporal Semantic Entropy which captures the distribution of semantic variations in answers generated at each step of the iterative denoising process. It serves as an indicator of the semantic stability of the model's outputs.</p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Temporal Consistency Reinforcement</h5>
+                    <p>A reinforcement learning-based post-training method that uses negative Temporal Semantic Entropy (TSE) as a reward signal to encourage stable and consistent generations. Importantly, leveraging negative TSE as the reward enables performance improvements without requiring ground-truth labels for reward computation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Citation -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Citation</h2>
+            <p id="bibtex" class="card-text" style="border: #1a1c20 1px">
+                <code> 
+                    <!-- TODO fixed citation -->
+                    todo
+                    <!-- @misc{tang2025guig2gaussianrewardmodeling,<br>
+                    &nbsp;&nbsp;title={GUI-G$^2$: Gaussian Reward Modeling for GUI Grounding},<br>
+                    &nbsp;&nbsp;author={Fei Tang and Zhangxuan Gu and Zhengxi Lu and Xuyang Liu and Shuheng Shen and Changhua Meng and Wen Wang and Wenqi Zhang and Yongliang Shen and Weiming Lu and Jun Xiao and Yueting Zhuang},<br>
+                    &nbsp;&nbsp;year={2025},<br>
+                    &nbsp;&nbsp;eprint={2507.15846},<br>
+                    &nbsp;&nbsp;archivePrefix={arXiv},<br>
+                    &nbsp;&nbsp;primaryClass={cs.LG},<br>
+                    &nbsp;&nbsp;url={https://arxiv.org/abs/2507.15846},<br>
+                    } -->
+                </code>
+            </p>
+
+            <!-- Bibtex (Button trigger modal)-->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    onclick="copyText()">
+                Copy BibTex
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Bibtex</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="bibtex modal-body">
+                            Copy Success!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Acknowledgements -->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title card-title-margin">Acknowledgements</h4>
+            <p class="card-text">We would like to thank Muzhi Zhu, Canyu Zhao, and Linhao Zhong at Zhejiang University for their valuable discussions and insightful feedback. We also acknowledge the template from <a href="https://ximinng.github.io/">Ximing Xing</a> that helped us build this project homepage.</p>
+        </div>
+    </div>
+    <br>
+
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- left layout -->
+            <div class="col-12 col-md-6 text-md-start text-center">
+                <p class="footer-title mb-0">Time is a Feature</p>
+            </div>
+            <!-- right layout -->
+            <div class="col-12 col-md-6 text-md-end text-center">
+                <p class="footer-text mb-0">
+                    This webpage template was originally made by
+                    <a href="https://github.com/ximinng/GithubPages-Template" class="link-primary text-decoration-none">Ximing Xing</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+function copyText() {
+    const text = document.getElementById("bibtex").innerText;
+    const new_input = document.createElement('input');
+    new_input.value = text
+    document.body.appendChild(new_input)
+    // select value of new_input
+    new_input.select();
+    // exec copy command
+    document.execCommand("copy");
+    document.body.removeChild(new_input);
+}
+</script>
+
+</body>
+</html>
