@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="TINKER: Generalizable 3D Editing through Sparse Inputs without Per-Scene Finetuning">
+  <meta name="keywords" content="TINKER, 3D Gaussian Splatting, 3D Editing">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TINKER: Generalizable 3D Editing through Sparse Inputs without Per-Scene Finetuning</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/LOGO.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <!-- Three.js and related loaders -->
+  <script src="./static/js/three.min.js"></script>
+  <script src="./static/js/OrbitControls.js"></script>
+  <script src="./static/js/GLTFLoader.js"></script>
+  <!-- Three.js ESM imports and namespace bridging -->
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+  
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <img src="static/LOGO.png" style="height:200px"></img>
+    </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">TINKER: Generalizable 3D Editing through Sparse Inputs without Per-Scene Finetuning</h1>
+
+          <div class="is-size-5 publication-authors" style="margin-top: 20px;">
+            <span class="author-block">
+              <a href="https://http://canyu.blog/">Canyu Zhao</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="#">Xiaoman Li</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="#">Tianjian Feng</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="#">Zhiyue Zhao</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com.hk/citations?user=kWADCMUAAAAJ">Tong He</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://cshen.github.io">Chunhua Shen</a><sup>1,3</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Zhejiang University,</span>
+            <span class="author-block"><sup>2</sup>Shanghai AI Laboratory,</span>
+            <span class="author-block"><sup>3</sup>Zhejiang University of Technology</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/aim-uofa/Tinker"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="subtitle has-text-centered" style="margin-bottom: 30px;">
+        <span class="dnerf">TINKER</span> achieves generalizable 3D editing with one or few inputs without per-scene optimization.
+      </h2>
+      <div class="video-carousel-container" style="position: relative; max-width: 800px; margin: 0 auto;">
+        <!-- Carousel wrapper with fixed background -->
+        <div class="video-carousel" style="overflow: hidden; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative; height: 500px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-align: center; padding: 20px; display: flex; flex-direction: column; justify-content: center;">
+          <!-- Title that changes with slides -->
+          <h3 id="carousel-title" style="margin: 0 0 20px 0; font-size: 20px; font-weight: bold; color: white;">Sketch Style</h3>
+          
+          <!-- Video container with individual slides - Generated dynamically by JavaScript -->
+          <div id="video-container" class="video-container" style="position: relative; width: 100%; max-width: 400px; height: 400px; margin: 0 auto;">
+            <!-- Videos will be generated dynamically -->
+          </div>
+        </div>
+        
+        <!-- Navigation arrows -->
+        <button class="carousel-btn carousel-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 18px; z-index: 10;">‹</button>
+        <button class="carousel-btn carousel-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 18px; z-index: 10;">›</button>
+        
+        <!-- Dots indicator - Generated dynamically by JavaScript -->
+        <div id="carousel-dots" class="carousel-dots" style="text-align: center; margin-top: 15px;">
+          <!-- Dots will be generated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.dot.active {
+  background-color: #717171 !important;
+}
+.carousel-btn:hover {
+  background: rgba(0,0,0,0.9) !important;
+}
+.carousel-slides {
+  will-change: transform;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Video configuration - easy to add new videos here
+  // Just add new entries to this array to add more videos!
+  const videoConfig = [
+  { title: 'Change the Road to River', src: './videos/demo/river.mp4' },
+  { title: 'Frost Effect', src: './videos/demo/frost.mp4' },
+  { title: 'Autumn Fallen Leaves', src: './videos/demo/leaves.mp4' },
+  { title: 'Vincent Van Gogh Style', src: './videos/demo/vincint.mp4' },
+  { title: 'White Slippers', src: './videos/demo/white_slippers.mp4' },
+  { title: 'Black Tuxedo Collar', src: './videos/demo/black-tuxedo-collar2.mp4' },
+  { title: 'Sketch Style', src: './videos/demo/sketch2.mp4' },
+  { title: 'Bronze Statue', src: './videos/demo/bronze.mp4' },
+  { title: 'Beard', src: './videos/demo/beard2.mp4' },
+  { title: 'Clay', src: './videos/demo/clay.mp4' },
+  { title: 'Change Towel to Chalkboard Painting', src: './videos/demo/chalkboard.mp4' },
+  { title: 'Western Comics', src: './videos/demo/western-comic.mp4' },
+  ];
+  
+  let currentSlide = 0;
+  const totalSlides = videoConfig.length;
+  let autoSlideInterval;
+  let videoSlides, dots, carouselTitle;
+  
+  // Generate HTML elements dynamically
+  function initializeCarousel() {
+    const videoContainer = document.getElementById('video-container');
+    const dotsContainer = document.getElementById('carousel-dots');
+    carouselTitle = document.getElementById('carousel-title');
+    
+    // Clear existing content
+    videoContainer.innerHTML = '';
+    dotsContainer.innerHTML = '';
+    
+    // Generate video elements
+    videoConfig.forEach((video, index) => {
+      const videoElement = document.createElement('video');
+      videoElement.className = 'video-slide';
+      if (index === 0) videoElement.classList.add('active');
+      videoElement.setAttribute('data-slide', index);
+      videoElement.autoplay = true;
+      videoElement.muted = true;
+      videoElement.loop = true;
+      videoElement.playsInline = true;
+      videoElement.style.cssText = `
+        width: 100%; height: 400px; object-fit: cover; border-radius: 8px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: absolute; top: 0; left: 0; 
+        opacity: ${index === 0 ? '1' : '0'}; transition: opacity 0.5s ease-in-out;
+      `;
+      
+      const sourceElement = document.createElement('source');
+      sourceElement.src = video.src;
+      sourceElement.type = 'video/mp4';
+      videoElement.appendChild(sourceElement);
+      
+      videoContainer.appendChild(videoElement);
+      
+      // Generate dot elements
+      const dotElement = document.createElement('span');
+      dotElement.className = 'dot';
+      if (index === 0) dotElement.classList.add('active');
+      dotElement.setAttribute('data-slide', index);
+      dotElement.style.cssText = `
+        height: 12px; width: 12px; margin: 0 5px; background-color: #bbb; 
+        border-radius: 50%; display: inline-block; cursor: pointer; 
+        transition: background-color 0.3s;
+      `;
+      
+      dotsContainer.appendChild(dotElement);
+    });
+    
+    // Update references after generating elements
+    videoSlides = document.querySelectorAll('.video-slide');
+    dots = document.querySelectorAll('.dot');
+    
+    // Set initial title
+    carouselTitle.textContent = videoConfig[0].title;
+  }
+
+  function showSlide(n) {
+    // Wrap around if necessary
+    if (n >= totalSlides) currentSlide = 0;
+    if (n < 0) currentSlide = totalSlides - 1;
+    
+    // Hide all videos
+    videoSlides.forEach((video, index) => {
+      video.classList.remove('active');
+      video.style.opacity = '0';
+    });
+    
+    // Show current video
+    videoSlides[currentSlide].classList.add('active');
+    videoSlides[currentSlide].style.opacity = '1';
+    
+    // Update title
+    if (carouselTitle && videoConfig[currentSlide]) {
+      carouselTitle.textContent = videoConfig[currentSlide].title;
+      console.log('Title updated to:', videoConfig[currentSlide].title); // Debug log
+    }
+    
+    // Update dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[currentSlide]) {
+      dots[currentSlide].classList.add('active');
+    }
+  }
+
+  function nextSlide() {
+    currentSlide++;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide--;
+    showSlide(currentSlide);
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(nextSlide, 6000); // Change slide every 6 seconds
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlideInterval);
+  }
+
+  // Reset timer function - ensures clean restart of auto-slide
+  function resetAutoSlide() {
+    stopAutoSlide();
+    startAutoSlide();
+  }
+
+  // Event listeners
+  document.querySelector('.carousel-next').addEventListener('click', () => {
+    nextSlide();
+    resetAutoSlide(); // Reset timer after manual action
+  });
+
+  document.querySelector('.carousel-prev').addEventListener('click', () => {
+    prevSlide();
+    resetAutoSlide(); // Reset timer after manual action
+  });
+
+  // Dot navigation - use event delegation since dots are generated dynamically
+  document.getElementById('carousel-dots').addEventListener('click', (e) => {
+    if (e.target.classList.contains('dot')) {
+      currentSlide = parseInt(e.target.getAttribute('data-slide'));
+      showSlide(currentSlide);
+      resetAutoSlide(); // Reset timer after manual action
+    }
+  });
+
+  // Pause on hover
+  const carouselContainer = document.querySelector('.video-carousel-container');
+  carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+  carouselContainer.addEventListener('mouseleave', () => {
+    resetAutoSlide(); // Reset timer when mouse leaves, not just restart
+  });
+
+  // Initialize carousel
+  initializeCarousel();
+  
+  // Initialize first slide
+  showSlide(0);
+  
+  // Start auto-slide
+  startAutoSlide();
+});
+</script>
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce <b>TINKER</b>, a novel approach for high-quality 3D editing in both one-shot and few-shot settings. In contrast to prior methods that typically rely on extensive per-scene optimization or a large number of input views, TINKER delivers robust and versatile results from minimal image inputs, without requiring any per-scene finetuning. This strong adaptation capability arises from the effective utilization of pretrained diffusion models, coupled with our tailored repurposing of these models to incorporate 3D awareness.
+            To this end, we uncover the inherent multi-view consistent editing capability of state-of-the-art image editing foundation models through a simple image concatenation strategy.
+            Building on this strategy, we contribute, to the best of our knowledge, the first multi-view editing dataset that covers a wide range of scenes and editing styles, providing a valuable resource for advancing consistent 3D-aware editing methods. 
+            Moreover, we introduce a novel model capable of performing referring multi-view consistent editing, enabling precise, reference-driven modifications that remain coherent across viewpoints.
+            We further present an any-view-to-video model to enable high-quality scene completion, showing that leveraging spatial-temporal consistency learned from video models enables high-quality and coherent synthesis of novel views even from sparse inputs.
+            TINKER substantially lowers the barrier to 3D content editing, exhibiting strong performance across diverse editing tasks and varying scene complexities, even in scenarios where the goal is not to edit content but merely to enhance rendering quality. 
+            We believe TINKER marks a significant step toward generalizable 3D editing.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- <div class="columns is-centered"> -->
+
+      <!-- Visual Effects. -->
+      <!-- <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Visual Effects</h2>
+          <p>
+            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
+            would be impossible without nerfies since it would require going through a wall.
+          </p>
+          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/dollyzoom-stacked.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div> -->
+      <!--/ Visual Effects. -->
+
+      <!-- Matting. -->
+      <!-- <div class="column">
+        <h2 class="title is-3">Matting</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <p>
+              As a byproduct of our method, we can also solve the matting problem by ignoring
+              samples that fall outside of a bounding box during rendering.
+            </p>
+            <video id="matting-video" controls playsinline height="100%">
+              <source src="./static/videos/matting.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
+    <!--/ Matting. -->
+
+    <!-- Comparisons with existing methods. -->
+    <h3 class="title is-4">Comparisons with existing methods</h3>
+    <div class="content has-text-justified">
+      <p>
+        <span class="dnerf"><b>Tinker</b></span> achieves high-quality 3D editing results with only one or few inputs, even for scenes with substantial overall style changes, such as oil paintings or black-and-white comics. <b>No per-scene finetuning is required.</b>
+      </p>
+    </div>
+    <div class="content has-text-centered">
+      <img src="./images/exp.jpg"
+            alt="Comparisons with existing methods"
+            width="100%">
+    </div>
+    <!--/ Comparisons with existing methods. -->
+
+    <!-- Animation. -->
+    <!-- <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Animation</h2> -->
+
+        <!-- Interpolating. -->
+        <!-- <h3 class="title is-4">Interpolating states</h3>
+        <div class="content has-text-justified">
+          <p>
+            We can also animate the scene by interpolating the deformation latent codes of two input
+            frames. Use the slider here to linearly interpolate between the left frame and the right
+            frame.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_start.jpg"
+                 class="interpolation-image"
+                 alt="Interpolate start reference image."/>
+            <p>Start Frame</p>
+          </div>
+          <div class="column interpolation-video-column">
+            <div id="interpolation-image-wrapper">
+              Loading...
+            </div>
+            <input class="slider is-fullwidth is-large is-info"
+                   id="interpolation-slider"
+                   step="1" min="0" max="100" value="0" type="range">
+          </div>
+          <div class="column is-3 has-text-centered">
+            <img src="./static/images/interpolate_end.jpg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p class="is-bold">End Frame</p>
+          </div>
+        </div>
+        <br/> -->
+        <!--/ Interpolating. -->
+
+        
+        <!-- Additional 3D Editing Results. -->
+        <!-- <h3 class="title is-4">Additional 3D Editing Results</h3>
+        <div class="content has-text-justified">
+          <p>
+            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
+            viewpoint such as a stabilized camera by playing back the training deformations.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="75%">
+            <source src="./static/videos/replay.mp4"
+                    type="video/mp4">
+          </video>
+        </div> -->
+        <!--/ Additional 3D Editing Results. -->
+
+
+      <!-- </div> -->
+    <!-- </div> -->
+    <!--/ Animation. -->
+
+    <h3 class="title is-3" style="margin-top: 40px;">Additional Features</h3>
+    <!-- Video Reconstruction. -->
+    <h4 class="title is-4" style="margin-top: 40px; margin-bottom: 20px;">Video Reconstruction</h4>
+    <div class="content has-text-justified">
+      <p>
+        <span class="dnerf"><b>Tinker</b></span> supports high-quality video reconstruction with <b>only the first frame and video depth as inputs</b>.
+      </p>
+    </div>
+    <section class="hero is-light is-small", style="margin-bottom: 30px;">
+      <div class="hero-body">
+        <div class="container">
+          <!-- Video Comparison 1 -->
+          <div class="video-comparison-wrapper" style="display: flex; justify-content: space-around; align-items: center; padding: 20px; text-align: center; margin: 5px 0 20px 0; border: 1px solid #bbb; border-radius: 10px; background: white;">
+            <div style="flex: 1; max-width: 45%;">
+              <div style="font-weight: bold; margin-bottom: 10px; font-size: 18px; font-family: 'Google Sans', sans-serif;">GT</div>
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/0_gt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="flex: 1; max-width: 45%;">
+              <div style="font-weight: bold; margin-bottom: 10px; font-size: 18px; font-family: 'Google Sans', sans-serif;">Our Reconstruction</div>
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/0_pred.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Video Comparison 2 -->
+          <div class="video-comparison-wrapper" style="display: flex; justify-content: space-around; align-items: center; padding: 20px; text-align: center; margin: 5px 0 20px 0; border: 1px solid #bbb; border-radius: 10px; background: white;">
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/1_gt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/1_pred.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Video Comparison 3 -->
+          <div class="video-comparison-wrapper" style="display: flex; justify-content: space-around; align-items: center; padding: 20px; text-align: center; margin: 5px 0 20px 0; border: 1px solid #bbb; border-radius: 10px; background: white;">
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/2_gt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/2_pred.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Video Comparison 4 -->
+          <div class="video-comparison-wrapper" style="display: flex; justify-content: space-around; align-items: center; padding: 20px; text-align: center; margin: 5px 0 20px 0; border: 1px solid #bbb; border-radius: 10px; background: white;">
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/3_gt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/3_pred.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Video Comparison 5 -->
+          <div class="video-comparison-wrapper" style="display: flex; justify-content: space-around; align-items: center; padding: 20px; text-align: center; margin: 5px 0 20px 0; border: 1px solid #bbb; border-radius: 10px; background: white;">
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/4_gt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="flex: 1; max-width: 45%;">
+              <video poster="" autoplay controls muted loop playsinline style="width: 100%; height: 300px; object-fit: fill; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <source src="./videos/4_pred.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="content has-text-centered">
+      <img src="./images/video_recon.png"
+            alt="Video Reconstruction"
+            width="100%">
+    </div>
+    <!--/ Video Reconstruction. -->
+
+
+    <!-- Enhance Quality. -->
+    <h4 class="title is-4" style="margin-top: 40px;">Enhance Quality</h4>
+    <div class="content has-text-justified">
+      <p>
+        <span class="dnerf"><b>Tinker</b></span> further supports enhancing the quality of 3DGS, as such quality improvements can be regarded as a specialized form of editing.
+      </p>
+    </div>
+    <div class="content has-text-centered">
+      <img src="./images/enhance_quality.png"
+            alt="Enhance Quality"
+            width="100%">
+    </div>
+    <!--/ Enhance Quality. -->
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Interactive Mesh Viewer</h2>
+    <div id="mesh-viewer" style="width: 100%; height: 500px; border: 1px solid #ccc;"></div>
+  </div>
+</section> -->
+
+
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{zhao2025tinker,
+  author    = {Zhao, Canyu and Li, Xiaoman and Feng, Tianjian and Zhao, Zhiyue and Chen, Hao and He, Tong and Shen, Chunhua},
+  title     = {Tinker: Generalizable 3D Editing through Sparse Inputs without Per-Scene Finetuning},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://doubiiu.github.io/projects/ToonCrafter"> ToonCrafter</a> project page. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
