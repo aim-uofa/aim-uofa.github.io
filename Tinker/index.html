@@ -64,9 +64,9 @@
 
           <div class="is-size-5 publication-authors" style="margin-top: 20px;">
             <span class="author-block">
-              <a href="https://http://canyu.blog/">Canyu Zhao</a><sup>1</sup>,</span>
+              <a href="https://http://canyu.blog/">Canyu Zhao</a><sup>1 *</sup>,</span>
             <span class="author-block">
-              <a href="#">Xiaoman Li</a><sup>1</sup>,</span>
+              <a href="#">Xiaoman Li</a><sup>1 *</sup>,</span>
             <span class="author-block">
               <a href="#">Tianjian Feng</a><sup>1</sup>,
             </span>
@@ -86,6 +86,11 @@
             <span class="author-block"><sup>1</sup>Zhejiang University,</span>
       
             <span class="author-block"><sup>2</sup>Zhejiang University of Technology</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+    
           </div>
 
           <div class="column has-text-centered">
@@ -193,9 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
   { title: 'White Slippers', src: './videos/demo/white_slippers.mp4' },
   { title: 'Black Tuxedo Collar', src: './videos/demo/black-tuxedo-collar2.mp4' },
   { title: 'Sketch Style', src: './videos/demo/sketch2.mp4' },
-  { title: 'Bronze Statue', src: './videos/demo/bronze.mp4' },
   { title: 'Beard', src: './videos/demo/beard2.mp4' },
-  { title: 'Clay', src: './videos/demo/clay.mp4' },
   { title: 'Change Towel to Chalkboard Painting', src: './videos/demo/chalkboard.mp4' },
   { title: 'Western Comics', src: './videos/demo/western-comic.mp4' },
   ];
@@ -269,11 +272,18 @@ document.addEventListener('DOMContentLoaded', function() {
     videoSlides.forEach((video, index) => {
       video.classList.remove('active');
       video.style.opacity = '0';
+      // Pause and rewind hidden videos to conserve resources and ensure fresh playback when revisited
+      video.pause();
+      video.currentTime = 0;
     });
     
     // Show current video
     videoSlides[currentSlide].classList.add('active');
     videoSlides[currentSlide].style.opacity = '1';
+
+    // Restart the newly shown video from the beginning
+    videoSlides[currentSlide].currentTime = 0;
+    videoSlides[currentSlide].play();
     
     // Update title
     if (carouselTitle && videoConfig[currentSlide]) {
@@ -440,6 +450,10 @@ document.addEventListener('DOMContentLoaded', function() {
       </p>
     </div>
     <div class="content has-text-centered">
+      <!-- Additional comparison video -->
+      <video autoplay controls muted loop playsinline width="100%" style="margin-top: 20px;">
+        <source src="./videos/compare.mp4" type="video/mp4">
+      </video>
       <img src="./images/exp.jpg"
             alt="Comparisons with existing methods"
             width="100%">
