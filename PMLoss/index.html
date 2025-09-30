@@ -88,7 +88,7 @@
 
               <div class="column">
                 <p class="mb-5">
-                  <a class="btn btn-large btn-light" href="https://github.com/aim-uofa/PM-Loss" role="button">
+                  <a class="btn btn-large btn-light" href="https://huggingface.co/dc-walker/PM-Loss/" role="button">
                     <i class="fa fa-gamepad"></i>
                     <b>Models</b>
                   </a>
@@ -121,7 +121,7 @@
           <hr style="margin-top: 0px" />
 
           <p>
-            We introduce <strong>PM-Loss</strong>, a novel regularization loss based on a learned point map for feed-forward 3DGS,  leading to smoother 3D geometry and better rendering.
+            We introduce <strong>PM-Loss</strong>, a novel regularization loss based on a learned pointmap for feed-forward 3DGS, leading to more coherent 3D geometry and better rendering.
           </p>
 
 
@@ -147,9 +147,9 @@
           <p style="text-align: justify;">
             Depth maps are widely used in feed-forward 3D Gaussian Splatting (3DGS) pipelines by unprojecting them into 3D point clouds for novel view synthesis. 
             This approach offers advantages such as efficient training, the use of known camera poses, and accurate geometry estimation. 
-            However, depth discontinuities at object boundaries often lead to fragmented or sparse point clouds, degrading rendering quality---a well-known limitation of depth-based representations. 
-            To tackle this issue, we introduce <strong>PM-Loss</strong>, a novel <strong><span style="color: #431aad">regularization loss</span></strong> based on a pointmap predicted by a pre-trained transformer. Although the pointmap itself may be less accurate than the depth map, it effectively enforces geometric smoothness, especially around object boundaries. 
-            With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results. <br>
+            However, depth discontinuities, which are particularly problematic at the boundaries of the reconstructed geometry, often lead to fragmented or sparse point clouds, degrading rendering quality---a well-known limitation of depth-based representations. 
+            To tackle this issue, we introduce <strong>PM-Loss</strong>, a novel <strong><span style="color: #431aad">regularization loss</span></strong> based on a pointmap predicted by a pre-trained transformer. Although  the pointmap itself may be less accurate than the depth map, it provides a powerful prior for geometric coherence and structural completeness, especially at the very edges where depth prediction falters. 
+            With the improved depth map, our method significantly improves the feed-forward 3DGS across various architectures and scenes, delivering consistently better rendering results.  <br>
           </p>
 
         </div>
@@ -236,13 +236,14 @@
           <img src="assets/results.jpg" width="100%" />
           <br><br>
           <p>
-            <strong>Qualitative comparisons</strong> on DL3DV(top two rows) and RealEstate10K(bottom two rows) under the 2-view extrapolation setting. Adding PM-Loss leads to significant improvements in rendering object boundaries.
+            <strong>Qualitative comparisons</strong> on DL3DV(top two rows) and RealEstate10K(bottom two rows). 
+            Adding PM-Loss leads to significant improvements in rendering quality at boundaries. Note the mitigation of blurry artifacts(row 1,3) and black regions(row 2,4) in the rendered views.
           </p>
 
           <br>
           <hr />
 
-          <center>Rendering results under view extrapolation</center>
+          <center>Quantitative results in the boundary-aware setting.</center>
           <div style="display: flex; justify-content: center;">
             <img src="assets/dl3dv.png" width="70%" />
           </div>
