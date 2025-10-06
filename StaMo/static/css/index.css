@@ -115,10 +115,10 @@ body {
 }
 
 .results-carousel .item {
-  margin: 5px;
+  margin: 2px;
   overflow: hidden;
   border: 1px solid #bbb;
-  border-radius: 7px;
+  border-radius: 5px;
   padding: 0;
   font-size: 0;
 }
