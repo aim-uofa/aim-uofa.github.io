@@ -112,10 +112,14 @@ body {
 
 .results-carousel {
   overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px; /* 替代margin */
 }
 
 .results-carousel .item {
-  margin: 5px;
+  flex: 1; /* 每个项目平均分配空间 */
+  min-width: 0; /* 允许项目收缩 */
   overflow: hidden;
   border: 1px solid #bbb;
   border-radius: 10px;
@@ -125,6 +129,9 @@ body {
 
 .results-carousel video {
   margin: 0;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 
