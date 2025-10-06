@@ -112,26 +112,19 @@ body {
 
 .results-carousel {
   overflow: hidden;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 10px; /* 替代margin */
 }
 
 .results-carousel .item {
-  flex: 1; /* 每个项目平均分配空间 */
-  min-width: 0; /* 允许项目收缩 */
+  margin: 5px;
   overflow: hidden;
   border: 1px solid #bbb;
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 0;
   font-size: 0;
 }
 
 .results-carousel video {
   margin: 0;
-  width: 100%;
-  height: auto;
-  display: block;
 }
 
 
