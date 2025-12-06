@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality</title>
+  <meta name="description" content="LivingSwap: The first video reference guided face swapping model for high-fidelity and temporally consistent cinematic quality results.">
+  <meta name="keywords" content="Face Swapping, Video Editing, Generative AI, Diffusion Models, Computer Vision, Cinematic Quality">
+  <meta name="author" content="Zekai Luo, Zongze Du, Zhouhang Zhu, Hao Zhong, Muzhi Zhu, Wen Wang, Yuling Xi, Chenchen Jing, Hao Chen, Chunhua Shen">
+  
+  <!-- Mobile/Theme -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="static/images/livingswap_icon.png">
+  <link rel="apple-touch-icon" href="static/images/livingswap_icon.png">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Scripts -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- TODO: Replace with your paper title -->
+            <h1 class="title is-1 publication-title">
+              <img class="title-logo" src="static/images/livingswap_icon.png" alt="LivingSwap Logo" style="width: 8%">
+              Preserving Source Video Realism: High-Fidelity Face Swapping for Cinematic Quality
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="#">Zekai Luo</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Zongze Du</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Zhouhang Zhu</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Hao Zhong</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Muzhi Zhu</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://github.com/encounter1997" target="_blank">Wen Wang</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="#">Yuling Xi</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://jingchenchen.github.io/">Chenchen Jing</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://stan-haochen.github.io/" target="_blank">Hao Chen</a><sup>1,†</sup>,</span>
+              <span class="author-block">
+                <a href="https://cshen.github.io/" target="_blank">Chunhua Shen</a><sup>1,2,†</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Zhejiang University,</span>
+              <span class="author-block"><sup>2</sup>Zhejiang University of Technology</span>
+              <span class="eql-cntrb"><small><br><sup>†</sup>Corresponding Author</small></span>
+            </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- TODO: Update with your arXiv paper ID -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <!-- TODO: Replace with your GitHub repository URL -->
+                  <span class="link-block">
+                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- TODO: Update with your arXiv paper ID -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Main Results (Video Carousel) -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <!-- <h2 class="title is-3">Main Results</h2> -->
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-video1">
+          <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00032_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Facial Makeup & Exaggerated Expressions & Extreme Poses & Fast Motion & Face Occlusion
+          </h2>
+        </div>
+        <div class="item item-video2">
+          <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00001_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Long-take Video & Fast Motion & Reappearing Face
+          </h2>
+        </div>
+        <div class="item item-video3">
+          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00013_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Exaggerated Expressions & Extreme Poses & Long-take Video
+          </h2>
+        </div>
+        <div class="item item-video4">
+          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00011_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Exaggerated Expressions & Cinematic Lighting & Extreme Poses
+          </h2>
+        </div>
+        <div class="item item-video5">
+          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00007_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">
+            Cinematic Lighting & Semi-transparent Face Occlusion
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Main Results -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <!-- TODO: Replace with your paper abstract -->
+          <p>
+            <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit. -->
+            Video face swapping is crucial in film and entertainment production, where achieving high fidelity and temporal consistency over long and complex video sequences remains a significant challenge. 
+            Inspired by recent advances in reference-guided image editing, we explore whether rich visual attributes from source videos can be similarly leveraged to enhance both fidelity and temporal coherence in video face swapping.
+            Building on this insight, this work presents <strong><em>LivingSwap</em></strong>, the first video reference guided face swapping model. 
+            Our approach employs keyframes as conditioning signals to inject the target identity, enabling flexible and controllable editing. 
+            By combining keyframe conditioning with video reference guidance, the model performs temporal stitching to ensure stable identity preservation and high-fidelity reconstruction across long video sequences.
+            To address the scarcity of data for reference-guided training, we construct a paired face-swapping dataset, <strong><em>Face2Face</em></strong>, and further reverse the data pairs to ensure reliable ground-truth supervision.
+            Extensive experiments demonstrate that our method achieves state-of-the-art results, seamlessly integrating the target identity with the source video’s expressions, lighting, and motion, while significantly reducing manual effort in production workflows.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Methodology -->
+<section class="section hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Methodology</h2>
+        <div class="content has-text-justified">
+          <!-- TODO: Replace with your method image -->
+          <img src="static/images/pipeline.jpg" alt="Methodology" style="width: 100%; margin-bottom: 20px;">
+          <!-- 将 JPG 改为嵌入 PDF -->
+          <!-- <iframe  src="static/pdfs/pipeline.pdf" width="100%" height="550"> </iframe> -->
+          <p>
+            <!-- Here you can describe your method. Explain the architecture, the loss functions, and the training process. -->
+            Overview of the proposed <strong><em>LivingSwap</em></strong> framework for video face swapping. 
+            (1) Keyframes are used as temporal anchors to ensure consistent identity injection across long sequences. 
+            (2) We feed the source video as a reference, enabling high-fidelity reconstruction of non-identity attributes such as lighting and expressions. 
+            (3) By sequentially generating chunks and propagating the final frame of the previous chunk as guidance, <strong><em>LivingSwap</em></strong> achieves seamless transitions in long videos. 
+            (4) We use Per-frame Edit method to generate the data and reverse data roles to construct paired samples, ensuring reliable and artifact-free learning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Methodology -->
+
+
+
+<!-- Comparisons on CineFaceBench -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Comparisons on CineFaceBench</h2>
+      <div class="carousel results-carousel">
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00127_diff_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 4</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00101_sim_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 3</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00181_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 3</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00007_diff_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 1</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00049_diff_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/compare_bench/00075_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Comparison 2</h2> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Comparisons -->
+
+<!-- Robustness to Keyframe Quality -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Robustness to Keyframe Quality</h2>
+      <div class="carousel results-carousel">
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/keyframe_robustness/inswapper_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Using Inswapper for Keyframes</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/keyframe_robustness/simswap_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Using SimSwap for Keyframes</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/keyframe_robustness/blendface_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Using BlendFace for Keyframes</h2>
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/keyframe_robustness/canonswap_concat.mp4" type="video/mp4">
+          </video>
+          <h2 class="subtitle has-text-centered">Using CanonSwap for Keyframes</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Robustness -->
+
+<!-- More Applications on Cinematic Scene -->
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">More Applications on Cinematic Scene</h2>
+      <div class="carousel results-carousel">
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00016_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 1</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00015_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00025_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00028_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00026_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00027_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00009_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/cinematic_results/00010_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Cinematic Scene 2</h2> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Cinematic Scene -->
+
+<!-- More Results on CineFaceBench -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">More Results on CineFaceBench (Easy & Hard)</h2>
+      <div class="carousel results-carousel">
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00006_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 1</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00021_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00042_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00067_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00116_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00123_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00125_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+        <div class="item">
+          <video poster="" controls muted loop height="100%" preload="metadata">
+            <source src="static/videos/bench_results/00163_concat.mp4" type="video/mp4">
+          </video>
+          <!-- <h2 class="subtitle has-text-centered">Bench Result 2</h2> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Bench Results -->
+
+<!--BibTex citation -->
+  <!-- <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+    </div>
+</section> -->
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
