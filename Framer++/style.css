@@ -1,0 +1,453 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+}
+td {
+	font-size: 20px;
+}
+.page-container {
+    width: 1200px;
+    min-height: 1000px;
+    margin: 0 auto; /* top and bottom, right and left */
+    text-align: left; /* top, right, bottom, left */
+    padding-top: 0em;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+}
+
+
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+  }
+
+
+th.afhq {
+    width: 200px;  
+}
+th {
+    text-align: center;
+}
+.intra-link {
+    color: #4488ff;
+    text-decoration: underline;
+}
+a:active {
+    color: #4488ff;
+    text-decoration: underline;
+}
+a:visited {
+    color: #4488ff;
+    text-decoration: underline;
+}
+a:hover {
+    color: #ff0000;
+    text-decoration: none;
+}
+.reference {
+    font-size: 80%;
+}
+.emph {
+    color: #B1FF00;
+}
+
+.comparison-img {
+    width: 150px !important;
+}
+
+hr {
+    background-color: white;
+}
+
+.video-grid {
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+    /* gap: 1px; /* Adjust the gap between videos as needed */
+  }
+  
+  .video-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 48%;
+    /* height: 350px; /* Set the desired width */
+    /* padding-bottom: 350px; */
+    /* overflow: hidden; */
+  }
+  
+  
+  .video-wrapper video {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .video-wrapper .hover-video {
+    display: none;
+  }
+  
+  .video-wrapper .overlay-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
+    font-family: "Chalkduster";
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: center;
+  }
+  
+  .video-wrapper:hover .default-video {
+    display: none;
+  }
+  
+  .video-wrapper:hover .hover-video {
+    display: block;
+  }
+  
+  .video-wrapper:hover .overlay-text {
+    opacity: 1;
+  }
+  
+  
+  .video-wrapper video::-webkit-media-controls {
+    display: none !important;
+  }
+  
+  .video-wrapper video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+  
+  .video-wrapper video::-webkit-media-controls-panel {
+    display: none !important;
+  }
+  
+  .video-wrapper video::-webkit-media-controls-play-button {
+    display: none !important;
+  }
+  
+  
+  
+  
+  .video-grid-wide {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust the number of columns as needed */
+    gap: 1px; /* Adjust the gap between videos as needed */
+  }
+  
+  .video-warpper-wide {
+    position: relative;
+    width: 350px; /* Set the desired width */
+    height: 350px;
+    overflow: hidden;
+  }
+  
+  .video-warpper-wide video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .video-warpper-wide .hover-video {
+    display: none;
+  }
+  
+  .caption-vid {
+    display: inline-block;
+  }
+  
+  .video-warpper-wide .overlay-text {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
+    font-family: "Chalkduster";
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: center;
+  }
+  
+  .video-warpper-wide:hover .default-video {
+    display: none;
+  }
+  
+  .video-warpper-wide:hover .hover-video {
+    display: block;
+  }
+  
+  .video-warpper-wide:hover .overlay-text {
+    opacity: 1;
+  }
+
+/* Add by me */
+.container {
+    display: block;
+    text-align: center;
+}
+.gif {
+    display: block;
+    margin: 10px auto;
+    max-width: 800px; /* You can change this value to control the width of the video_comparison */
+}
+.input_image{
+  width: 256px; /* Set the desired width */
+  height:256px;
+}
+
+.input_image_morph{
+  width: 340px; /* Set the desired width */
+  height:340px;
+}
+
+.input_image_morph_rec_small{
+  width: 220px; /* Set the desired width */
+  height:140px;
+}
+
+.input_image_morph_rec{
+  width: 340px; /* Set the desired width */
+  height:212.5px;
+}
+
+.input_image_morph_rec_1{
+  width: 340px; /* Set the desired width */
+  height:255px;
+}
+
+.input_image_ablation1{
+  width: 200px; /* Set the desired width */
+  height:200px;
+}
+.input_image_loop{
+  width: 512px; /* Set the desired width */
+  height:320px;
+}
+.input_image_frameinterp{
+  width: 256px; /* Set the desired width */
+}
+.input_image_normal{
+  width: 340px; /* Set the desired width */
+}
+.input_image_topdownlayout{
+  width: 120px; /* Set the desired width */
+}
+.input_image_topdownlayout_rectan{
+  width: 160px; /* Set the desired width */
+}
+.input_image_motion{
+  width: 200px;
+}
+.input_image_story{
+  width: 150px;
+}
+.media-border {
+  /* border: 1px solid #808080; */
+  border: 1px solid rgb(177, 174, 174);
+
+}
+
+
+.video-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+.video-container:hover {
+  z-index: 2; /* Add this line to increase the z-index when hovering */
+}
+.hover-image {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+}
+
+.video-container:hover .hover-image {
+  display: block;
+}
+
+.caption {
+  display: none;
+  position: absolute;
+  /* bottom: -30px; Adjust this value to change the position of the caption */
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.video-container:hover .caption {
+  display: block;
+}
+
+
+/* 容器整体样式 */
+.ablation-container {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.ablation-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* 输入区域（首帧 + Prompt） */
+.input-context {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  border: 1px solid #eee;
+}
+
+.start-frame-box {
+  width: 180px;
+  text-align: center;
+}
+
+.start-frame-box img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+}
+
+.prompt-box {
+  flex: 1;
+  font-style: italic;
+  color: #555;
+  background: #f1f3f5;
+  padding: 15px;
+  border-left: 4px solid #4a90e2;
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* 视频对比网格 */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 三列等宽 */
+  gap: 15px;
+}
+
+.result-item {
+  text-align: center;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.result-item:hover {
+  transform: translateY(-5px);
+}
+
+.result-label {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #444;
+  font-size: 0.9rem;
+  height: 1.2rem;
+}
+
+/* 强制正方形视频 */
+.square-video {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 锁定 1:1 比例 */
+  object-fit: cover;    /* 填充并裁剪，确保铺满正方形 */
+  border-radius: 6px;
+  background-color: #000;
+}
+
+/* .frame-label {
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #777;
+  text-transform: uppercase;
+} */
+
+
+
+
+/* 侧边栏基础样式 */
+.side-toc {
+  position: fixed;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 160px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  z-index: 1000;
+  display: none; /* 默认手机端隐藏 */
+}
+
+@media screen and (min-width: 1400px) {
+  .side-toc { display: block; } /* 宽屏显示 */
+}
+
+.toc-title {
+  font-weight: bold;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.toc-list { list-style: none; padding: 0; margin: 0; }
+
+.toc-link {
+  display: block;
+  padding: 8px 0;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+}
+
+/* --- 核心高亮样式 --- */
+.toc-link.is-active {
+  color: #3273dc !important; /* 激活时的蓝色 */
+  font-weight: 600;
+  border-left-color: #3273dc;
+  background: rgba(50, 115, 220, 0.05);
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}

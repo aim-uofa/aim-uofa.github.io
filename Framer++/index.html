@@ -1,0 +1,518 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Unleashing the Creativity of Generative Frame Interpolation</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="gallery.css">
+  <link rel="stylesheet" href="comparison.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="gallery.js"></script>
+  <script src="comparison.js"></script>
+</head>
+
+<body>
+
+<aside class="side-toc">
+  <div class="toc-title">Navigation</div>
+  <ul class="toc-list">
+    <li><a href="#top" class="toc-link">Abstract</a></li>
+    <li><a href="#gallery_container" class="toc-link">Gallery</a></li>
+    <li><a href="#comparisons_container" class="toc-link">Comparisons</a></li>
+    <li><a href="#control_signal_ablations" class="toc-link">Ablations</a></li>
+    <li><a href="#limitations_container" class="toc-link">Limitations</a></li>
+  </ul>
+</aside>
+
+  <button style="position: fixed;right: 15px;bottom: 15px;" class="toggle-all-button" type="button"><span
+      class="toggle-all-text"><a href="#top">Back to top</a></span></button>
+  <div class="page-container">
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">Framer++: Unleashing the Creativity of Generative Frame Interpolation</h1>
+              <!-- <div class="column is-full_width">
+                <h2 class="title is-5">ICCV 2025 submission ID: 2047</h2>
+              </div> -->
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="https://github.com/encounter1997">Wen Wang</a><sup>1,2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=VRsy9v8AAAAJ">Qiuyu Wang</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://ken-ouyang.github.io/">Hao Ouyang</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://felixcheng97.github.io/">Ka Leong Cheng</a><sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://zliucz.github.io/">Zichen Liu</a><sup>3</sup>,</span>
+                <br>
+                <span class="author-block">
+                  <a href="https://leecampbellgroup.blog/people-overview/yu-yue-%E8%99%9E%E8%B6%8A/">Yue Yu</a><sup>3</sup>,</span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  Xing Zhu<sup>2</sup>,</span>
+                <span class="author-block">
+                  <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ">Hao Chen</a><sup>1</sup>,</span>
+                <span class="author-block">
+                  <a href="https://cshen.github.io">Chunhua Shen</a><sup>1</sup></span>
+              </div>
+
+              <div class="is-size-6 publication-authors">
+                <span class="author-block"><sup>1</sup>Zhejiang University,</span>
+                <span class="author-block"><sup>2</sup>Ant Group,</span>
+                <br>
+                <span class="author-block"><sup>3</sup>The Hong Kong University of Science and Technology,</span>
+                <span class="author-block"><sup>4</sup>Zhejiang University of Technology</span>
+              </div>
+
+                          <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <!-- <span class="link-block">
+                  <a href="https://arxiv.org/abs/2410.18978"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+
+                <span class="link-block">
+                  <a href="https://github.com/aim-uofa/Framer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+
+                <!-- <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=4MPGKgn7jRc"
+                      class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/spaces/wwen1997/Framer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img style="max-width: 100%;" src="static/hf.png" alt="Hugging Face Demo">
+                    </span>
+                    <span>Hugging Face Demo</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/wwen1997/FramerBench"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img style="max-width: 100%;" src="static/hf.png" alt="Hugging Face Demo">
+                    </span>
+                    <span>FramerBench</span>
+                  </a>
+                </span>
+
+
+
+
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+
+                  <span class="link-block">
+                    <a href="#gallery_container" class="external-link button is-normal is-rounded">
+                      <span>Gallery</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="#comparisons_container" class="external-link button is-normal is-rounded">
+                      <span>Comparisons</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="#control_signal_ablations" class="external-link button is-normal is-rounded">
+                      <span>Control Signal Ablations</span>
+                    </a>
+                  </span>
+
+                  <span class="link-block">
+                    <a href="#limitations_container" class="external-link button is-normal is-rounded">
+                      <span>Limitations</span>
+                    </a>
+                  </span>
+
+                </div>
+              </div>
+
+              <div class="abstract-container">
+                <h2>Abstract</h2>
+                <div style="text-align: left;">
+                  <p>As an emerging task, generative frame interpolation aims to synthesize a video clip from 
+                    two images (i.e. the starting and ending frames) leveraging generative priors. 
+                    Thanks to its "generative" nature, this task is expected to provide greater 
+                    flexibility for the input frames, thus allowing for broader applications 
+                    beyond temporal super-resolution. To back up this point, we develop <i>Framer++</i>, 
+                    a diffusion-based frame interpolator that incorporates versatile control mechanisms, 
+                    including texts, trajectories, and intermediate keyframes. Alongside its good visual 
+                    quality, our model highlights strong adaptability to the provided images by delivering 
+                    smooth and coherent transitions, which unlocks a wide range of creative applications, 
+                    including morphing, smooth editing transitions, and even seamlessly connecting two images. 
+                    Recognizing that traditional frame interpolation benchmarks rely solely on consecutive 
+                    sequences and fall short in evaluation, we develop a new benchmark <i>FramerBench</i> that 
+                    more accurately assesses performance. The strong performance of <i>Framer++</i> underscores 
+                    the viability of generative frame interpolation as a foundational tool for creativity.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+
+    <h2 style="margin-top: 0em; text-align: center;" id="gallery_container" align="left"><a name="gallery"
+        id="gallery"></a>Gallery</h2>
+
+    <div class="gallery-container" id="dynamic-gallery">
+      <!-- Gallery sections will be dynamically inserted here -->
+    </div>
+
+        
+    <!------------------ BEGIN SECTION ------------------>
+
+    <hr>
+    <h2 style="margin-top: 0em; text-align: center;" id="comparisons_container" align="left"><a name="comparisons"
+        id="comparisons"></a>Comparisons</h2>
+
+
+    <div id="comparison-table-container" class="comparison-table-container">
+      <!-- Comparison table will be dynamically inserted here -->
+    </div>
+
+    <!------------------ BEGIN SECTION ------------------>
+
+    <hr>
+    <h2 style="margin-top: 0em; text-align: center;" id="control_signal_ablations" align="left"><a name="benchmark"
+        id="control_signal_ablations"></a>Control Signal Ablations</h2>
+
+    <div class="ablation-container">
+      <div class="gallery-section">
+
+      <h3 class="ablation-title subtitle">Text Control</h3>
+      <div class="gallery-subsection">  
+        <div class="input-context">
+          <div class="start-frame-box">
+            <img src="control_signal_ablation/control_text/frame_000.png" alt="Start Frame" />
+            <div class="frame-label">Start Frame</div>
+          </div>
+          <div class="start-frame-box">
+            <img src="control_signal_ablation/control_text/frame_008.png" alt="End Frame" />
+            <div class="frame-label">End Frame</div>
+          </div>
+          <div class="prompt-box">
+            <strong>Prompt:</strong> “A blue and white soccer ball is seen rolling on the grass near a mossy tree, with a wooden post and a wire mesh fence in the background, indicating a residential area.”
+          </div>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-item">
+            <div class="result-label">w/o Text CFG</div>
+            <video class="square-video" autoplay loop muted playsinline controls>
+              <source src="control_signal_ablation/control_text/0159_wo_cfg.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="result-item">
+            <div class="result-label">w/o AdaCFG</div>
+            <video class="square-video" autoplay loop muted playsinline controls>
+              <source src="control_signal_ablation/control_text/0159_wo_adacfg.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="result-item" style="border: 2px solid #4a90e2; background-color: #f0f7ff;">
+            <div class="result-label" style="color: #4a90e2;">Ours (Framer++)</div>
+            <video class="square-video" autoplay loop muted playsinline controls>
+              <source src="control_signal_ablation/control_text/0159_ours.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+ <br />
+      <div class="gallery-section">
+        <h3 class="ablation-title subtitle">Trajectory Control</h3>
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/man_start.jpg" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/man_end.jpg" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_drag/man.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/cat_start.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/cat_end.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_drag/cat.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/elk_start.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/elk_end.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_drag/elk.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/monkey_start.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_drag/monkey_end.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_drag/monkey.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery-section">
+        <h3 class="ablation-title subtitle">Image Control</h3>
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_image/snow_two/383.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="control_signal_ablation/control_image/snow_two/end_23.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_image/snow_two/image.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; width: 70%; justify-content: space-between; align-self: center;">
+              <div style="width: 15%; ">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/383.png" />
+                <div class="frame-label">Start Frame</div>
+              </div>
+              <div style="width: 15%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/384.png" />
+              </div>
+              <div style="width: 15%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/385.png" />
+              </div>
+              <div style="width: 15%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/386.png" />
+              </div>
+              <div style="width: 15%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/387.png" />
+              </div>
+              <div style="width: 15%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/snow_multiple/end_23.png" />
+                <div class="frame-label">End Frame</div>
+              </div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_image/snow_multiple/video.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; width: 60%; justify-content: space-between; align-self: center;">
+              <div style="width: 30%; ">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_joint/150_frame_000.png" />
+                <div class="frame-label">Start Frame</div>
+              </div>
+              <div style="width: 30%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_joint/150_frame_008.png" />
+              </div>
+              <div style="width: 30%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_joint/151_frame_008.png" />
+                <div class="frame-label">End Frame</div>
+              </div>
+            </div>
+            <div style="width: 40%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="control_signal_ablation/control_image/train_joint/train_joint.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="display: flex; width: 60%; justify-content: space-between; align-self: center;">
+              <div style="width: 30%; ">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_sep/150_frame_000.png" />
+                <div class="frame-label">Start Frame</div>
+              </div>
+              <div style="width: 30%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_sep/150_frame_008.png" />
+              </div>
+              <div style="width: 30%;">
+                <img style="width: 100%;" src="control_signal_ablation/control_image/train_sep/151_frame_008.png" />
+                <div class="frame-label">End Frame</div>
+              </div>
+            </div>
+            <div style="display: flex; width: 40%; justify-content: space-between; align-self: center;">
+              <div style="width: 50%;">
+                <video style="width: 100%;" autoplay loop muted playsinline controls>
+                  <source src="control_signal_ablation/control_image/train_sep/0150.mp4" type="video/mp4">
+                </video>
+                <p>Video sep 1</p>
+              </div>
+              <div style="width: 50%;">
+                <video style="width: 100%;" autoplay loop muted playsinline controls>
+                  <source src="control_signal_ablation/control_image/train_sep/0151.mp4" type="video/mp4">
+                </video>
+                <p>Video sep 2</p>
+              </div>
+            </div>
+
+          </div>
+          <div>* We generate the videos separately. The first video is based on the
+            first two frames, and the second video is based on the last two frames.</div>
+        </div>
+      </div>
+    </div>
+
+    <!------------------ BEGIN SECTION ------------------>
+
+    <hr>
+    <h2 style="margin-top: 0em; text-align: center;" id="limitations_container" align="left"><a name="failure_cases"
+        id="failure_cases"></a>Limitations and Failure Cases</h2>
+
+    <div class="results-container">
+      <div class="gallery-section">
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="fail/fail_1_start.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="fail/fail_1_end.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="fail/fail_1.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="gallery-subsection">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="fail/fail_2_start.png" />
+              <div class="frame-label">Start Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <img style="width: 100%;" src="fail/fail_2_end.png" />
+              <div class="frame-label">End Frame</div>
+            </div>
+            <div style="width: 30%;">
+              <video style="width: 100%;" autoplay loop muted playsinline controls>
+                <source src="fail/fail_2.mp4" type="video/mp4">
+              </video>
+              <div class="frame-label">Video</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
+
+

@@ -1,0 +1,114 @@
+.comparisons-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.comparisons-section {
+  margin-bottom: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px 20px;
+  border: 1px solid #eaeaea;
+}
+
+.comparisons-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.comparison-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.comparison-table th, 
+.comparison-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.comparison-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+
+.comparison-table thead th:first-child {
+  width: 150px;
+}
+
+.case-name {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.result-cell {
+  width: 5%;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.ours-cell {
+  width: 10%;
+}
+
+.comparison-video-container {
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.comparison-video-container video {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+/* Highlight our method column */
+.comparison-table th:last-child,
+.comparison-table td:last-child {
+  background-color: #f0f8ff;
+  border-left: 2px solid #4a90e2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .comparison-video-container {
+    max-width: 200px;
+  }
+  
+  .comparison-table th, 
+  .comparison-table td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .comparison-video-container {
+    max-width: 150px;
+  }
+  
+  .comparison-table th, 
+  .comparison-table td {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+  
+  .comparisons-title {
+    font-size: 1.5rem;
+  }
+} 
