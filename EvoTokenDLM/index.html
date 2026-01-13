@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!--Include Bootstrap's JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
+    <!-- Custom JS for this template -->
+    <script src="js/copyText.js"></script>
+    <!-- Katex -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+
+
+
+    <!--Include the icon fonts stylesheet-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!--Include Bootstrap's CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+          crossorigin="anonymous">
+    <!--Local Icon-->
+    <link rel="stylesheet" href="icons/style.css">
+    <!--Local Fonts-->
+    <link rel="stylesheet" href="fonts/avenir-next/stylesheet.css">
+    <link rel="stylesheet" href="fonts/segoe-print/stylesheet.css">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="style.css">
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Website Title -->
+    <title>Beyond Hard Masks: Progressive Token Evolution for Diffusion Language Models</title>
+    <!-- <title>GUI-G^2: Gaussian Reward Modeling for GUI Grounding</title> -->
+    <!-- <h1>GUI-G<sup>2</sup>: Gaussian Reward Modeling for GUI Grounding</h1> -->
+    <!-- The description that appears when you share the link -->
+    <meta property="og:description" content="Beyond Hard Masks: Progressive Token Evolution for Diffusion Language Models"/>
+    <!-- Used to display page descriptions in search results -->
+    <meta name="description" content="Beyond Hard Masks, Progressive Token Evolution, Diffusion Language Models">
+    <!-- favicon -->
+    <link rel="icon" href="assets/logo.png" type="image/x-icon">
+    <style>
+        .author {
+            margin: 2rem 0;
+        }
+        .author-name {
+            display: inline-block;
+            margin: 0.3rem 1rem;
+            white-space: nowrap;
+        }
+        .author-name a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .author-name a:hover {
+            color: #007bff;
+        }
+        .author-name sup {
+            font-size: 0.8em;
+            margin-left: 2px;
+        }
+        .organization {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 1rem;
+        }
+        .footnote {
+            font-size: 0.8em;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .author-name {
+                display: block;
+                margin: 0.2rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="container">
+    <hr>
+    <!-- Paper Title -->
+    <div class="container text-center">
+        <img src="assets/logo.png" alt="Logo" style="width: 30%; vertical-align: middle; margin-right: 15px;">
+        <br>
+        <span class="title-font x-gradient-font">Beyond Hard Masks: </span>
+        <a class="title-font text-body-emphasis"
+           href="#">
+            <!-- TODO: fix arvix url -->
+            Progressive Token Evolution for Diffusion Language Models
+        </a>
+    </div>
+    <hr>
+    <!-- author list -->
+    <div class="container author text-center">
+        <!-- authors arranged in neat rows -->
+        <div class="row">
+            <div class="col-12">
+                <div class="author-name">
+                    <a href="https://github.com/zhongzero"><strong>Linhao Zhong</strong></a><sup>1,*</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://github.com/Celve"><strong>Linyu Wu</strong></a><sup>2,*</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://github.com/fangbozhen"><strong>Bozhen Fang</strong></a><sup>1</sup>
+                </div>
+                <div class="author-name">
+                    <a href="#"><strong>Tianjian Feng</strong></a><sup>1</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://jingchenchen.github.io/"><strong>Chenchen Jing</strong></a><sup>1,3</sup>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="author-name">
+                    <a href="https://github.com/encounter1997"><strong>Wen Wang</strong></a><sup>1</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://zjhzjh123.github.io/"><strong>Jiaheng Zhang</strong></a><sup>2</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ&hl=en"><strong>Hao Chen</strong></a><sup>1</sup>
+                </div>
+                <div class="author-name">
+                    <a href="https://cshen.github.io/"><strong>Chunhua Shen</strong></a><sup>1,3,†</sup>
+                </div>
+            </div>
+        </div>
+        
+        <!-- author organization -->
+        <div class="row mt-3">
+            <div class="col-12 organization">
+                <sup>1</sup>Zhejiang University &nbsp;&nbsp;
+                <sup>2</sup>National University of Singapore &nbsp;&nbsp;
+                <sup>3</sup>Zhejiang University of Technology &nbsp;&nbsp;
+                <!-- <sup>†</sup>Corresponding author -->
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 footnote">
+                <sup>*</sup>Equal contribution
+                <sup>†</sup>Corresponding author
+            </div>
+        </div>
+    <!-- paper status -->
+    <!-- <div class="text-center" style="margin-top: 20px">
+        <h3>Under Review</h3>
+    </div> -->
+    <!-- links -->
+    <div class="text-center">
+        <div class="row justify-content-md-center">
+            <div id="links">
+                <!-- TODO fix urls -->
+                <div class="col col-lg-2">
+                    <a id="arxiv" href="https://arxiv.org/abs/2601.07351">Arxiv</a>
+                </div>
+                <div class="col col-lg-2">
+                    <a id="code" href="https://github.com/aim-uofa/EvoTokenDLM">Code</a>
+                </div>
+                <div class="col col-lg-2">
+                    <a id="demo" href="https://aim-uofa.github.io/EvoTokenDLM">Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+</header>
+<br>
+
+
+<main class="container">
+    <!-- Abstract -->
+    <div class="card">
+        <div class="card-body x-gradient-block">
+            <h2 class="card-title text-center card-title-margin">Abstract</h2>
+            <p class="card-text">
+                Diffusion Language Models (DLMs) offer a promising alternative for language modeling by enabling parallel decoding through iterative refinement. However, most DLMs rely on hard binary masking and discrete token assignments, which hinder the revision of early decisions and underutilize intermediate probabilistic representations. In this paper, we propose EvoToken-DLM, a novel diffusion-based language modeling approach that replaces hard binary masks with evolving soft token distributions. EvoToken-DLM enables a progressive transition from masked states to discrete outputs, supporting revisable decoding. To effectively support this evolution, we introduce continuous trajectory supervision, which aligns training objectives with iterative probabilistic updates. Extensive experiments across multiple benchmarks show that EvoToken-DLM consistently achieves superior performance, outperforming strong diffusion-based and masked DLM baselines.
+            </p>
+
+            <div class="text-center mt-4">
+                <figure class="figure" style="max-width: 80%; margin: 0 auto;">
+                    <img src="./assets/overview.png" class="img-thumbnail figure-img img-fluid rounded"
+                        alt="Overview of EvoToken-DLM">
+                    <figcaption class="figure-caption">
+                        Comparison between MDLMs and EvoToken-DLM.
+    (a) Standard MDLMs employ only two token states, alternating between &lt;mask&gt; and discrete decoded tokens, leading to abrupt mask-to-token transitions.
+    (b) EvoToken-DLM introduces soft tokens represented by probability distributions and four token states, enabling tokens to evolve progressively through iterative refinement.
+    The top-right panel illustrates a quantitative comparison between the two approaches under the same settings based on LLaDA-Instruct-8B.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+        
+    </div>
+    <br>
+
+    <!-- Motivation -->
+    <div class="card">
+        <div class="card-body x-gradient-block">
+            <h2 class="card-title text-center card-title-margin">Motivation</h2>
+            <p class="card-text">
+                Most MDLMs rely on hard binary masking with discrete token assignments. Once a token is decoded, it is treated as final and excluded from further refinement, resulting in an abrupt transition from uncertainty to determinism. This irreversibility limits the model's ability to revise early decisions and undermines the iterative refinement paradigm of diffusion-based language modeling. In addition, although MDLMs compute token distributions for all positions at each refinement step, only a small subset of positions are updated, while the remaining probabilistic information is discarded.
+            </p>
+            
+            <div class="text-center mt-4">
+                <figure class="figure" style="max-width: 50%; margin: 0 auto;">
+                    <img src="./assets/waste-computation.png" class="img-thumbnail figure-img img-fluid rounded"
+                         alt="Illustration of inefficient utilization of predictions in masked diffusion language models">
+                    <figcaption class="figure-caption">
+                        Inefficient utilization of predictions in masked diffusion language models, where distributions are computed for all positions but only a subset are used for decoding.
+    [<i>M</i><sub>1</sub>, <i>M</i><sub>2</sub>, ..., <i>M</i><sub><i>n</i></sub>] denote the initial mask tokens following prompt <i>P</i>, and <i>dist</i><sub><i>i</i></sub> represents the predicted probability distribution for the <i>i</i>-th token in the generation sequence.
+    In this example, the total sequence of 542 tokens consists of 30 prompt tokens and 512 generated tokens, while only two positions are updated per step.
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Methodology -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Methodology</h2>
+            <hr class="body-hr"/>
+            <h4>Progressive Inference with EvoToken-DLM</h4>
+            <p class="card-text">
+                We formally define the progressive inference procedure of EvoToken-DLM as follows. Given a prompt <i>P</i>, the objective is to generate a response of length <i>N</i>. The output is partitioned into <i>M</i> = <i>N</i>/<i>B</i> discrete blocks, each of size <i>B</i>.
+                The sequence <i>X</i> is constructed by concatenating the prompt <i>P</i> with <i>N</i> tokens, denoted as <i>X</i> = (<i>P</i>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, ..., <i>x</i><sub><i>N</i></sub>), where each token <i>x</i><sub><i>i</i></sub> is characterized by a pair (<i>e</i><sub><i>i</i></sub>, <i>z</i><sub><i>i</i></sub>), comprising continuous embeddings <i>e</i><sub><i>i</i></sub> and a token state <i>z</i><sub><i>i</i></sub>.
+                Initially, all target positions are initialized as mask tokens, where <i>z</i><sub><i>i</i></sub> = <span style="font-family: monospace;">[MASK]</span> for all <i>i</i> &in; {1, ..., <i>N</i>}, and the corresponding embedding sequence is represented as <b>E</b> = (<i>e</i><sub><i>P</i></sub>, <i>e</i><sup>&lt;mask&gt;</sup><sub>1</sub>, ..., <i>e</i><sup>&lt;mask&gt;</sup><sub><i>N</i></sub>).
+                During the evolution process, each token <i>x</i><sub><i>i</i></sub> transitions through a state space consisting of four distinct stages:
+                $$
+                \texttt{[MASK]},\  \mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V}),\  \mathrm{Soft}(\mathcal{V}),\  \texttt{[Decode]},
+                $$
+                where \(\mathcal{V}\) is the vocabulary.
+            </p>
+
+            <div class="text-center mt-4">
+                <figure class="figure" style="max-width: 50%; margin: 0 auto;">
+                    <img src="./assets/inference.png" class="img-fluid rounded" alt="Progressive step-wise token update with blockwise decoding in EvoToken-DLM.">
+                    <figcaption class="figure-caption">
+                        Progressive step-wise token update with blockwise decoding in EvoToken-DLM.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p class="card-text">
+                <strong>Token Prediction.</strong>
+                At each inference step, we input embeddings <b>E</b> into the model to obtain a predicted distribution \(\{p_i^c\}_{c=1}^{|\mathcal{V}|}\) over the vocabulary for each position <i>i</i>.
+                We retain the top-<i>K</i> probabilities and renormalize them to obtain \(\{\hat{p}_i^c\}_{c=1}^{K}\), along with their corresponding tokens \(\{\hat{v}_i^c\}_{c=1}^{K} \subseteq \mathcal{V}\).
+                <i>Soft embeddings</i> are then computed as:
+                $$
+                \begin{aligned}
+                e_i^{\text{dist}} &= \sum_{c=1}^{K} \hat{p}_i^c \cdot e^{\hat{v}_i^c}, \\
+                e_i^{\text{dist+M}} &= \alpha \, e_i^{<\text{mask}>} + (1-\alpha) \, e_i^{\text{dist}},
+                \end{aligned}
+                $$
+                where \(\alpha \in [0,1]\) controls the mixing ratio of the mask embedding.
+            </p>
+
+            <p class="card-text">
+                <strong>Embedding Assignment by Token State.</strong>
+                For token <i>x</i><sub><i>i</i></sub>, its newly generated embeddings at the current step is assigned based on its current state:
+                $$
+                e_i =
+                \begin{cases}
+                e_i^{<\text{mask}>}, & z_i = \texttt{[MASK]} \\
+                e_i^{\text{dist+M}}, & z_i = \mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V}) \\
+                e_i^{\text{dist}}, & z_i = \mathrm{Soft}(\mathcal{V}) \\
+                e^{v_i}, & z_i = \texttt{[Decode]}
+                \end{cases}
+                $$
+                where <i>v</i><sub><i>i</i></sub> is selected as the token in the vocabulary with the highest confidence among all historical predictions made after <i>x</i><sub><i>i</i></sub> enters the \(\mathrm{Soft}(\mathcal{V})\) state.
+            </p>
+
+            <p class="card-text">
+                <strong>Step-wise Token Update.</strong>
+                By default, tokens in the <span style="font-family: monospace;">[MASK]</span> state transition to \(\mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V})\), whereas tokens already in the \(\mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V})\), \(\mathrm{Soft}(\mathcal{V})\), or <span style="font-family: monospace;">[Decode]</span> states retain their current state.
+                At each step, a subset of tokens currently in the <span style="font-family: monospace;">[MASK]</span> or \(\mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V})\) states in the current block is selected to transition to the \(\mathrm{Soft}(\mathcal{V})\) state. Let <i>S</i> denote the set of these selected tokens.
+                The complete update rule is formalized as:
+                $$
+                z_i \gets
+                \begin{cases}
+                \mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V}), & z_i \in \{\mathrm{Soft}([\texttt{MASK}] \cup \mathcal{V}), \\
+                                                                & \quad \quad \texttt{[MASK]}\} \text{ and } x_i \notin S \\
+                \mathrm{Soft}(\mathcal{V}), & x_i \in S \text{ or } z_i = \mathrm{Soft}(\mathcal{V}) \\
+                \texttt{[Decode]}, & z_i = \texttt{[Decode]}
+                \end{cases}
+                $$
+            </p>
+
+            <p class="card-text">
+                <strong>Blockwise Decoding.</strong>
+                Let \(\mathcal{B}\) denote the set of tokens in the current block. Once all tokens in \(\mathcal{B}\) reach the \(\mathrm{Soft}(\mathcal{V})\) state, they are simultaneously converted to the <span style="font-family: monospace;">[Decode]</span> state:
+                $$
+                \begin{aligned}
+                z_i &\gets \texttt{[Decode]}, \quad \forall x_i \in \mathcal{B}, \\
+                    &\text{if all tokens } x_j \in \mathcal{B} \text{ are in the } \mathrm{Soft}(\mathcal{V}) \text{ state}.
+                \end{aligned}
+                $$
+                Combining step-wise token update with blockwise decoding, EvoToken-DLM allows each token to gradually refine its representation from <span style="font-family: monospace;">[MASK]</span> to final <span style="font-family: monospace;">[Decode]</span> through progressive token evolution.
+            </p>
+
+            <h4>Continuous Trajectory Supervision</h4>
+
+            <p class="card-text">
+                Unlike conventional masked diffusion frameworks, EvoToken-DLM employs a progressive evolution mechanism. In this approach, the current states and embeddings of the tokens are conditioned on the cumulative history of the preceding refinements. This temporal dependency renders standard single-step denoising objectives inapplicable, necessitating a specialized training paradigm that models the trajectory of token evolution.
+                We propose continuous trajectory supervision, a training strategy that aligns model optimization with iterative probabilistic token refinement along the diffusion trajectory \(\mathcal{T}\).
+                This approach ensures consistency from training to inference.
+            </p>
+            
+            <div class="text-center mt-4">
+                <figure class="figure" style="max-width: 50%; margin: 0 auto;">
+                    <img src="./assets/train.png" class="img-fluid rounded" alt="Continuous trajectory supervision">
+                    <figcaption class="figure-caption">
+                        Continuous trajectory supervision by performing <i>&Delta;&tau;</i> consecutive refinement steps during training and applying supervision at each step, aligning the training objective with the inference process.
+                    </figcaption>
+                </figure>
+            </div>
+
+            <p class="card-text">
+                <strong>Initialization and Masking Strategy.</strong>
+                Given a sequence comprising a prompt and a target response, we sample a contiguous segment of length <i>L</i> from the response as the current training block. To align with the blockwise inference procedure, tokens preceding this block are set to the ground truth, while tokens after this block are replaced with <span style="font-family: monospace;">[MASK]</span>. Within the selected block, we randomly mask a subset of tokens to initialize the state <i>X</i><sup>(0)</sup>.
+            </p>
+
+            <p class="card-text">
+                <strong>Trajectory Unrolling.</strong>
+                Starting from <i>X</i><sup>(0)</sup>, we simulate \(\Delta \tau\) consecutive refinement steps to sample the trajectory:
+                $$
+                X^{(i)}, \; \mathcal{L}^{(i)} = \mathrm{Model}(X^{(i-1)}), \quad \forall i = 1, \dots, \Delta \tau,
+                $$
+                where each forward pass produces probability distributions, updated continuous embeddings, and updated token states according to the progressive inference rules described in Section above.
+            </p>
+
+            <p class="card-text">
+                <strong>Cumulative Trajectory Loss.</strong>
+                At each step <i>i</i>, we compute a supervised loss \(\mathcal{L}^{(i)}\) against the ground-truth tokens within the current block. Rather than backpropagating only through the final step, we perform a backward pass for every forward step:
+                $$
+                \nabla_\theta \mathcal{L}^{(i)}, \quad i = 1, \dots, \Delta \tau.
+                $$
+                By explicitly simulating the progressive refinement during training, continuous trajectory supervision aligns the learning objective with the inference behavior of EvoToken-DLM.
+            </p>
+        </div>
+    </div>
+    <br>
+
+    <!-- Experimental Results -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Experimental Results</h2>
+            <hr class="body-hr"/>
+            <div class="table-container">
+                <h4>Results</h4>
+                <p class="card-text">
+                    We employ LLaDA-Instruct-8B as our primary backbone for fine-tuning.
+                    For fine-tuning, we utilize the S1K dataset and train the pretrained model for a default duration of 10k steps using continuous trajectory supervision.
+                    Evaluations are performed across several mathematical and reasoning benchmarks, including Countdown, GSM8K, MATH500, and SVAMP.
+                    For the proposed refinement mechanism, we perform a grid search for the hyperparameter <i>&alpha;</i> within the candidate set {0.5, 0.6, 0.7, 0.8, 0.9} and report the performance associated with the optimal <i>&alpha;</i> for each setting.
+                    We compare EvoToken-DLM against the original LLaDA-Instruct-8B and the FT-baseline across multiple reasoning benchmarks. 
+                    EvoToken-DLM predominantly surpasses both baselines, exhibiting substantial performance leaps under varying configurations. 
+                    Specifically, at <i>NFE</i>/<i>Gen Len</i> = 1, our method yields average accuracy gains of 17.45% on Countdown, 3.08% on GSM8K, 2.06% on MATH500, and 3.23% on SVAMP compared to the original model. 
+                    These results underscore the superiority of our soft token evolution framework in enhancing reasoning capabilities and generation quality.
+                </p>
+
+                <div class="text-center mt-4">
+                    <figure class="figure">
+                        <img src="./assets/table-results.png" class="img-fluid rounded" alt="Performance comparison results">
+                        <figcaption class="figure-caption">
+                            Performance comparison on the Countdown, GSM8K, MATH500 and SVAMP datasets across various
+                            generation lengths and NFEs based on LLaDA-Instruct-8B. EvoToken-DLM is initialized from LLaDA-Instruct-8B
+                            and fine-tuned for 10k steps using continuous trajectory supervision. Comparisons are conducted against both the
+                            baseline model and the sft-baseline.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h4>Qualitative Visualization</h4>
+                <p class="card-text">
+                    We provide a qualitative visualization of the inference process.
+                    By tracing the evolution of a selected subsequence, we observe how initial uncertain tokens progressively converge into precise and coherent results.
+                    This visualization confirms that EvoToken-DLM effectively implements a progressive refinement mechanism, allowing the model to iteratively calibrate its predictions within the diffusion framework.
+                </p>
+
+                <div class="text-center mt-4">
+                    <figure class="figure">
+                        <img src="./assets/inference-example.png" class="img-fluid rounded" alt="Qualitative visualization of inference process">
+                        <figcaption class="figure-caption">
+                            An illustrative example of EvoToken-DLM during inference, showing intermediate refinement states for a selected subsequence across successive steps.
+                            The block size is set to 12, and the refinement process for the first 16 output tokens is visualized.
+                            For each position, only the top <i>K</i>=3 most probable tokens are retained.
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+    <!-- Citation -->
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title card-title-margin">Citation</h2>
+            <p id="bibtex" class="card-text" style="border: #1a1c20 1px">
+                <code> 
+                    <!-- TODO fixed citation -->
+                    @article{zhong2026beyond,<br>
+                    &nbsp;&nbsp;title={Beyond Hard Masks: Progressive Token Evolution for Diffusion Language Models},<br>
+                    &nbsp;&nbsp;author={Zhong, Linhao and Wu, Linyu and Fang, Bozhen and Feng, Tianjian and Jing, Chenchen and Wang, Wen and Zhang, Jiaheng and Chen, Hao and Shen, Chunhua},<br>
+                    &nbsp;&nbsp;journal={arXiv preprint arXiv:2601.07351},<br>
+                    &nbsp;&nbsp;year={2026}<br>
+                    }
+                </code>
+            </p>
+
+            <!-- Bibtex (Button trigger modal)-->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    onclick="copyText()">
+                Copy BibTex
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Bibtex</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="bibtex modal-body">
+                            Copy Success!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- left layout -->
+            <div class="col-12 col-md-6 text-md-start text-center">
+                <p class="footer-title mb-0">Time is a Feature</p>
+            </div>
+            <!-- right layout -->
+            <div class="col-12 col-md-6 text-md-end text-center">
+                <p class="footer-text mb-0">
+                    This webpage template was originally made by
+                    <a href="https://github.com/ximinng/GithubPages-Template" class="link-primary text-decoration-none">Ximing Xing</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+function copyText() {
+    const text = document.getElementById("bibtex").innerText;
+    const new_input = document.createElement('input');
+    new_input.value = text
+    document.body.appendChild(new_input)
+    // select value of new_input
+    new_input.select();
+    // exec copy command
+    document.execCommand("copy");
+    document.body.removeChild(new_input);
+}
+</script>
+
+</body>
+</html>
