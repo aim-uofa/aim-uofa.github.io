@@ -156,6 +156,18 @@
     .cite-button:active { transform: scale(0.98); }
     .cite-feedback { min-height: 1.3rem; margin: 0.45rem 0 0; color: rgba(255,255,255,0.5); font-size: 0.86rem; }
 
+    .hero-link-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.65rem 1.25rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem;
+      text-decoration: none; transition: transform 220ms cubic-bezier(.16,1,.3,1), background-color 220ms ease, border-color 220ms ease;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(76,110,245,0.18); color: #c7d2fe;
+    }
+    .hero-link-btn:hover { background: rgba(76,110,245,0.28); border-color: rgba(145,167,255,0.35); color: #e0e7ff; }
+    .hero-link-btn.secondary { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+    .hero-link-btn.secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .hero-link-btn:active { transform: scale(0.98); }
+
     @media(max-width:768px) {
       .result-table { font-size:11px; }
       .result-table th, .result-table td { padding:6px 4px; }
@@ -176,7 +188,7 @@
         <a href="#results" class="nav-link">Results</a>
         <a href="#analysis" class="nav-link">Analysis</a>
         <a href="#examples" class="nav-link">Examples</a>
-        <!-- <a href="#citation" class="nav-link">Citation</a> -->
+        <a href="#citation" class="nav-link">Citation</a>
       </nav>
       <button id="menu-toggle" class="md:hidden text-white" aria-label="Toggle menu">
         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -193,7 +205,7 @@
     <a href="#results" class="text-xl text-white font-medium" onclick="closeMobileNav()">Results</a>
     <a href="#analysis" class="text-xl text-white font-medium" onclick="closeMobileNav()">Analysis</a>
     <a href="#examples" class="text-xl text-white font-medium" onclick="closeMobileNav()">Examples</a>
-    <!-- <a href="#citation" class="text-xl text-white font-medium" onclick="closeMobileNav()">Citation</a> -->
+    <a href="#citation" class="text-xl text-white font-medium" onclick="closeMobileNav()">Citation</a>
   </div>
 
   <main>
@@ -227,6 +239,17 @@
             </div>
             <div class="mt-1 text-xs text-gray-500">* Equal contribution &nbsp;&middot;&nbsp; &dagger; Corresponding authors</div>
           </div>
+        </div>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4 fade-in-up delay-200">
+          <a href="https://arxiv.org/abs/2604.08209" class="hero-link-btn" target="_blank" rel="noopener noreferrer" aria-label="Paper on arXiv">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Paper (arXiv)
+          </a>
+          <a href="https://github.com/aim-uofa/OmniJigsaw" class="hero-link-btn secondary" target="_blank" rel="noopener noreferrer" aria-label="Source code on GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            Code
+          </a>
         </div>
 
       </div>
@@ -631,7 +654,6 @@
       </div>
     </section>
 
-    <!-- Citation (hidden until we have the arXiv link)
     <section id="citation" class="py-20 px-6">
       <div class="max-w-3xl mx-auto reveal">
         <div class="cite-heading">
@@ -642,7 +664,7 @@
           <pre id="citation-block">@article{jia2026omnijigsaw,
   title={OmniJigsaw: Enhancing Omni-Modal Reasoning via Modality-Orchestrated Reordering},
   author={Jia, Yiduo and Zhu, Muzhi and Zhong, Hao and Liu, Mingyu and Xi, Yuling and Chen, Hao and Qin, Bin and Yang, Yongjie and Luo, Zhenbo and Shen, Chunhua},
-  journal={arXiv preprint},
+  journal={arXiv preprint arXiv:2604.08209},
   year={2026}
 }</pre>
           <button id="copy-citation" class="cite-button" type="button" onclick="copyBibtex()">
@@ -652,7 +674,6 @@
         </div>
       </div>
     </section>
-    -->
   </main>
 
   <!-- Footer -->
