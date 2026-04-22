@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GSI-Bench · Exploring Spatial Intelligence from a Generative Perspective</title>
+<meta name="description" content="GSI-Bench: the first benchmark that quantifies Generative Spatial Intelligence through spatially grounded image editing, spanning a real-world set (GSI-Real) and a large-scale synthetic set (GSI-Syn)." />
+<meta property="og:title" content="Exploring Spatial Intelligence from a Generative Perspective" />
+<meta property="og:description" content="GSI-Bench quantifies Generative Spatial Intelligence through spatially grounded image editing." />
+<meta property="og:image" content="assets/figures/teaser_main.png" />
+<link rel="preload" as="image" href="assets/figures/teaser_main.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ============================================================= HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="venue"><span class="dot"></span>CVPR 2026 · Paper&nbsp;#5700</span>
+    <h1 class="title">
+      Exploring Spatial Intelligence<br/>
+      from a <span class="hl">Generative Perspective</span>
+    </h1>
+    <div class="subtitle">
+      GSI-Bench &mdash; a benchmark and training set for Generative Spatial Intelligence,
+      spanning real-world (GSI-Real) and large-scale synthetic (GSI-Syn) settings.
+    </div>
+
+    <div class="authors">
+      <span class="name">Muzhi Zhu<sup>1,2</sup><sup class="equal">*</sup></span>,
+      <span class="name">Shunyao Jiang<sup>1</sup><sup class="equal">*</sup></span>,
+      <span class="name">Huanyi Zheng<sup>1</sup></span>,
+      <span class="name">Zekai Luo<sup>1</sup></span>,
+      <span class="name">Hao Zhong<sup>1</sup></span>,
+      <span class="name">Anzhou Li<sup>1,2</sup></span>,<br/>
+      <span class="name">Kaijun Wang<sup>1</sup></span>,
+      <span class="name">Jintao Rong<sup>4</sup></span>,
+      <span class="name">Yang Liu<sup>1</sup></span>,
+      <span class="name">Hao Chen<sup>1</sup><sup class="corr">&dagger;</sup></span>,
+      <span class="name">Tao Lin<sup>3,2</sup></span>,
+      <span class="name">Chunhua Shen<sup>1,2</sup><sup class="corr">&dagger;</sup></span>
+    </div>
+
+    <div class="affiliations">
+      <sup>1</sup>Zhejiang University, State Key Laboratory of CAD&nbsp;&amp;&nbsp;CG &nbsp;·&nbsp;
+      <sup>2</sup>Ant Group &nbsp;·&nbsp;
+      <sup>3</sup>Westlake University &nbsp;·&nbsp;
+      <sup>4</sup>Zhejiang University of Technology &nbsp;
+      <br/>
+      <small><sup class="equal">*</sup>Equal contribution &nbsp;&nbsp;
+      <sup class="corr">&dagger;</sup>Corresponding authors</small>
+    </div>
+
+    <div class="badges">
+      <a class="badge" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H14a1 1 0 0 1-1-1V3.5z"/></svg>
+        Paper (PDF)
+      </a>
+      <a class="badge" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 15l-5-5 1.4-1.4L11 14.2l6.6-6.6L19 9l-8 8z"/></svg>
+        arXiv
+      </a>
+      <a class="badge soft" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.7 15.3L4.4 11l4.3-4.3L7.3 5.3 1.6 11l5.7 5.7zm6.6 0l4.3-4.3-4.3-4.3 1.4-1.4L22.4 11l-5.7 5.7z"/></svg>
+        Code
+      </a>
+      <a class="badge soft" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 4v12l-9 4-9-4V6l9-4zm0 2.2L5 7v10l7 3 7-3V7l-7-2.8zM7 9.5l5 2.2 5-2.2V15l-5 2.2L7 15V9.5z"/></svg>
+        Dataset
+      </a>
+      <a class="badge soft" href="#bibtex">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2z"/></svg>
+        BibTeX
+      </a>
+    </div>
+  </div>
+
+  <!-- ---- teaser ---- -->
+  <div class="teaser">
+    <div class="teaser-wrap interactive">
+      <img src="assets/figures/teaser_main.png" alt="GSI-Bench overview" />
+      <div class="teaser-cap">
+        <b>Figure&nbsp;1.</b> GSI-Bench evaluates a diverse set of spatial editing skills across
+        real-world (GSI-Real) and synthetic (GSI-Syn-Tabletop, GSI-Syn-Room) domains. A unified
+        evaluation protocol measures <b>Instruction Compliance (IC)</b>, <b>Spatial Accuracy (SA)</b>,
+        <b>Edit Locality (EL)</b>, and <b>Appearance Consistency (AC)</b>. Fine-tuning with GSI-Syn
+        substantially boosts spatial generation <i>and</i> spatial understanding across every subset.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================= ABSTRACT -->
+<section id="abstract">
+  <div class="narrow">
+    <h2 class="section-title">Abstract</h2>
+    <p class="lead">
+      Spatial intelligence is essential for multimodal large language models, yet current
+      benchmarks largely assess it only from an <em>understanding</em> perspective. We ask whether
+      modern generative or unified multimodal models also possess <strong>Generative Spatial
+      Intelligence (GSI)</strong>&mdash;the ability to respect and manipulate 3D spatial constraints
+      during image generation&mdash;and whether such capability can be <em>measured</em> or
+      <em>improved</em>.
+    </p>
+    <p class="lead">
+      We introduce <strong>GSI-Bench</strong>, the first benchmark designed to quantify GSI through
+      spatially grounded image editing. It consists of two complementary components:
+      <strong>GSI-Real</strong>, a high-quality real-world dataset built via a 3D-prior-guided
+      generation and filtering pipeline, and <strong>GSI-Syn</strong>, a large-scale synthetic
+      benchmark with controllable spatial operations and fully automated labeling. Together with a
+      unified evaluation protocol, GSI-Bench enables scalable, model-agnostic assessment of spatial
+      compliance and editing fidelity.
+    </p>
+    <p class="lead">
+      Experiments show that fine-tuning unified multimodal models on GSI-Syn yields substantial gains
+      on both synthetic and real tasks and, strikingly, also improves downstream spatial
+      <em>understanding</em>. This provides the first clear evidence that generative training can
+      tangibly strengthen spatial reasoning&mdash;establishing a new pathway for advancing spatial
+      intelligence in multimodal models.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================= HIGHLIGHTS -->
+<section class="tight" id="highlights">
+  <div class="container">
+    <h2 class="section-title">Key Statistics</h2>
+    <p class="section-sub">A compact snapshot of GSI-Bench's scale and scope.</p>
+
+    <div class="highlights">
+      <div class="hcard">
+        <h3>GSI-Real</h3>
+        <div class="num">441</div>
+        <div class="desc">real-world samples drawn from 211 diverse ScanNet++ scenes, spanning 3 operation types.</div>
+      </div>
+      <div class="hcard">
+        <h3>GSI-Syn-Tabletop</h3>
+        <div class="num">600</div>
+        <div class="desc">MesaTask-based tabletop samples with 3 controllable operations.</div>
+      </div>
+      <div class="hcard">
+        <h3>GSI-Syn-Room</h3>
+        <div class="num">593</div>
+        <div class="desc">AI2-THOR-based room samples covering 6 spatial operation categories.</div>
+      </div>
+      <div class="hcard">
+        <h3>GSI-Syn-Train</h3>
+        <div class="num">10,500</div>
+        <div class="desc">training pairs (1,500 per operation per environment) with strict scene separation.</div>
+      </div>
+    </div>
+
+    <div class="dchips" aria-label="Spatial operation categories">
+      <span class="chip pink">Camera-Relative Movement</span>
+      <span class="chip cream">Object Rotation</span>
+      <span class="chip cyan">Object Scaling</span>
+      <span class="chip green">Object Removal</span>
+      <span class="chip lav">Perspective Control</span>
+      <span class="chip pink">Object Placement</span>
+      <span class="chip cream">Receptacle Placement</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= CONTRIBUTIONS -->
+<section id="contrib">
+  <div class="container">
+    <h2 class="section-title">Contributions</h2>
+    <p class="section-sub">Four concrete steps toward spatial intelligence from generation.</p>
+
+    <div class="contribs">
+      <div class="contrib">
+        <div class="ic">01</div>
+        <div>
+          <h4>A benchmark for Generative Spatial Intelligence</h4>
+          <p>We introduce GSI-Bench, which operationalizes GSI as spatially grounded image
+          editing&mdash;requiring models to respect explicit 3D constraints while generating.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">02</div>
+        <div>
+          <h4>Two complementary datasets</h4>
+          <p><strong>GSI-Real</strong> is the first high-quality real-world set for spatially
+          grounded editing; <strong>GSI-Syn</strong> is a large-scale synthetic set with
+          controllable operations and difficulty levels.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">03</div>
+        <div>
+          <h4>Automated pipelines</h4>
+          <p>We build an end-to-end pipeline for data generation <em>and</em> evaluation that
+          combines 3D grounding priors, rule-based operation sampling, MLLM captioning &amp;
+          validation, and human verification.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">04</div>
+        <div>
+          <h4>Generation improves understanding</h4>
+          <p>Fine-tuning on GSI-Syn&mdash;with no understanding or QA supervision&mdash;improves
+          spatial generation <em>and</em> transfers to downstream spatial understanding benchmarks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= PIPELINE -->
+<section id="pipeline">
+  <div class="container">
+    <h2 class="section-title">Benchmark Construction Pipeline</h2>
+    <p class="section-sub">A unified pipeline for synthetic and real-world spatial editing data.</p>
+    <figure class="figure interactive">
+      <img src="assets/figures/pipeline.png" alt="GSI-Bench construction pipeline" loading="lazy" />
+      <figcaption>
+        <b>GSI-Syn (top)</b> samples actionable viewpoints, validates candidate operations in 3D,
+        executes them in a simulator, and filters outcomes with multimodal quality checks.
+        <b>GSI-Real (bottom)</b> reuses 3D priors from ScanNet++ for scene reconstruction and
+        pair mining, followed by MLLM captioning and human refinement&mdash;yielding high-fidelity
+        <em>(I, T, I&prime;)</em> triplets with aligned scene metadata.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================= EVAL DIMS -->
+<section class="tight" id="eval-dims">
+  <div class="container">
+    <h2 class="section-title">Four Evaluation Dimensions</h2>
+    <p class="section-sub">Each edit is scored along a fine-grained, model-agnostic protocol.</p>
+    <div class="dims">
+      <div class="dim">
+        <span class="k">IC</span>
+        <h5>Instruction Compliance</h5>
+        <p>Does the output actually perform the requested spatial operation?</p>
+      </div>
+      <div class="dim">
+        <span class="k">SA</span>
+        <h5>Spatial Accuracy</h5>
+        <p>Is the 3D displacement, rotation, or scale close to the ground-truth geometry?</p>
+      </div>
+      <div class="dim">
+        <span class="k">AC</span>
+        <h5>Appearance Consistency</h5>
+        <p>Are object identity, category, and appearance preserved after editing?</p>
+      </div>
+      <div class="dim">
+        <span class="k">EL</span>
+        <h5>Edit Locality</h5>
+        <p>Is the rest of the scene left untouched outside the intended region?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= RESULTS -->
+<section id="results">
+  <div class="container">
+    <h2 class="section-title">Main Results</h2>
+    <p class="section-sub">
+      Performance of nine state-of-the-art image-editing and unified multimodal models on GSI-Bench.
+      Fine-tuning BAGEL on GSI-Syn&mdash;<b>BAGEL&nbsp;+&nbsp;GSI-Syn</b>&mdash;delivers the largest
+      gains on every subset. Higher is better.
+    </p>
+
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table class="results" aria-label="Main results on GSI-Bench">
+          <caption>Performance comparison on GSI-Bench across three subsets and four dimensions (higher is better). <b>Bold</b> = best open-source; <u>underline</u> = second-best.</caption>
+          <thead>
+            <tr>
+              <th rowspan="2">Subset</th>
+              <th rowspan="2">Dim</th>
+              <th colspan="2" class="group">Closed-Source</th>
+              <th colspan="8" class="group">Open-Source</th>
+              <th rowspan="2">&Delta;&uarr;</th>
+            </tr>
+            <tr>
+              <th>Nano&nbsp;Banana</th>
+              <th>GPT-img</th>
+              <th>AnyEdit</th>
+              <th>UniWorld</th>
+              <th>Ultra</th>
+              <th>Qwen</th>
+              <th>OmniGen2</th>
+              <th>Emu3.5</th>
+              <th>BAGEL</th>
+              <th>BAGEL&nbsp;+&nbsp;GSI-Syn</th>
+            </tr>
+          </thead>
+
+          <!-- GSI-Real -->
+          <tbody>
+            <tr><td class="row-label" rowspan="5">GSI-Real</td>
+              <td class="dim">IC</td>
+              <td>38.78</td><td>41.72</td><td>10.20</td><td>28.80</td><td>10.66</td>
+              <td class="second">51.02</td><td>33.56</td><td class="best">51.70</td>
+              <td>31.97</td><td>40.14</td><td class="delta">+8.16</td>
+            </tr>
+            <tr>
+              <td class="dim">SA</td>
+              <td>21.60</td><td>28.04</td><td>8.37</td><td>18.36</td><td>5.70</td>
+              <td class="best">31.22</td><td>19.62</td><td class="second">29.51</td>
+              <td>22.07</td><td>27.76</td><td class="delta">+5.68</td>
+            </tr>
+            <tr>
+              <td class="dim">AC</td>
+              <td>38.78</td><td>41.52</td><td>9.68</td><td>28.75</td><td>9.48</td>
+              <td class="second">50.95</td><td>33.20</td><td class="best">51.70</td>
+              <td>31.88</td><td>40.14</td><td class="delta">+8.25</td>
+            </tr>
+            <tr>
+              <td class="dim">EL</td>
+              <td>34.92</td><td>27.52</td><td>8.75</td><td>18.51</td><td>8.97</td>
+              <td class="second">40.55</td><td>29.82</td><td class="best">41.17</td>
+              <td>27.89</td><td>37.11</td><td class="delta">+9.22</td>
+            </tr>
+            <tr class="avg">
+              <td class="dim">Avg</td>
+              <td>33.52</td><td>34.70</td><td>9.25</td><td>23.61</td><td>8.70</td>
+              <td class="second">43.44</td><td>29.05</td><td class="best">43.52</td>
+              <td>28.46</td><td>36.28</td><td class="delta">+7.83</td>
+            </tr>
+          </tbody>
+
+          <!-- GSI-Syn-Tabletop -->
+          <tbody>
+            <tr><td class="row-label" rowspan="5">GSI-Syn-Tabletop</td>
+              <td class="dim">IC</td>
+              <td>36.62</td><td class="second">39.33</td><td>10.33</td><td>15.83</td><td>2.17</td>
+              <td>27.33</td><td>0.00</td><td>39.17</td>
+              <td>27.17</td><td class="best">50.67</td><td class="delta">+23.50</td>
+            </tr>
+            <tr>
+              <td class="dim">SA</td>
+              <td class="second">38.96</td><td>26.16</td><td>22.84</td><td>30.33</td><td>3.09</td>
+              <td>25.52</td><td>0.00</td><td>24.09</td>
+              <td>26.52</td><td class="best">44.10</td><td class="delta">+17.58</td>
+            </tr>
+            <tr>
+              <td class="dim">AC</td>
+              <td>36.62</td><td>38.40</td><td>10.33</td><td>15.58</td><td>1.33</td>
+              <td>27.27</td><td>0.00</td><td class="second">38.82</td>
+              <td>26.52</td><td class="best">50.67</td><td class="delta">+24.15</td>
+            </tr>
+            <tr>
+              <td class="dim">EL</td>
+              <td class="second">35.91</td><td>31.98</td><td>9.52</td><td>14.43</td><td>1.93</td>
+              <td>25.51</td><td>0.00</td><td>34.91</td>
+              <td>26.17</td><td class="best">49.52</td><td class="delta">+23.36</td>
+            </tr>
+            <tr class="avg">
+              <td class="dim">Avg</td>
+              <td class="second">37.03</td><td>33.97</td><td>13.26</td><td>19.04</td><td>2.13</td>
+              <td>26.41</td><td>0.00</td><td>34.25</td>
+              <td>26.59</td><td class="best">48.74</td><td class="delta">+22.15</td>
+            </tr>
+          </tbody>
+
+          <!-- GSI-Syn-Room -->
+          <tbody>
+            <tr><td class="row-label" rowspan="5">GSI-Syn-Room</td>
+              <td class="dim">IC</td>
+              <td>20.65</td><td>8.05</td><td>7.00</td><td>12.69</td><td>2.20</td>
+              <td>20.40</td><td>18.71</td><td class="second">20.70</td>
+              <td>16.11</td><td class="best">24.01</td><td class="delta">+7.90</td>
+            </tr>
+            <tr>
+              <td class="dim">SA</td>
+              <td>16.85</td><td>8.05</td><td>6.46</td><td>11.55</td><td>2.21</td>
+              <td class="second">17.73</td><td>15.03</td><td>16.56</td>
+              <td>14.53</td><td class="best">19.41</td><td class="delta">+4.88</td>
+            </tr>
+            <tr>
+              <td class="dim">AC</td>
+              <td>28.01</td><td>16.69</td><td>11.85</td><td>20.40</td><td>3.46</td>
+              <td class="second">28.67</td><td>25.94</td><td>26.98</td>
+              <td>24.00</td><td class="best">31.64</td><td class="delta">+7.64</td>
+            </tr>
+            <tr>
+              <td class="dim">EL</td>
+              <td class="second">19.65</td><td>7.34</td><td>5.50</td><td>11.03</td><td>1.86</td>
+              <td>18.48</td><td>17.13</td><td>17.56</td>
+              <td>14.82</td><td class="best">22.61</td><td class="delta">+7.79</td>
+            </tr>
+            <tr class="avg">
+              <td class="dim">Avg</td>
+              <td>21.29</td><td>10.03</td><td>7.70</td><td>13.92</td><td>2.43</td>
+              <td class="second">21.32</td><td>19.20</td><td>20.45</td>
+              <td>17.37</td><td class="best">24.42</td><td class="delta">+7.05</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="leg">
+        <span><span class="best">bold</span> = best</span>
+        <span><span class="second">underline</span> = second-best</span>
+        <span>&Delta;&uarr; = BAGEL + GSI-Syn &minus; BAGEL baseline</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= UNDERSTANDING TRANSFER -->
+<section class="tight" id="understanding">
+  <div class="container">
+    <h2 class="section-title">Generation &#8594; Understanding Transfer</h2>
+    <p class="section-sub">
+      Fine-tuning on GSI-Syn uses <em>only</em> spatially grounded generative editing data&mdash;no
+      QA or reasoning supervision&mdash;yet consistently improves downstream spatial understanding.
+    </p>
+
+    <div class="table-wrap" style="margin-bottom:24px">
+      <div class="table-scroll">
+        <table class="results" aria-label="OmniSpatial results">
+          <caption>OmniSpatial benchmark (accuracy &#37;). Best among open-source 7B models in <b>bold</b>. &dagger;Proprietary.</caption>
+          <thead>
+            <tr>
+              <th>Model</th><th>Size</th><th>Overall</th>
+              <th>Dynamic Reasoning</th><th>Spatial Interaction</th>
+              <th>Complex Logic</th><th>Perspective Taking</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>GPT-4-turbo&dagger;</td><td>&mdash;</td><td>34.06</td><td>38.39</td><td>36.49</td><td>24.80</td><td>33.69</td></tr>
+            <tr><td>Gemini-2.5&dagger;</td><td>&mdash;</td><td>52.12</td><td>63.59</td><td>67.46</td><td>35.67</td><td>43.10</td></tr>
+            <tr><td>LLaVA-1.5</td><td>7B</td><td>34.97</td><td>35.38</td><td>35.13</td><td>25.99</td><td>38.82</td></tr>
+            <tr><td>Qwen-VL-2.5</td><td>7B</td><td>39.25</td><td>46.30</td><td>30.06</td><td class="best">35.65</td><td>39.68</td></tr>
+            <tr><td>BAGEL</td><td>7B</td><td>41.55</td><td>47.38</td><td>45.67</td><td>32.14</td><td>39.22</td></tr>
+            <tr class="avg">
+              <td><b>BAGEL + GSI-Syn</b></td><td>7B</td>
+              <td class="best">42.07</td><td class="best">48.33</td><td class="best">47.67</td>
+              <td>28.97</td><td class="best">40.29</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-scroll">
+        <table class="results" aria-label="SAT-Real results">
+          <caption>SAT-Real benchmark (accuracy &#37;) across five spatial reasoning dimensions.</caption>
+          <thead>
+            <tr>
+              <th>Model</th><th>Overall</th>
+              <th>Perspective</th><th>Goal&nbsp;Aiming</th>
+              <th>Egocentric&nbsp;Action</th><th>Object&nbsp;Motion</th><th>Egocentric&nbsp;Motion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Qwen-VL-2.5</td><td>56.33</td><td>43.94</td><td>67.65</td><td>56.76</td><td>56.52</td><td>56.52</td></tr>
+            <tr><td>BAGEL</td><td>65.33</td><td>46.97</td><td>75.00</td><td class="best">75.68</td><td>65.22</td><td>60.87</td></tr>
+            <tr class="avg">
+              <td><b>BAGEL + GSI-Syn</b></td>
+              <td class="best">69.33</td><td class="best">48.48</td><td class="best">85.29</td>
+              <td>72.97</td><td class="best">65.22</td><td class="best">73.91</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= QUALITATIVE -->
+<section id="qualitative">
+  <div class="container">
+    <h2 class="section-title">Qualitative Comparison</h2>
+    <p class="section-sub">
+      Five instruction types across GSI-Real, GSI-Tabletop, and GSI-Room. BAGEL<sup>+</sup>
+      (BAGEL&nbsp;+&nbsp;GSI-Syn fine-tuning) preserves unaffected content while executing the
+      spatial operation more faithfully.
+    </p>
+    <figure class="figure interactive">
+      <img src="assets/figures/qualitative.jpg" alt="Qualitative spatial editing comparisons" loading="lazy" />
+      <figcaption>
+        Columns: input, Emu3.5, BAGEL, BAGEL<sup>+</sup>, ground truth.
+        Rows&nbsp;1&ndash;2 use GSI-Real; rows&nbsp;3&ndash;4 use GSI-Tabletop; the last row uses GSI-Room.
+      </figcaption>
+    </figure>
+
+    <figure class="figure interactive" style="margin-top:22px">
+      <img src="assets/figures/supp_examples_2.jpg" alt="Additional qualitative examples" loading="lazy" />
+      <figcaption>Additional spatial editing cases across operation types.</figcaption>
+    </figure>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-top:22px;">
+      <figure class="figure interactive">
+        <img src="assets/figures/supp_examples_1.jpg" alt="GSI-Real gallery" loading="lazy" />
+        <figcaption>Gallery of real-world examples from GSI-Real.</figcaption>
+      </figure>
+      <figure class="figure interactive">
+        <img src="assets/figures/supp_examples_7.jpg" alt="GSI-Syn gallery" loading="lazy" />
+        <figcaption>Synthetic examples from GSI-Syn-Tabletop and GSI-Syn-Room.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= KEY TAKEAWAYS -->
+<section class="tight" id="takeaways">
+  <div class="container">
+    <h2 class="section-title">Key Findings</h2>
+    <div class="contribs">
+      <div class="contrib">
+        <div class="ic">&rarr;</div>
+        <div>
+          <h4>Current SOTA struggles with spatial precision</h4>
+          <p>Even leading closed-source models show large gaps on GSI-Real and GSI-Syn-Room, with
+          Spatial Accuracy often below 30. Precise 3D-aware editing remains an open challenge.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">&rarr;</div>
+        <div>
+          <h4>Synthetic supervision transfers to real scenes</h4>
+          <p>Trained purely on synthetic pairs, BAGEL&nbsp;+&nbsp;GSI-Syn still improves on GSI-Real
+          by <b>+7.83 Avg</b>, with Edit Locality jumping <b>+9.22</b>.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">&rarr;</div>
+        <div>
+          <h4>Removal is easier than geometric manipulation</h4>
+          <p>Across models, spatial removal succeeds more often than translation, rotation, or
+          scaling&mdash;indicating an inductive bias toward deletion rather than true geometric edits.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">&rarr;</div>
+        <div>
+          <h4>Generation supervision boosts understanding</h4>
+          <p>On OmniSpatial, GSI-Syn fine-tuning raises BAGEL by <b>+2.00</b> on Spatial Interaction
+          and <b>+1.07</b> on Perspective Taking; on SAT-Real, overall accuracy jumps by <b>+4.00</b>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= BIBTEX -->
+<section id="bibtex">
+  <div class="container">
+    <h2 class="section-title">Citation</h2>
+    <p class="section-sub">If you find GSI-Bench useful for your research, please cite our paper.</p>
+    <div class="bib">
+      <button class="copy-btn" id="copyBib" type="button">Copy</button>
+<pre id="bibtex-block">@inproceedings{zhu2026gsi,
+  title     = {Exploring Spatial Intelligence from a Generative Perspective},
+  author    = {Zhu, Muzhi and Jiang, Shunyao and Zheng, Huanyi and Luo, Zekai
+               and Zhong, Hao and Li, Anzhou and Wang, Kaijun and Rong, Jintao
+               and Liu, Yang and Chen, Hao and Lin, Tao and Shen, Chunhua},
+  booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= FOOTER -->
+<footer>
+  <div class="container">
+    <div>
+      Supported in part by The Pioneer R&amp;D Program of Zhejiang (No.&nbsp;2025C01011),
+      the Ant Group Research Intern Program, and NSFC (No.&nbsp;62576315).
+    </div>
+    <div style="margin-top:8px;">
+      &copy; 2026 GSI-Bench authors &nbsp;·&nbsp;
+      <a href="#abstract">Abstract</a> &nbsp;·&nbsp;
+      <a href="#results">Results</a> &nbsp;·&nbsp;
+      <a href="#qualitative">Qualitative</a> &nbsp;·&nbsp;
+      <a href="#bibtex">BibTeX</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================= LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+  <div class="lb-stage" id="lbStage">
+    <img id="lbImg" alt="" />
+  </div>
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <div class="lb-caption" id="lbCaption"></div>
+  <div class="lb-zoom">
+    <button id="lbZoomOut" aria-label="Zoom out">&minus;</button>
+    <button id="lbZoomReset" aria-label="Reset zoom" style="font-size:14px;">1&times;</button>
+    <button id="lbZoomIn" aria-label="Zoom in">+</button>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   Interactions: BibTeX copy · scroll reveal · magnifier · lightbox · table col-hl
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  /* -------------------------------------------------- BibTeX copy */
+  var copyBtn = document.getElementById('copyBib');
+  var bib = document.getElementById('bibtex-block');
+  if (copyBtn && bib) {
+    copyBtn.addEventListener('click', function () {
+      var text = bib.innerText;
+      var ok = function () {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok);
+      } else {
+        var r = document.createRange();
+        r.selectNode(bib);
+        var sel = window.getSelection();
+        sel.removeAllRanges(); sel.addRange(r);
+        try { document.execCommand('copy'); ok(); } catch (e) {}
+        sel.removeAllRanges();
+      }
+    });
+  }
+
+  /* -------------------------------------------------- Scroll reveal */
+  var revealTargets = document.querySelectorAll(
+    '.hcard, .contrib, .dim, .figure, .table-wrap, .bib, h2.section-title, .lead, .dchips, .leg'
+  );
+  revealTargets.forEach(function (el) { el.classList.add('reveal'); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealTargets.forEach(function (el) { io.observe(el); });
+  } else {
+    revealTargets.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  /* -------------------------------------------------- Zoom hint overlays */
+  document.querySelectorAll('.interactive').forEach(function (fig) {
+    var hint = document.createElement('div');
+    hint.className = 'zoom-hint';
+    hint.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="margin-top:-1px"><path d="M10 2a8 8 0 1 0 5.3 14l4.4 4.4 1.4-1.4-4.4-4.4A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm-1 3v2H7v2h2v2h2V9h2V7h-2V5H9v2z"/></svg>Click to expand · hover to zoom';
+    fig.appendChild(hint);
+  });
+
+  /* -------------------------------------------------- Magnifier lens */
+  function setupLens(figure) {
+    var img = figure.querySelector('img');
+    if (!img) return;
+    img.classList.add('lens-target');
+    figure.classList.add('has-lens');
+
+    var lens = document.createElement('div');
+    lens.className = 'magnifier';
+    figure.appendChild(lens);
+
+    var LENS = 220;
+    var ZOOM = 2.2;
+
+    function move(e) {
+      if (!img.complete || !img.naturalWidth) return;
+      var rect = img.getBoundingClientRect();
+      var t = e.touches ? e.touches[0] : e;
+      var x = t.clientX - rect.left;
+      var y = t.clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
+        lens.style.display = 'none';
+        return;
+      }
+      lens.style.display = 'block';
+      lens.style.width  = LENS + 'px';
+      lens.style.height = LENS + 'px';
+      // position lens relative to figure
+      var figRect = figure.getBoundingClientRect();
+      var lx = (rect.left - figRect.left) + x - LENS/2;
+      var ly = (rect.top  - figRect.top)  + y - LENS/2;
+      lens.style.left = lx + 'px';
+      lens.style.top  = ly + 'px';
+      // background
+      lens.style.backgroundImage = "url('" + img.currentSrc + "')";
+      lens.style.backgroundSize =
+        (rect.width * ZOOM) + 'px ' + (rect.height * ZOOM) + 'px';
+      var bx = -(x * ZOOM) + LENS/2;
+      var by = -(y * ZOOM) + LENS/2;
+      lens.style.backgroundPosition = bx + 'px ' + by + 'px';
+    }
+    function hide() { lens.style.display = 'none'; }
+
+    img.addEventListener('mousemove', move);
+    img.addEventListener('mouseleave', hide);
+    lens.addEventListener('mouseleave', hide);
+  }
+
+  /* Only attach lens on non-touch devices; touch users get lightbox tap-to-zoom */
+  var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (!isTouch) {
+    document.querySelectorAll('.figure.interactive, .teaser-wrap.interactive').forEach(setupLens);
+  }
+
+  /* -------------------------------------------------- Lightbox */
+  var lb      = document.getElementById('lightbox');
+  var lbImg   = document.getElementById('lbImg');
+  var lbCap   = document.getElementById('lbCaption');
+  var lbClose = document.getElementById('lbClose');
+  var lbIn    = document.getElementById('lbZoomIn');
+  var lbOut   = document.getElementById('lbZoomOut');
+  var lbReset = document.getElementById('lbZoomReset');
+
+  var state = { scale: 1, tx: 0, ty: 0, dragging: false, sx: 0, sy: 0 };
+
+  function applyTransform() {
+    lbImg.style.transform =
+      'translate(' + state.tx + 'px,' + state.ty + 'px) scale(' + state.scale + ')';
+    lbReset.textContent = state.scale.toFixed(1).replace(/\.0$/, '') + '×';
+  }
+  function resetView() {
+    state.scale = 1; state.tx = 0; state.ty = 0;
+    applyTransform();
+  }
+
+  function openLB(src, caption) {
+    lbImg.src = src;
+    lbImg.alt = caption || '';
+    lbCap.textContent = caption || '';
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    resetView();
+  }
+  function closeLB() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(function () { lbImg.src = ''; }, 220);
+  }
+
+  function pickCaption(fig) {
+    var cap = fig.querySelector('figcaption, .teaser-cap');
+    return cap ? cap.textContent.trim().replace(/\s+/g, ' ') : '';
+  }
+
+  document.querySelectorAll('.figure.interactive img, .teaser-wrap.interactive img')
+    .forEach(function (img) {
+      img.addEventListener('click', function () {
+        var fig = img.closest('.figure, .teaser-wrap');
+        openLB(img.currentSrc || img.src, pickCaption(fig));
+      });
+    });
+
+  lbClose.addEventListener('click', closeLB);
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.id === 'lbStage') closeLB();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLB();
+    else if (e.key === '+' || e.key === '=') { state.scale = Math.min(6, state.scale * 1.25); applyTransform(); }
+    else if (e.key === '-' || e.key === '_') { state.scale = Math.max(0.5, state.scale / 1.25); applyTransform(); }
+    else if (e.key === '0') resetView();
+  });
+
+  lbIn.addEventListener('click', function () { state.scale = Math.min(6, state.scale * 1.25); applyTransform(); });
+  lbOut.addEventListener('click', function () { state.scale = Math.max(0.5, state.scale / 1.25); applyTransform(); });
+  lbReset.addEventListener('click', resetView);
+
+  /* Wheel to zoom */
+  lb.addEventListener('wheel', function (e) {
+    if (!lb.classList.contains('open')) return;
+    e.preventDefault();
+    var factor = e.deltaY < 0 ? 1.12 : 1/1.12;
+    state.scale = Math.max(0.5, Math.min(6, state.scale * factor));
+    applyTransform();
+  }, { passive: false });
+
+  /* Drag to pan */
+  lbImg.addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    state.dragging = true;
+    state.sx = e.clientX - state.tx;
+    state.sy = e.clientY - state.ty;
+    lbImg.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', function (e) {
+    if (!state.dragging) return;
+    state.tx = e.clientX - state.sx;
+    state.ty = e.clientY - state.sy;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', function () {
+    if (state.dragging) {
+      state.dragging = false;
+      lbImg.classList.remove('dragging');
+    }
+  });
+
+  /* Double-click to toggle zoom */
+  lbImg.addEventListener('dblclick', function () {
+    state.scale = state.scale > 1.2 ? 1 : 2.4;
+    state.tx = 0; state.ty = 0;
+    applyTransform();
+  });
+
+  /* -------------------------------------------------- Table column highlight */
+  document.querySelectorAll('table.results').forEach(function (table) {
+    table.addEventListener('mouseover', function (e) {
+      var cell = e.target.closest('td, th');
+      if (!cell || cell.hasAttribute('colspan') || cell.hasAttribute('rowspan')) return;
+      var idx = cell.cellIndex;
+      // mark column cells in same table
+      table.querySelectorAll('.col-hl').forEach(function (c) { c.classList.remove('col-hl'); });
+      // walk each row and highlight nth cell — but need to skip rowspan/colspan headers
+      Array.from(table.rows).forEach(function (row) {
+        var c = row.cells[idx];
+        if (c) c.classList.add('col-hl');
+      });
+    });
+    table.addEventListener('mouseleave', function () {
+      table.querySelectorAll('.col-hl').forEach(function (c) { c.classList.remove('col-hl'); });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
