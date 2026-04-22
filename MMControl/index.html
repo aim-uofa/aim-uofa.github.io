@@ -1,0 +1,3665 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .video-title-container {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: 0 10%;
+    }
+
+    .video-title {
+        width: 100%;
+        text-align: center;
+        font-style: italic;
+        font-size: 1em;
+    }
+
+    .video-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns */
+        gap: 15px;
+        /* Space between videos */
+        max-width: 1500px;
+        /* Adjust to your preferred width */
+        margin: 0 auto;
+        /* Center align the grid */
+    }
+
+    .video-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-title {
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    video {
+        width: 100%;
+        height: auto;
+    }
+
+    .video-container-four {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* 4 columns */
+        gap: 15px;
+        /* Space between videos */
+        max-width: 1500px;
+        /* Adjust to your preferred width */
+        margin: 0 auto;
+        /* Center align the grid */
+    }
+
+    .video-item-four {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-title-four {
+        margin-bottom: 10px;
+        /* Space between title and video */
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .new-row-container {
+        display: flex;
+        /* Keep text and videos in one row */
+        flex-direction: row;
+        /* Align text next to the videos */
+        align-items: center;
+        /* Vertically align the text and videos */
+        justify-content: center;
+        /* Center the whole row on the page */
+        gap: 20px;
+        /* Space between the text and videos */
+        padding: 10px;
+        margin-left: 4%;
+    }
+
+    .new-videos {
+        display: flex;
+        flex-direction: row;
+        /* Arrange videos horizontally */
+        gap: 15px;
+        /* Space between video items */
+    }
+
+    .new-video-item {
+        display: flex;
+        flex-direction: column;
+        /* Stack title above the video */
+        align-items: center;
+        /* Center-align titles and videos */
+    }
+
+    .new-video-title {
+        font-size: 16px;
+        margin-bottom: 5px;
+        /* Space between title and video */
+    }
+
+    .new-videos video {
+        width: 200px;
+        /* Set video size */
+        height: auto;
+        /* Maintain aspect ratio */
+        object-fit: cover;
+        /* Crop and center the video */
+        font-size: small;
+    }
+
+    .slider-pagination .slider-page {
+        background: white;
+    }
+
+    polyline {
+        fill: black;
+        stroke-width: 0.5em;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta name="description" content="Project page draft for MMControl: Unified Multi-Modal Control for Joint Audio-Video Generation.">
+    <meta property="og:title" content="MMControl" />
+    <meta property="og:description" content="Project page draft for MMControl: Unified Multi-Modal Control for Joint Audio-Video Generation." />
+
+
+    <!-- <meta name="twitter:title" content="MoCha">
+  <meta name="twitter:description" content="Talking Characters: Towards Movie-Level Talking Character Video Synthesis">
+  Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <!-- <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image"> -->
+
+    <!-- Keywords for your paper to be indexed by-->
+    <meta name="keywords" content="Diffusion Models, video-to-video, generative AI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>MMControl</title>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var lazyVideos = [].slice.call(document.querySelectorAll("video.lazy"));
+            var sources = document.querySelectorAll('source');
+
+            if ("IntersectionObserver" in window) {
+                var lazyVideoObserver = new IntersectionObserver(function (entries, observer) {
+                    entries.forEach(function (video) {
+                        if (video.isIntersecting) {
+                            for (var source in video.target.children) {
+                                var videoSource = video.target.children[source];
+                                if (typeof videoSource.tagName === "string" && videoSource.tagName === "SOURCE") {
+                                    videoSource.src = videoSource.dataset.src;
+                                }
+                            }
+
+                            video.target.load();
+                            video.target.classList.remove("lazy");
+                            lazyVideoObserver.unobserve(video.target);
+                        }
+                    });
+                });
+
+                lazyVideos.forEach(function (lazyVideo) {
+                    lazyVideoObserver.observe(lazyVideo);
+                });
+            }
+        });
+    </script>
+</head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMControl</title>
+    <style>
+        .page-container {
+            width: 1200px;
+            min-height: 1000px;
+            margin: 0 auto;
+            text-align: left;
+            padding-top: 5em;
+            padding-left: 1em;
+            padding-right: 1em;
+            padding-bottom: 1em;
+            height: auto;
+        }
+
+        .scrollable-table-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #scrollableTableWrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: auto;
+            display: table;
+            border-collapse: separate;
+            box-sizing: border-box;
+            text-indent: initial;
+            line-height: normal;
+            font-weight: normal;
+            font-size: medium;
+            font-style: normal;
+            color: -internal-quirk-inherit;
+            text-align: start;
+            border-spacing: 2px;
+            border-color: gray;
+            white-space: normal;
+            font-variant: normal;
+        }
+
+        .last-updated {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            color: black;
+            /* text color */
+            font-size: 1.0em;
+            z-index: 1000;
+            /* ensures it's on top of other elements */
+        }
+
+        .container-1 {
+            height: 750px;
+        }
+
+        .container-2 {
+            height: 550px;
+
+        }
+
+        .video-container-character {
+            position: relative;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            padding: 0;
+        }
+
+        .video-container-stylizaton {
+            position: relative;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100%;
+            padding: 0;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            content: '';
+        }
+
+        .video-container-character .swiper-button-next,
+        .video-container-character .swiper-button-prev {
+            top: 23rem;
+            outline: none;
+        }
+
+        .video-container-stylizaton .swiper-button-next,
+        .video-container-stylizaton .swiper-button-prev {
+            top: 15rem;
+            outline: none;
+        }
+
+        .swiper-icon {
+            font-size: 4rem;
+            color: black;
+        }
+
+        .video-size {
+            height: 335px;
+        }
+
+        .video-size-2 {
+            height: 250px;
+        }
+
+        .responsive-img {
+            width: 80vw;
+            /* Always 80% of viewport width */
+            max-width: 1400px;
+            /* Prevents it from exceeding original size */
+            height: auto;
+            /* Maintains aspect ratio */
+            display: block;
+            margin: 0 auto;
+            /* Center horizontally */
+        }
+
+        .full-width-container {
+            width: 100vw;
+            /* Ensure it covers the full viewport width */
+            margin-left: calc(-50vw + 50%);
+            /* Shift left to align with viewport */
+            text-align: center;
+        }
+
+
+
+        .video-container-four {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* 4 columns */
+            gap: calc(0.5%);
+            /* Space between videos */
+            max-width: 1100px;
+            /* Adjust to your preferred width */
+            margin: 0 auto;
+            /* Center align the grid */
+        }
+
+        .video-item-four {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .video-title-four {
+            margin-bottom: 0px;
+            /* Space between title and video */
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .video-container-five {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            /* 5 columns */
+            gap: calc(0.5%);
+            /* Space between videos */
+            max-width: 1400px;
+            /* Adjust to your preferred width */
+            margin: 0 auto;
+            /* Center align the grid */
+        }
+
+        /* carouseal with 3 items and 3 rows */
+
+        .results-carousel-3x3 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0px;
+            padding: 0;
+            margin: 0 0;
+            justify-content: center;
+            width: 99vw;
+            /* MODIFY THIS for 80% of viewport width */
+            max-width: 100vw;
+            /* modify this!*/
+            background-color: var(--main-bg-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .carousel-item-3x3 {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: var(--main-bg-color) !important;
+        }
+
+        .carousel-row-3x3 {
+            display: flex;
+            justify-content: space-between;
+            /* margin-bottom: 17px; */
+            margin-bottom: 5px;
+            /* MODIFY THIS FOR MARGIN*/
+            gap: 0px;
+            width: 100%;
+        }
+
+        .video-item-3x3 {
+            width: calc(33.2%);
+            /* Maintain exactly one-third width minus gap */
+            box-sizing: border-box;
+        }
+
+        .video-item-2x2 {
+            width: calc(49%);
+            /* Maintain exactly one-third width minus gap */
+            /* box-sizing: border-box; */
+        }
+
+        .video-item-3x3 video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: none;
+            outline: none;
+        }
+
+        .video-title-3x3 {
+            text-align: center;
+            margin-top: 0px;
+            font-family: "Times New Roman", serif;
+            font-weight: normal !important;
+            /* Reduced font size range for better scaling */
+            font-size: clamp(8px, 1.5vw, 20px);
+            /* Smaller minimum size, reduced scaling rate */
+
+            /* Keep truncation attempt */
+            /* display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        max-height: 2.4em;
+        line-height: 1.2; */
+        }
+
+        .teaser-container {
+            position: relative;
+            width: 40vw;
+            /* 80% of viewport width */
+            margin: 0 auto;
+            /* Center the container */
+            max-width: 1400px;
+            /* Maximum width on large screens */
+            background-color: #000;
+            /* Black background for letterboxing */
+            overflow: hidden;
+            /* Prevent content overflow */
+        }
+
+        .teaser-video {
+            width: 100%;
+            height: auto;
+            /* Maintain aspect ratio */
+            display: block;
+            /* Remove any extra space below video */
+            object-fit: contain;
+            /* Ensure video fits without stretching */
+        }
+
+        /* Optional overlay for controls or text */
+        .teaser-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            /* Semi-transparent overlay */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .teaser-container:hover .teaser-overlay {
+            opacity: 1;
+        }
+
+        .audio-toggle {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .audio-toggle:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .audio-toggle span {
+            color: white;
+            font-size: 20px;
+        }
+
+        .text-container {
+            width: 70vw !important;
+            /* 70% of viewport width */
+            margin: 0 auto !important;
+            /* Center the container */
+            max-width: 1200px !important;
+            /* Optional: maximum width on very large screens */
+            box-sizing: border-box !important;
+            /* Makes sure padding is included in width calculation */
+            text-align: left !important;
+        }
+
+        /* Optional: adjust width and padding for smaller screens */
+        @media screen and (max-width: 768px) {
+            .text-container {
+                width: 85vw !important;
+                /* Slightly wider on mobile for better readability */
+                padding: 15px !important;
+                text-align: left !important;
+            }
+        }
+
+        /* Adjust video size for different screen sizes */
+        @media screen and (max-width: 768px) {
+            .teaser-container {
+                width: 90vw;
+                /* Slightly wider on mobile for better visibility */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .video-title-3x3 {
+                font-size: clamp(8px, 1.2vw, 14px);
+                /* Smaller minimum size, reduced scaling rate */
+                margin-top: 0px;
+                margin: 0px;
+                /* -webkit-line-clamp: 2;
+            line-clamp: 2;
+            max-height: 1.2em; */
+            }
+
+            .results-carousel-3x3 {
+                width: 90vw;
+                gap: 0px;
+            }
+
+            .carousel-item-3x3,
+            .carousel-row-3x3 {
+                gap: 0px;
+            }
+
+            .video-item-3x3 {
+                width: calc(33%);
+                /* Adjust for smaller gap */
+            }
+        }
+
+        /* qulitative comparison css */
+
+        /* Container that holds the row of videos */
+        .new-row-container {
+            display: flex;
+            justify-content: space-between;
+            /* Evenly space out the videos */
+            gap: 10px;
+            /* Space between the videos */
+            flex-wrap: nowrap;
+            /* Prevent wrapping of items */
+            padding: 0px 0;
+            width: 100%;
+            max-width: 100%;
+            /* Ensure the container takes up the full width */
+            margin: 0 auto;
+            /* Center the container */
+            overflow: hidden;
+            /* Ensure any excess content is clipped */
+        }
+
+
+        /* Title above the video */
+        .new-text-prompt {
+            font-size: 20px;
+            /* Size of the title text */
+            color: #333;
+            /* Dark color for the text */
+        }
+
+        /* Title above the video */
+        .new-text-prompt-bold {
+            font-size: 20px;
+            /* Size of the title text */
+            font-weight: bold;
+            color: #02376c;
+            /* Dark color for the text */
+        }
+
+        /* Make the video fill the width of its container */
+        .new-video-item video {
+            width: 100%;
+            /* Make the video take the full width of the item */
+            display: block;
+            border: none;
+            /* No border around the video */
+            outline: none;
+            /* Remove focus outline */
+            height: auto;
+            /* Maintain video aspect ratio */
+        }
+
+        /* Optional: style for the prompt below the video */
+        /* .new-video-item .new-text-prompt:last-child {
+            font-size: 20px;
+            font-weight: normal;
+            color: #666; /* Lighter color for the prompt } */
+
+        /* Responsive design: Stack the videos vertically on smaller screens */
+        @media (max-width: 768px) {
+            .new-video-item {
+                flex: 1 1 100%;
+                /* Stack videos on smaller screens */
+                width: 100%;
+                /* Full width on smaller devices */
+            }
+
+            .new-video-item:hover {
+                transform: none;
+                /* Remove scale effect on hover */
+            }
+
+            /* Title above the video */
+            .new-text-prompt {
+                font-size: clamp(8px, 1.2vw, 14px);
+                /* Smaller minimum size, reduced scaling rate */
+                color: #333;
+                /* Dark color for the text */
+            }
+
+            .new-text-prompt-bold {
+                font-size: clamp(8px, 1.2vw, 14px);
+                /* Smaller minimum size, reduced scaling rate */
+                font-weight: bold;
+                color: #02376c;
+                /* Dark color for the text */
+            }
+        }
+
+        /* ===== Comparison Section ===== */
+        .cmp-list {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .cmp-row {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .cmp-row-caption {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .cmp-ref-img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .cmp-caption-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cmp-caption-visual {
+            font-size: 0.78rem;
+            color: #aaa;
+            line-height: 1.4;
+        }
+
+        .cmp-caption-speech {
+            font-size: 0.78rem;
+            color: #7ec8e3;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .cmp-row-body {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        .cmp-ours-side {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cmp-ours-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #00d1b2;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cmp-ours-video {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #00d1b2;
+            background: #000;
+            display: block;
+            flex: 1;
+            object-fit: cover;
+        }
+
+        #sec-comparison h2 {
+            color: rgba(255, 215, 0, 0.9);
+        }
+
+        .cmp-others-side {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .cmp-other-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cmp-other-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: #888;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .cmp-other-video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #000;
+            display: block;
+            flex: 1;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .cmp-row-body {
+                flex-direction: column;
+            }
+
+            .cmp-others-side {
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: 1fr;
+            }
+        }
+    </style>
+</head>
+
+
+
+<body>
+    
+    
+
+    <section class="hero mb-0 pb-0 is-black" style="background-color: black">
+        <div class="hero-body mb-0 pb-0">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <br>
+                        <h1 class="title is-1 publication-title" style="font-size: 46px; line-height: 1.2;">MMControl:
+                            Unified Multi-Modal Control for Joint Audio-Video Generation</h1>
+                        <br>
+                        <div class="is-size-5" style="color: #aaa; margin-bottom: 0.35rem;">Liyang Li<sup>*</sup>, Wen Wang<sup>*</sup>, Canyu Zhao, Tianjian Feng, Zhiyue Zhao, Hao Chen, Chunhua Shen</div>
+                        <div class="is-size-6" style="color: #888; margin-bottom: 0.25rem;">Zhejiang University</div>
+                        <div class="is-size-6" style="color: #777; margin-bottom: 1rem;"><sup>*</sup> Equal contribution</div>
+                        <div class="publication-links" style="margin-bottom: 1rem;">
+                            <span class="link-block">
+                                <a href="https://github.com/TURING132/TURING132.github.io/tree/main/MMControl" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                    <span class="icon">
+                                        <i class="fab fa-github"></i>
+                                    </span>
+                                    <span>GitHub</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="https://arxiv.org/abs/<paper-id>" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                    <span class="icon">
+                                        <i class="ai ai-arxiv"></i>
+                                    </span>
+                                    <span>Paper</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Paper abstract -->
+    <!-- <section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Abstract
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+    <!-- End paper abstract -->
+
+    <!-- ===== Navigation Bar ===== -->
+    <nav class="section-nav" id="sectionNav">
+        <div class="nav-inner">
+            <a href="#sec-ref-image" class="nav-link active">Ref Image</a>
+            <a href="#sec-ref-audio-image" class="nav-link">Ref Audio + Image</a>
+            <a href="#sec-depth-image" class="nav-link">Depth + Image</a>
+            <a href="#sec-pose-image" class="nav-link">Pose + Image</a>
+            <a href="#sec-audio-depth-image" class="nav-link">Audio + Depth + Image</a>
+            <a href="#sec-audio-pose-image" class="nav-link">Audio + Pose + Image</a>
+            <span class="nav-divider"></span>
+            <a href="#sec-comparison" class="nav-link nav-link-cmp">&#x2B50; Comparison</a>
+        </div>
+    </nav>
+
+    <style>
+        /* ===== section nav ===== */
+        .section-nav {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(17, 17, 17, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section-nav.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .nav-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.55);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            font-family: 'Google Sans', 'Noto Sans', sans-serif;
+            letter-spacing: 0.3px;
+            padding: 14px 16px;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.25s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 70%;
+            height: 2px;
+            background: #00d1b2;
+            border-radius: 1px;
+            transition: transform 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-link:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-link.active {
+            color: #00d1b2;
+        }
+
+        .nav-link.active::after {
+            transform: translateX(-50%) scaleX(1);
+            background: #00d1b2;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 0 8px;
+            flex-shrink: 0;
+        }
+
+        .nav-link-cmp {
+            font-weight: 700;
+            color: rgba(255, 215, 0, 0.85) !important;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 8px 18px !important;
+            font-size: 0.78rem;
+        }
+
+        .nav-link-cmp:hover {
+            color: rgba(255, 215, 0, 1) !important;
+            border-color: rgba(255, 215, 0, 0.6);
+            background: rgba(255, 215, 0, 0.08);
+        }
+
+        .nav-link-cmp.active {
+            color: rgba(255, 215, 0, 1) !important;
+            border-color: rgba(255, 215, 0, 0.7);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .nav-link-cmp::after,
+        .nav-link-cmp.active::after {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .nav-link {
+                font-size: 0.72rem;
+                padding: 12px 10px;
+            }
+        }
+
+        /* ===== demo section ===== */
+        .demo-section {
+            background-color: #111;
+            padding: 40px 20px;
+            scroll-margin-top: 52px;
+        }
+
+        .demo-section h2 {
+            color: #fff;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-family: 'Google Sans', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-section .section-subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        .demo-table {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .demo-table thead th {
+            color: #aaa;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .demo-row {
+            border-bottom: 1px solid #222;
+        }
+
+        .demo-row:last-child {
+            border-bottom: none;
+        }
+
+        .demo-cell {
+            padding: 16px 12px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .demo-ref-img {
+            width: 100%;
+            max-width: 200px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .demo-audio {
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 4px;
+            accent-color: #00d1b2;
+        }
+
+        .demo-caption {
+            color: #888;
+            font-size: 0.72rem;
+            margin-top: 6px;
+            font-style: italic;
+            line-height: 1.4;
+            max-width: 220px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .demo-video {
+            width: 100%;
+            max-width: 340px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .arrow-cell {
+            color: #00d1b2;
+            font-size: 1.6rem;
+            vertical-align: middle;
+            white-space: nowrap;
+            padding: 0 4px;
+        }
+    </style>
+
+    <style>
+        /* ===== Ref Image Only grid ===== */
+        .ref-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-image-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-image-grid-item .pair {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-image-grid-item .pair img {
+            width: 28%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-image-grid-item .pair video {
+            width: 70%;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .ref-image-pair-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-image-pair-label .lbl-ref {
+            width: 28%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-image-pair-label .lbl-gen {
+            width: 70%;
+            text-align: center;
+        }
+
+        /* collapsible caption */
+        .sample-caption {
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .sample-caption summary {
+            cursor: pointer;
+            color: #00d1b2;
+            font-size: 0.72rem;
+            user-select: none;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sample-caption summary::before {
+            content: '▶';
+            font-size: 0.6rem;
+            transition: transform 0.2s;
+        }
+
+        .sample-caption[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .sample-caption .caption-body {
+            margin-top: 6px;
+            padding: 8px 10px;
+            background: #1a1a1a;
+            border-left: 2px solid #00d1b2;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            color: #bbb;
+            line-height: 1.5;
+        }
+
+        .caption-visual {
+            color: #ccc;
+        }
+
+        .caption-speech {
+            color: #7ec8e3;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .ref-image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-ref-image">
+        <h2>Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given only a reference image, our model generates a realistic audio-video with
+            synchronized speech.</p>
+
+        <div class="ref-image-grid">
+
+
+
+            <!-- Sample 3 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/52eb53c773424168fc07ac6e829b6102/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/52eb53c773424168fc07ac6e829b6102/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man on stage, holding a microphone. Wearing a blue shirt
+                            over a gray t-shirt, left arm extended outward. Warm orange-yellow background.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;The Thatcher pubes, that&rsquo;s what it would be
+                            called.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 4 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/53392a3406d4c6fbc9af9cc8ca630494/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/53392a3406d4c6fbc9af9cc8ca630494/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with shoulder-length brown hair, wearing a white
+                            top with a floral pattern. Gold earrings. Concerned or questioning expression.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Sent away family somewhere.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 5 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/54192580723604e6fe1f2d60b6b6743d/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/54192580723604e6fe1f2d60b6b6743d/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man sitting in an office setting. Short dark hair,
+                            mustache. Light purple button-up shirt over a beige t-shirt. Hands clasped.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I don&rsquo;t feel good about it, but he
+                            just.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 6 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/546b22b8bb550f58897bf5ed29f02651/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/546b22b8bb550f58897bf5ed29f02651/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man with short curly brown hair and a beard, wearing a
+                            dark blue jacket with a &ldquo;Jeffersonian Institute of Forensic Medicine&rdquo;
+                            patch.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;So sure our victim was a firefighter after
+                            all.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 7 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/557193fe7b7d25a6ce4118138533a394/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/557193fe7b7d25a6ce4118138533a394/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man standing in a professional office setting. Gray
+                            suit, white shirt, purple tie. Pocket square in jacket.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;and I am not going back again.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 8 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/9eb27bc2565d1df4aafb1fd453dd7359/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/9eb27bc2565d1df4aafb1fd453dd7359/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A person with medium-length wavy brown hair, wearing a
+                            green jacket with a white fur-lined collar over a dark shirt. Outdoor background.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Yeah, but the birds are still here.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 9 -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/a0be0a10ba5f41c9b8b70d66e3d7f573/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/a0be0a10ba5f41c9b8b70d66e3d7f573/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A person with blonde curly hair wearing a red sweater with
+                            green and blue patterns. Holding up a clear plastic bag filled with medicine
+                            bottles.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Not anymore. Here&rsquo;s a variety of
+                            medicine.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Sample 10 (new) -->
+            <div class="ref-image-grid-item">
+                <div class="pair">
+                    <img src="assets/demo/ref_image_only/530c53fb132882d78ba2b95751c5ddfa/ref_image.jpg" alt="ref">
+                    <video controls playsinline class="lazy">
+                        <source data-src="assets/demo/ref_image_only/530c53fb132882d78ba2b95751c5ddfa/generated.mp4"
+                            type="video/mp4">
+                    </video>
+                </div>
+                <div class="ref-image-pair-label"><span class="lbl-ref">Ref Image</span><span
+                        class="lbl-gen">Generated</span></div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with dark hair tied back is shown. She is wearing
+                            a white lab coat. The background appears to be an indoor setting, possibly a medical or
+                            laboratory environment, with a window and some blurred objects visible.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Your husband must be a pretty important
+                            guy.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+    <style>
+        /* ===== Ref Image + Audio grid ===== */
+        .ref-ia-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-ia-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-ia-grid-item .pair-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-ia-grid-item .pair-top img {
+            width: 40%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-ia-grid-item .pair-top .audio-wrap {
+            width: 58%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+        }
+
+        .ref-ia-grid-item .pair-top .audio-wrap audio {
+            width: 100%;
+        }
+
+        .ref-ia-grid-item video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+            margin-top: 4px;
+        }
+
+        .ref-ia-input-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-ia-input-label .lbl-ref-img {
+            width: 40%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-ia-input-label .lbl-ref-aud {
+            width: 58%;
+            text-align: center;
+        }
+
+        .ref-ia-output-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .ref-ia-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-ref-audio-image">
+        <h2>Ref Audio + Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given a reference image and audio clip, our model generates a realistic video with
+            matching appearance, similar voice, and natural motion.</p>
+
+        <div class="ref-ia-grid">
+
+            <!-- IA Sample 1 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/9c2a4ff6f31195a5cf43940551b4a747/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/9c2a4ff6f31195a5cf43940551b4a747/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/9c2a4ff6f31195a5cf43940551b4a747/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is sitting in what appears to be an office or study.
+                            He is wearing a plaid blazer, a checkered shirt, and a patterned tie. He has glasses and
+                            short brown hair. The background shows a window with a view of a building and a shelf with
+                            several books. The man is looking to his right and appears to be speaking</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Right. She was our in-house publicist about ten
+                            years&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 2 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/9c7115dc48b5bed02c105b845dfea109/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/9c7115dc48b5bed02c105b845dfea109/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/9c7115dc48b5bed02c105b845dfea109/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman with short, dark, wavy hair. She is wearing a
+                            black leather jacket over a colorful striped shirt. Her expression appears to be one of
+                            concern or worry. In the background, there is a man with short, dark hair, wearing a light
+                            blue shirt and dark pants. He is walking away from the woman, and the setting appears to be
+                            an outdoor area with trees and a road. The lighting suggests it might be daytime, but the
+                            sky looks overcast</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;No one is&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 3 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/9cabfe9eff026e1ae65c9e8789c7afbc/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/9cabfe9eff026e1ae65c9e8789c7afbc/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/9cabfe9eff026e1ae65c9e8789c7afbc/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with long, wavy, light brown hair is holding a
+                            black phone to her ear. She appears to be in a professional setting, possibly an office or a
+                            conference room. There is another person in the background, wearing a white shirt and a dark
+                            tie, but they are out of focus. The woman is wearing a white top. The lighting is bright,
+                            suggesting an indoor environment</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Thank you for coming all the way down
+                            here&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 4 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/9e2a58ebe23d8ac0336a4e4fec3d6d85/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/9e2a58ebe23d8ac0336a4e4fec3d6d85/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/9e2a58ebe23d8ac0336a4e4fec3d6d85/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman with long, dark hair. She is wearing a black top.
+                            Her expression appears to be one of surprise or shock, with her mouth slightly open and her
+                            eyes wide. The background is somewhat blurred, but it seems to be an indoor setting with a
+                            greenish, bokeh-like light effect</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I found that it was best to ask&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 5 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/a0fb7f0f8b2e7057ce2b9006c17fcb3b/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/a0fb7f0f8b2e7057ce2b9006c17fcb3b/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/a0fb7f0f8b2e7057ce2b9006c17fcb3b/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with light-colored hair and glasses, wearing a dark
+                            cardigan over a plaid shirt. He appears to be in a room with a fireplace in the background.
+                            The man is looking towards another person who is not fully visible in the frame. The
+                            lighting in the room is warm and there are some reflections on the fireplace</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I&#x27;m sorry, I shouldn&#x27;t be
+                            so&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 6 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/a271bdc952f4d2c048b9917d739fe27c/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/a271bdc952f4d2c048b9917d739fe27c/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/a271bdc952f4d2c048b9917d739fe27c/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is shown in a dimly lit room. He has a receding
+                            hairline, a beard, and is wearing a dark suit with a white shirt and a patterned tie. There
+                            is a small American flag pin on his left lapel. The background appears to be a storage area
+                            with shelves and boxes. The lighting is low, creating a somewhat somber
+                            atmosphere</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I&#x27;ll have your passport returned&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 7 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/a38c3ed547f680988bac488a1c5979d4/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/a38c3ed547f680988bac488a1c5979d4/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/a38c3ed547f680988bac488a1c5979d4/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is standing in what appears to be a room with a
+                            decorative wall in the background. The wall has a pattern of light-colored tiles and some
+                            gold accents. The man is wearing a dark purple cap and a dark shirt with a floral pattern.
+                            He has a black neck brace around his neck. He is gesturing with his right hand as he
+                            speaks</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;And knowing how to take care of your
+                            body&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IA Sample 8 -->
+            <div class="ref-ia-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_audio/a407ff91b58c64f229cbfb3ea0cc882b/ref_image.jpg" alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source src="assets/demo/ref_image_audio/a407ff91b58c64f229cbfb3ea0cc882b/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                </div>
+                <div class="ref-ia-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span></div>
+                <video controls playsinline class="lazy">
+                    <source data-src="assets/demo/ref_image_audio/a407ff91b58c64f229cbfb3ea0cc882b/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-ia-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with short, dark hair, wearing a dark shirt. He
+                            appears to be in a room with blinds covering a window in the background. The lighting is
+                            somewhat dim, and the man&#x27;s face is in focus. There is another person partially visible
+                            in the foreground, wearing a light-colored shirt, but their face is not shown. The
+                            man&#x27;s expression seems serious or concerned</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;It&#x27;s nothing personal&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+    <style>
+        /* ===== Depth + Ref Image grid ===== */
+        .ref-depth-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-depth-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-depth-grid-item .pair-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-depth-grid-item .pair-top img {
+            width: 40%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-depth-grid-item .pair-top .depth-wrap {
+            width: 58%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ref-depth-grid-item .pair-top .depth-wrap video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .ref-depth-grid-item video.gen-video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+            margin-top: 4px;
+        }
+
+        .ref-depth-input-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-depth-input-label .lbl-ref-img {
+            width: 40%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-depth-input-label .lbl-depth {
+            width: 58%;
+            text-align: center;
+        }
+
+        .ref-depth-output-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .ref-depth-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-depth-image">
+        <h2>Depth + Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given a reference image and a depth map video, our model generates a realistic video
+            with matching appearance and depth-guided motion.</p>
+
+        <div class="ref-depth-grid">
+
+            <!-- Depth Sample 1 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/5224135a6daf7f111e243ab306af3185/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/5224135a6daf7f111e243ab306af3185/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/5224135a6daf7f111e243ab306af3185/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is sitting in a dimly lit room. He is wearing a blue
+                            and white plaid shirt and has dark hair. He appears to be in a relaxed posture, leaning
+                            slightly forward.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Beautiful memories, man.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 2 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/5226c7a3959f4250c0577b7948488f58/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/5226c7a3959f4250c0577b7948488f58/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/5226c7a3959f4250c0577b7948488f58/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man with light brown, slightly wavy hair wearing a dark
+                            jacket over a light blue shirt. His expression appears to be one of concern or distress,
+                            gesturing with his hands.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I swear I didn&rsquo;t do anything.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+
+            <!-- Depth Sample 4 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/5259c9dbae166dfc0e32ff3373722de7/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/5259c9dbae166dfc0e32ff3373722de7/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/5259c9dbae166dfc0e32ff3373722de7/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man sitting in the passenger seat of a car, wearing a
+                            dark suit with a white shirt. His expression seems serious or focused.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;You gotta work a little outside the
+                            system.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 5 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/526ed378e666548aa4e0681545ddb76b/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/526ed378e666548aa4e0681545ddb76b/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/526ed378e666548aa4e0681545ddb76b/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with short, dark hair wearing a dark green
+                            sweater. She appears to be in a room with a bookshelf in the background, looking
+                            concerned.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Listen, I will look into reviving
+                            myself.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 6 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/5272e1e02520c5021a9fa16ae585f570/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/5272e1e02520c5021a9fa16ae585f570/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/5272e1e02520c5021a9fa16ae585f570/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman in a blue scrub top standing in a medical setting.
+                            She has shoulder-length brown hair and is gesturing as if explaining something.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;The gems are small enough he should be able to
+                            excrete them.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 7 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/52746849192dba4a9bcbaf1583b1383b/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/52746849192dba4a9bcbaf1583b1383b/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/52746849192dba4a9bcbaf1583b1383b/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man wearing a black jacket with &ldquo;DEA&rdquo; on it,
+                            speaking into a microphone outdoors with trees and a building in the background.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Which point we apprehended three individuals in
+                            place.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 8 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/52898764ffad58065db9ef548ba44da9/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/52898764ffad58065db9ef548ba44da9/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/52898764ffad58065db9ef548ba44da9/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man talking on a phone with short, dark hair, wearing a
+                            dark jacket over a light-colored shirt. The background appears to be indoors with dim
+                            lighting.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Please spare me the boring details.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Depth Sample 9 -->
+            <div class="ref-depth-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_depth/52a5b97af3ef3c035d611a4a26c5af7e/ref_image.jpg" alt="ref">
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_depth/52a5b97af3ef3c035d611a4a26c5af7e/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-depth-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_depth/52a5b97af3ef3c035d611a4a26c5af7e/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-depth-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man with short, dark hair wearing a black and white
+                            striped polo shirt in an indoor setting with large windows and plants.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I don&rsquo;t suppose that&rsquo;s a Rubenesque
+                            19.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <style>
+        /* ===== Pose + Ref Image grid ===== */
+        .ref-pose-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-pose-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-pose-grid-item .pair-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-pose-grid-item .pair-top img {
+            width: 40%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-pose-grid-item .pair-top .pose-wrap {
+            width: 58%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ref-pose-grid-item .pair-top .pose-wrap video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .ref-pose-grid-item video.gen-video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+            margin-top: 4px;
+        }
+
+        .ref-pose-input-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .ref-pose-input-label .lbl-ref-img {
+            width: 40%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-pose-input-label .lbl-pose {
+            width: 58%;
+            text-align: center;
+        }
+
+        .ref-pose-output-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .ref-pose-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-pose-image">
+        <h2>Pose + Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given a reference image and a pose sequence video, our model generates a realistic
+            video with matching appearance and pose-guided motion.</p>
+
+        <div class="ref-pose-grid">
+
+            <!-- Pose Sample 1 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/540b40800cb32bc7f759cf1e54575765/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/540b40800cb32bc7f759cf1e54575765/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/540b40800cb32bc7f759cf1e54575765/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman in a dimly lit setting. She has dark hair pulled
+                            back and is wearing a blue shirt with a dark jacket over it. She also has large hoop
+                            earrings. Her expression appears to be one of surprise or concern as she looks to the side.
+                            There is another person partially visible in the background, but their face is not shown.
+                            The overall lighting is low, creating a somewhat dramatic or intense atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;No alarms, no contact with
+                            control.&quot;.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 3 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/5416b751b7f3fb64247286b0204104f1/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/5416b751b7f3fb64247286b0204104f1/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/5416b751b7f3fb64247286b0204104f1/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with brown hair tied back in a ponytail is shown.
+                            She is wearing a blue shirt with a dark blue collar. She has earrings on. The background
+                            appears to be an indoor setting with some blue lighting. There is another person partially
+                            visible on the right side of the frame, but only their arm and part of their body are shown.
+                            The woman seems to be in the middle of a conversation or reacting to something.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;an injury sustained in the attack but
+                            of&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 4 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/542024952664abd8b95a016a3a535080/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/542024952664abd8b95a016a3a535080/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/542024952664abd8b95a016a3a535080/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] an older man with gray hair and a beard. He is wearing a
+                            gray suit with a white shirt and a patterned tie. He appears to be in an office setting, as
+                            there are papers and a whiteboard in the background. The lighting is dim, giving the scene a
+                            somewhat somber atmosphere. The man is looking to the side with a serious
+                            expression.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;No. Okay, since we&#x27;re a bunch of
+                            angers.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 14 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/5464aae4ad1073665027d5d6f491b733/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/5464aae4ad1073665027d5d6f491b733/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/5464aae4ad1073665027d5d6f491b733/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman with blonde hair styled in an updo. She is wearing
+                            a blue and black striped dress and large, ornate earrings with a green gemstone. The
+                            background appears to be an indoor setting with a painting on the wall and some furniture
+                            partially visible. The woman is looking to the side.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Well maybe that&#x27;s why he hasn&#x27;t returned
+                            my call.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 24 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/55267420d83b9df9dbaa9fcb973d8807/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/55267420d83b9df9dbaa9fcb973d8807/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/55267420d83b9df9dbaa9fcb973d8807/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with short, graying hair and a beard. He is wearing
+                            a dark hooded garment with a chainmail-like collar. The background appears to be a stone
+                            wall, suggesting an old or medieval setting. The man&#x27;s expression seems serious or
+                            intense.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Using heirs, bastards and otherwise.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 30 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/55826c6753105391d322745880a8dd22/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/55826c6753105391d322745880a8dd22/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/55826c6753105391d322745880a8dd22/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with short brown hair and a beard. He is wearing a
+                            dark, textured vest over a high-collared shirt. The background appears to be a dimly lit
+                            room with a wooden wall that has some intricate carvings or engravings. The lighting is
+                            focused on the man, creating a dramatic effect.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;For the man that I chose, my
+                            lord.&quot;.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 39 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/55e16630fddb90b745f8e6eb326796b5/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/55e16630fddb90b745f8e6eb326796b5/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/55e16630fddb90b745f8e6eb326796b5/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man in a suit with a serious expression. He has short,
+                            dark hair and is looking slightly to the side. In the foreground, there is a potted plant
+                            with large green leaves and a red flower. The background appears to be a wooden wall or
+                            door. The lighting is natural, suggesting it might be daytime.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;None.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Pose Sample 40 -->
+            <div class="ref-pose-grid-item">
+                <div class="pair-top">
+                    <img src="assets/demo/ref_image_pose/55ed9cd45b7389694861974cbbdbce66/ref_image.jpg" alt="ref">
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_pose/55ed9cd45b7389694861974cbbdbce66/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-pose-input-label"><span class="lbl-ref-img">Ref Image</span><span
+                        class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_pose/55ed9cd45b7389694861974cbbdbce66/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-pose-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with short brown hair and a beard, wearing a dark
+                            blue sweater over a plaid shirt. He is in a dimly lit room with a green wall in the
+                            background. There is a shelf with a white object on it to the right. The man appears to be
+                            speaking, and his mouth is open as if in the middle of a conversation. His expression seems
+                            serious or focused.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I know how we can survive. I also know how we can
+                            die.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <style>
+        /* ===== Ref Audio + Depth + Ref Image grid ===== */
+        .ref-iad-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-iad-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-iad-grid-item .triple-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .ref-iad-grid-item .triple-top img {
+            width: 30%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-iad-grid-item .triple-top .audio-wrap {
+            width: 28%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .ref-iad-grid-item .triple-top .audio-wrap audio {
+            width: 100%;
+        }
+
+        .ref-iad-grid-item .triple-top .depth-wrap {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ref-iad-grid-item .triple-top .depth-wrap video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .ref-iad-grid-item video.gen-video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+            margin-top: 4px;
+        }
+
+        .ref-iad-input-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .ref-iad-input-label .lbl-ref-img {
+            width: 30%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-iad-input-label .lbl-ref-aud {
+            width: 28%;
+            text-align: center;
+        }
+
+        .ref-iad-input-label .lbl-depth {
+            width: 40%;
+            text-align: center;
+        }
+
+        .ref-iad-output-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .ref-iad-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-audio-depth-image">
+        <h2>Ref Audio + Depth + Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given a reference image, an audio clip, and a depth map video, our model generates a
+            realistic video with matching appearance, voice, and depth-guided motion.</p>
+
+        <div class="ref-iad-grid">
+
+            <!-- IAD Sample 3 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/9cc3a55de738c623fc55671e293971ec/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/9cc3a55de738c623fc55671e293971ec/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/9cc3a55de738c623fc55671e293971ec/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/9cc3a55de738c623fc55671e293971ec/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is holding a telephone receiver to his ear. He has
+                            short, dark hair and is wearing a light-colored jacket with a plaid shirt underneath. The
+                            background appears to be an indoor setting, possibly a kitchen or dining area, with a
+                            patterned wall and some furniture visible. The lighting is somewhat dim, giving the scene a
+                            somewhat somber or serious atmosphere. The man&#x27;s expression seems focused or concerned
+                            as he listens to the phone.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;All we need is to walk Harold.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 5 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/9d7c3ebb0b3970e3672d9bf1e1608103/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/9d7c3ebb0b3970e3672d9bf1e1608103/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/9d7c3ebb0b3970e3672d9bf1e1608103/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/9d7c3ebb0b3970e3672d9bf1e1608103/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man in a white tuxedo with a black bow tie is singing
+                            into a microphone. He is holding the microphone in his right hand and gesturing with his
+                            left hand. The background is dark with neon signs. One sign says &quot;OON&quot; in blue and
+                            another sign has red Chinese characters. The man has short black hair and is looking down
+                            while singing. The setting appears to be a stage or performance area.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I&#x27;m sick of men making excuses.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 6 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/9d966c53e26513c59c9a23fe8af10e2a/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/9d966c53e26513c59c9a23fe8af10e2a/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/9d966c53e26513c59c9a23fe8af10e2a/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/9d966c53e26513c59c9a23fe8af10e2a/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] An older man with gray hair is sitting in a black leather
+                            chair. He is wearing a dark blue suit, a white shirt, and a red tie with a pattern of small
+                            white squares. The background features a window with sheer white curtains and patterned red
+                            and green curtains on either side. The lighting is dim, creating a somewhat somber
+                            atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Well, I&#x27;ve already pulled every string I
+                            can.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 10 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/9e931fbd6246a87e685fe5a8be04153d/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/9e931fbd6246a87e685fe5a8be04153d/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/9e931fbd6246a87e685fe5a8be04153d/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/9e931fbd6246a87e685fe5a8be04153d/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a person with long dark hair, wearing a red and gray
+                            uniform with a circular emblem on the chest. The background appears to be a high-tech
+                            setting with various screens and panels, some of which display blue and white graphics. The
+                            person is standing and looking to the side.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;According to Regor two&#x27;s history that&#x27;s
+                            right.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 12 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/9fbc94de0f08b61ff846bcebf9e0a0e9/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/9fbc94de0f08b61ff846bcebf9e0a0e9/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/9fbc94de0f08b61ff846bcebf9e0a0e9/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/9fbc94de0f08b61ff846bcebf9e0a0e9/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a close-up of a person with long, wavy blonde hair. The
+                            lighting is dim, creating a warm, moody atmosphere. The person appears to be in a relaxed
+                            setting, possibly a bar or a cozy room. There is a glass in the foreground, suggesting they
+                            might be drinking something.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;to have sex and&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 13 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/a036d0e274c5b66a87af816cba60e3f6/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/a036d0e274c5b66a87af816cba60e3f6/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/a036d0e274c5b66a87af816cba60e3f6/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/a036d0e274c5b66a87af816cba60e3f6/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman with shoulder - length brown hair wearing glasses
+                            and a gray blazer over a black shirt. She is seated in a room with a dark background. There
+                            is a window with vertical blinds behind her, and a silhouette of a dancing figure is visible
+                            on the right side of the image. The lighting is dim, creating a somewhat somber
+                            atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;the new big thing these days is&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 14 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/a04dd578e29cbd6df508aa92fceae9fa/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/a04dd578e29cbd6df508aa92fceae9fa/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/a04dd578e29cbd6df508aa92fceae9fa/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/a04dd578e29cbd6df508aa92fceae9fa/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man in a dark suit, white shirt, and dark tie is shown.
+                            He has short, dark hair and is looking slightly to the side. The background is dark and out
+                            of focus, with a small sign partially visible behind him. The lighting is dim, creating a
+                            serious and somewhat tense atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;We made the ticket out of here.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAD Sample 18 -->
+            <div class="ref-iad-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_depth/a1ba92bdf9f510be4724dab1e97d9c9f/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_depth/a1ba92bdf9f510be4724dab1e97d9c9f/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="depth-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_depth/a1ba92bdf9f510be4724dab1e97d9c9f/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iad-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-depth">Depth</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_depth/a1ba92bdf9f510be4724dab1e97d9c9f/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iad-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with short, dark hair and a beard. He is wearing a
+                            dark shirt. The background appears to be a dimly lit room with a patterned wall and a green
+                            door. The lighting is low, creating a somewhat dramatic or intense atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Before we roll anywhere the rest of the team has to
+                            be here.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    <style>
+        /* ===== Ref Audio + Pose + Ref Image grid ===== */
+        .ref-iap-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ref-iap-grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ref-iap-grid-item .triple-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .ref-iap-grid-item .triple-top img {
+            width: 30%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        .ref-iap-grid-item .triple-top .audio-wrap {
+            width: 28%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .ref-iap-grid-item .triple-top .audio-wrap audio {
+            width: 100%;
+        }
+
+        .ref-iap-grid-item .triple-top .pose-wrap {
+            width: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ref-iap-grid-item .triple-top .pose-wrap video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .ref-iap-grid-item video.gen-video {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #444;
+            margin-top: 4px;
+        }
+
+        .ref-iap-input-label {
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .ref-iap-input-label .lbl-ref-img {
+            width: 30%;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .ref-iap-input-label .lbl-ref-aud {
+            width: 28%;
+            text-align: center;
+        }
+
+        .ref-iap-input-label .lbl-pose {
+            width: 40%;
+            text-align: center;
+        }
+
+        .ref-iap-output-label {
+            font-size: 0.7rem;
+            color: #666;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .ref-iap-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <section class="demo-section" id="sec-audio-pose-image">
+        <h2>Ref Audio + Pose + Ref Image &#8594; Generated Audio-Video</h2>
+        <p class="section-subtitle">Given a reference image, an audio clip, and a pose sequence video, our model
+            generates a realistic video with matching appearance, voice, and pose-guided motion.</p>
+
+        <div class="ref-iap-grid">
+
+            <!-- IAP Sample 2 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/9cf9f7a6bdfe5e8557e147959930b78b/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/9cf9f7a6bdfe5e8557e147959930b78b/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/9cf9f7a6bdfe5e8557e147959930b78b/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/9cf9f7a6bdfe5e8557e147959930b78b/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a woman with long dark hair and bangs, wearing a dark
+                            blazer over a light blue top. She is in a room with a bulletin board in the background,
+                            which has several photos pinned to it. The lighting is dim, creating a somewhat serious
+                            atmosphere. The woman appears to be engaged in a conversation with someone whose back is to
+                            the camera. The person&#x27;s hair is gray and they are wearing a dark suit. The
+                            woman&#x27;s expression seems to be one of concern or seriousness.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Whispering is just not enough to induce the
+                            baby.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 4 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/9dcf45d32b44bee9f8443153b16e9908/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/9dcf45d32b44bee9f8443153b16e9908/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/9dcf45d32b44bee9f8443153b16e9908/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/9dcf45d32b44bee9f8443153b16e9908/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A woman with curly hair, some of which is gray, is shown.
+                            She is wearing a light gray blazer over a white top. She has a necklace on. The background
+                            is a solid brownish color. The woman appears to be speaking, her mouth is slightly open and
+                            her eyes are looking downwards.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;it&#x27;s really important to think about all&quot;
+                            followed by a pause and then &quot;the different ways that we can help&quot;.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 6 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/9debe25ac1598746be1ab7fc5f6ce5c0/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/9debe25ac1598746be1ab7fc5f6ce5c0/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/9debe25ac1598746be1ab7fc5f6ce5c0/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/9debe25ac1598746be1ab7fc5f6ce5c0/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man in a professional setting. He has dark, wavy hair
+                            and is wearing round glasses. His attire includes a gray tweed suit jacket, a light blue
+                            dress shirt, and a patterned tie. The background features a window with a view of greenery
+                            outside, and there are some framed pictures or certificates on the wall. The lighting is
+                            soft and natural, coming from the window.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;At the top of all his brilliance he had a
+                            genius.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 11 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/a07ace1d7c9c2970e8d86f8e473275af/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/a07ace1d7c9c2970e8d86f8e473275af/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/a07ace1d7c9c2970e8d86f8e473275af/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/a07ace1d7c9c2970e8d86f8e473275af/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man with long hair, a beard, and glasses is standing in
+                            a dimly lit room. He is wearing a dark jacket over a gray shirt. Behind him, there is a sign
+                            with the word &quot;piper&quot; partially visible. The background appears to be a door or a
+                            wall with some indistinct shapes and colors.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;You fucked around with son of
+                            Anton&#x27;s.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 15 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/a2267c16e85f87bb6ecd5e2886c1ea75/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/a2267c16e85f87bb6ecd5e2886c1ea75/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/a2267c16e85f87bb6ecd5e2886c1ea75/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/a2267c16e85f87bb6ecd5e2886c1ea75/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a person with curly, light-colored hair. The lighting is
+                            dim, with a light source coming from behind, creating a silhouette effect. The person is
+                            wearing a dark-colored top. The background is dark and out of focus, with some indistinct
+                            shapes and colors.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;Nobody. And you can take over this
+                            hall.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 17 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/a26e2951dcc5dfddf03eb3f804b905ea/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/a26e2951dcc5dfddf03eb3f804b905ea/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/a26e2951dcc5dfddf03eb3f804b905ea/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/a26e2951dcc5dfddf03eb3f804b905ea/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] a man with a beard and mustache, wearing a dark vest over
+                            a white shirt. He appears to be in a dimly lit room, possibly a study or office, with a dark
+                            background. The man is looking slightly to the side, and his expression seems serious or
+                            contemplative. There are no other people or objects clearly visible in the frame.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;If there&#x27;s blood on the streets of Chinatown,
+                            it&#x27;s because.&quot;.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 18 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/a271bdc952f4d2c048b9917d739fe27c/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/a271bdc952f4d2c048b9917d739fe27c/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/a271bdc952f4d2c048b9917d739fe27c/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/a271bdc952f4d2c048b9917d739fe27c/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is shown in a dimly lit room. He has a receding
+                            hairline, a beard, and is wearing a dark suit with a white shirt and a patterned tie. There
+                            is a small American flag pin on his left lapel. The background appears to be a storage area
+                            with shelves and boxes. The lighting is low, creating a somewhat somber
+                            atmosphere.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;I&#x27;ll have your passport
+                            returned.&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+            <!-- IAP Sample 19 -->
+            <div class="ref-iap-grid-item">
+                <div class="triple-top">
+                    <img src="assets/demo/ref_image_audio_pose/a2ecf18be328528509b86acddd58a5ac/ref_image.jpg"
+                        alt="ref">
+                    <div class="audio-wrap">
+                        <audio controls preload="none">
+                            <source
+                                src="assets/demo/ref_image_audio_pose/a2ecf18be328528509b86acddd58a5ac/ref_audio.wav"
+                                type="audio/wav">
+                        </audio>
+                    </div>
+                    <div class="pose-wrap">
+                        <video controls playsinline class="lazy">
+                            <source
+                                data-src="assets/demo/ref_image_audio_pose/a2ecf18be328528509b86acddd58a5ac/control_video.mp4"
+                                type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="ref-iap-input-label"><span class="lbl-ref-img">Ref Image</span><span class="lbl-ref-aud">Ref
+                        Audio</span><span class="lbl-pose">Pose</span></div>
+                <video controls playsinline class="lazy gen-video">
+                    <source data-src="assets/demo/ref_image_audio_pose/a2ecf18be328528509b86acddd58a5ac/generated.mp4"
+                        type="video/mp4">
+                </video>
+                <div class="ref-iap-output-label">Generated</div>
+                <details class="sample-caption">
+                    <summary>View Caption</summary>
+                    <div class="caption-body">
+                        <span class="caption-visual">[Visual] A man is sitting in a room, talking on a phone. He has
+                            short, graying hair and is wearing a dark-colored long-sleeve shirt. His left hand is
+                            holding the phone to his ear, and his right hand is gesturing as he speaks. The background
+                            shows a softly lit room with some furniture, including a lamp and a cabinet. The overall
+                            lighting is warm and dim.</span><br>
+                        <span class="caption-speech">[Speech] &ldquo;because if claire doesn&#x27;t get her halloween
+                            she turns into&rdquo;</span>
+                    </div>
+                </details>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ===== Comparison Section ===== -->
+    <section class="demo-section" id="sec-comparison">
+        <h2>Qualitative Comparison</h2>
+
+        <div class="cmp-list">
+
+            <!-- Sample 1: 9cbc620db53b -->
+            <div class="cmp-row">
+                <div class="cmp-row-caption">
+                    <img class="cmp-ref-img" src="assets/cmp/9cbc620db53b/ref_image.jpg" alt="ref">
+                    <div class="cmp-caption-wrap">
+                        <div class="cmp-caption-visual">[Visual] An elderly woman with short, gray hair. She is wearing
+                            round glasses and a patterned coat with black buttons. She also has a chunky necklace. The
+                            background appears to be an indoor setting with some blurred elements, possibly furniture or
+                            decorations. The lighting is somewhat dim, giving the scene a subdued feel.</div>
+                        <div class="cmp-caption-speech">[Speech] &ldquo;You have no idea.&rdquo;</div>
+                    </div>
+                </div>
+                <div class="cmp-row-body">
+                    <div class="cmp-ours-side">
+                        <div class="cmp-ours-label">Ours (MMControl)</div>
+                        <video class="cmp-ours-video" controls playsinline preload="metadata">
+                            <source src="assets/cmp/9cbc620db53b/ours.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="cmp-others-side">
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">AniPortrait</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cbc620db53b/aniportrait.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">Hallo3</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cbc620db53b/hallo3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">HunyuanCustom</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cbc620db53b/hunyuancustom.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">SadTalker</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cbc620db53b/sadtalker.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 2: 9cc7de321389 -->
+            <div class="cmp-row">
+                <div class="cmp-row-caption">
+                    <img class="cmp-ref-img" src="assets/cmp/9cc7de321389/ref_image.jpg" alt="ref">
+                    <div class="cmp-caption-wrap">
+                        <div class="cmp-caption-visual">[Visual] A woman with long dark hair, wearing a light-colored
+                            top. She has a necklace with a small pendant. The background appears to be indoors, with a
+                            neutral-colored wall and some darker elements that might be furniture or decor. The lighting
+                            is dim, creating a somewhat somber or serious atmosphere.</div>
+                        <div class="cmp-caption-speech">[Speech] &ldquo;Maybe not but Jessica I have watched you my
+                            whole.&rdquo;</div>
+                    </div>
+                </div>
+                <div class="cmp-row-body">
+                    <div class="cmp-ours-side">
+                        <div class="cmp-ours-label">Ours (MMControl)</div>
+                        <video class="cmp-ours-video" controls playsinline preload="metadata">
+                            <source src="assets/cmp/9cc7de321389/ours.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="cmp-others-side">
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">AniPortrait</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cc7de321389/aniportrait.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">Hallo3</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cc7de321389/hallo3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">HunyuanCustom</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cc7de321389/hunyuancustom.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">SadTalker</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cc7de321389/sadtalker.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 3: 9cf89cda17dc -->
+            <div class="cmp-row">
+                <div class="cmp-row-caption">
+                    <img class="cmp-ref-img" src="assets/cmp/9cf89cda17dc/ref_image.jpg" alt="ref">
+                    <div class="cmp-caption-wrap">
+                        <div class="cmp-caption-visual">[Visual] A close-up of a man in a suit and tie. He has short,
+                            light brown hair and is looking to his right with a serious expression. The background is
+                            blurred, but it appears to be an indoor setting, possibly an office or a room with some
+                            furniture. The lighting is dim, creating a somewhat somber atmosphere.</div>
+                        <div class="cmp-caption-speech">[Speech] &ldquo;By the way, I&rsquo;m gonna find out what it
+                            is.&rdquo;</div>
+                    </div>
+                </div>
+                <div class="cmp-row-body">
+                    <div class="cmp-ours-side">
+                        <div class="cmp-ours-label">Ours (MMControl)</div>
+                        <video class="cmp-ours-video" controls playsinline preload="metadata">
+                            <source src="assets/cmp/9cf89cda17dc/ours.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="cmp-others-side">
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">AniPortrait</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cf89cda17dc/aniportrait.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">Hallo3</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cf89cda17dc/hallo3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">HunyuanCustom</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cf89cda17dc/hunyuancustom.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">SadTalker</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9cf89cda17dc/sadtalker.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Sample 5: 9d38e124bccc -->
+            <div class="cmp-row">
+                <div class="cmp-row-caption">
+                    <img class="cmp-ref-img" src="assets/cmp/9d38e124bccc/ref_image.jpg" alt="ref">
+                    <div class="cmp-caption-wrap">
+                        <div class="cmp-caption-visual">[Visual] A woman with blonde hair styled in loose waves. She is
+                            wearing large, round, blue-framed glasses and has a headset with a microphone attached to
+                            it. She is wearing a dark top and a necklace. The background appears to be indoors, with
+                            some blurred lights visible, suggesting a dimly lit environment. The woman seems to be in
+                            the middle of speaking or reacting to something.</div>
+                        <div class="cmp-caption-speech">[Speech] &ldquo;and I did some research on Courtney too.&rdquo;
+                        </div>
+                    </div>
+                </div>
+                <div class="cmp-row-body">
+                    <div class="cmp-ours-side">
+                        <div class="cmp-ours-label">Ours (MMControl)</div>
+                        <video class="cmp-ours-video" controls playsinline preload="metadata">
+                            <source src="assets/cmp/9d38e124bccc/ours.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="cmp-others-side">
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">AniPortrait</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9d38e124bccc/aniportrait.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">Hallo3</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9d38e124bccc/hallo3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">HunyuanCustom</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9d38e124bccc/hunyuancustom.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">SadTalker</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9d38e124bccc/sadtalker.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sample 6: 9e22a8b5c873 -->
+            <div class="cmp-row">
+                <div class="cmp-row-caption">
+                    <img class="cmp-ref-img" src="assets/cmp/9e22a8b5c873/ref_image.jpg" alt="ref">
+                    <div class="cmp-caption-wrap">
+                        <div class="cmp-caption-visual">[Visual] A woman with long, dark brown hair and bangs is shown.
+                            She is wearing a dark blue velvet top. She has a ring on her right hand and is pointing with
+                            her index finger. The background appears to be a light-colored wall with a patterned design.
+                            There is a black object partially visible on the right side of the frame.</div>
+                        <div class="cmp-caption-speech">[Speech] &ldquo;I have a friend. She&rsquo;s an artist. I like
+                            her.&rdquo;</div>
+                    </div>
+                </div>
+                <div class="cmp-row-body">
+                    <div class="cmp-ours-side">
+                        <div class="cmp-ours-label">Ours (MMControl)</div>
+                        <video class="cmp-ours-video" controls playsinline preload="metadata">
+                            <source src="assets/cmp/9e22a8b5c873/ours.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="cmp-others-side">
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">AniPortrait</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9e22a8b5c873/aniportrait.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">Hallo3</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9e22a8b5c873/hallo3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">HunyuanCustom</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9e22a8b5c873/hunyuancustom.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <div class="cmp-other-item">
+                            <div class="cmp-other-label">SadTalker</div>
+                            <video class="cmp-other-video" controls playsinline preload="metadata">
+                                <source src="assets/cmp/9e22a8b5c873/sadtalker.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <footer class="footer has-background-black has-text-white">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        bulmaCarousel.attach('#results-carousel', {
+            slidesToScroll: 1,
+            slidesToShow: 1
+        });
+    </script>
+
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script>
+        const players = Plyr.setup('.plyr-video', {
+            controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen', 'download']
+        });
+
+        players.forEach(player => {
+            const source = player.media.querySelector('source');
+            if (source) {
+                // Set download URL as same as video src
+                const src = source.getAttribute('data-src') || source.getAttribute('src');
+                player.config.urls = { download: src };
+            }
+        });
+    </script>
+
+    <!-- Section nav: smooth scroll + active highlight -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const nav = document.getElementById('sectionNav');
+            const links = nav.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.demo-section[id]');
+
+            // Smooth scroll on click
+            links.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Highlight active section on scroll
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        links.forEach(function (l) { l.classList.remove('active'); });
+                        var activeLink = nav.querySelector('a[href="#' + entry.target.id + '"]');
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+            sections.forEach(function (sec) { observer.observe(sec); });
+
+            // Shadow on scroll
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
