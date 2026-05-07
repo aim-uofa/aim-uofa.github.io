@@ -481,6 +481,40 @@ footer a{color:#64748b}
       training in stages with a hand-crafted curriculum.
       <sup>†</sup>Sequential multi-stage training. <sup>‡</sup>Single-run weighted-sum aggregation.
     </p>
+
+    <!-- ────── Training cost ────── -->
+    <h3 style="margin-top:36px;margin-bottom:6px">Training Cost</h3>
+    <p class="section-sub" style="margin-top:0">
+      Measured on <b>8&times;H200</b> with five rewards (<i>K</i>&nbsp;=&nbsp;5).
+      Speed and memory are normalized by the weighted-sum DiffusionNFT baseline.
+      Amortization (<i>N</i>&nbsp;=&nbsp;10) brings full per-reward harmonization
+      from <b>0.56&times;</b> back to <b>0.97&times;</b> the baseline throughput,
+      with only a <b>1.14&times;</b> memory bump.
+    </p>
+
+    <div class="table-wrap">
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Relative speed&nbsp;&uarr;</th>
+            <th>GPU memory</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Weighted Sum (DiffusionNFT, <i>K</i>&nbsp;=&nbsp;5)</td><td>1.00&times;</td><td>59&nbsp;GB&nbsp;(1.00&times;)</td></tr>
+          <tr><td>MARBLE <i>w/o</i> amortization (<i>K</i>&nbsp;=&nbsp;5)</td><td>0.56&times;</td><td>67&nbsp;GB&nbsp;(1.14&times;)</td></tr>
+          <tr class="trained"><td><b>MARBLE w/ amortization (<i>K</i>&nbsp;=&nbsp;5, <i>N</i>&nbsp;=&nbsp;10)</b></td><td class="best">0.97&times;</td><td>67&nbsp;GB&nbsp;(1.14&times;)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:10px;line-height:1.6">
+      <b>Reading:</b> per-reward gradient harmonization at every step costs $K{+}1$ backward
+      passes, dropping throughput to $0.56\times$. Amortizing the full MGDA solve over
+      $N{=}10$ steps reduces the average per-step cost to $(K{+}N)/N \approx 1.5\times$
+      backward passes &mdash; nearly recovering single-reward training speed at no quality
+      cost (see Quantitative Results above and the EMA decay $\rho$ ablation below).
+    </p>
   </div>
 </section>
 
