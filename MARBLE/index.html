@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MARBLE &middot; Multi-Aspect Reward Balance for Diffusion RL</title>
+<meta name="description" content="MARBLE: a gradient-space framework for multi-reward diffusion RL that harmonizes reward-specific policy gradients into a unified update direction." />
+<meta property="og:title" content="MARBLE: Multi-Aspect Reward Balance for Diffusion RL" />
+<meta property="og:description" content="A gradient-space framework that preserves reward-specific supervision throughout optimization for multi-reward diffusion RL." />
+<meta property="og:image" content="assets/figures/teaser.png" />
+<link rel="preload" as="image" href="assets/figures/teaser.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;background:#fff;line-height:1.7;font-size:16px}
+img{max-width:100%;height:auto;display:block}
+a{color:#2d6a4f;text-decoration:none;transition:color .2s}
+a:hover{color:#1b4332}
+
+/* ── layout ── */
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+.narrow{max-width:720px;margin:0 auto;padding:0 24px}
+section{padding:64px 0}
+section.tight{padding:48px 0}
+
+/* ── hero ── */
+.hero{background:linear-gradient(165deg,#f0fdf4 0%,#ecfdf5 35%,#f0f9ff 70%,#faf5ff 100%);padding:80px 0 48px;text-align:center}
+.venue{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#2d6a4f;background:#d1fae5;padding:5px 14px;border-radius:20px;margin-bottom:24px}
+.venue .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.title{font-size:clamp(28px,4.5vw,48px);font-weight:800;line-height:1.15;color:#0f172a;margin-bottom:16px;letter-spacing:-.02em}
+.title .hl{background:linear-gradient(120deg,#2d6a4f,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.m{background:linear-gradient(120deg,#2d6a4f,#16a34a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+.subtitle{font-size:clamp(15px,2vw,18px);color:#475569;max-width:700px;margin:0 auto 28px;line-height:1.6}
+.authors{font-size:14px;color:#64748b;margin-bottom:8px;line-height:1.8}
+.authors .name{white-space:nowrap}
+.affiliations{font-size:13px;color:#94a3b8;margin-bottom:28px;line-height:1.7}
+.equal{color:#2d6a4f;font-weight:600}
+.corr{color:#2d6a4f}
+
+/* ── badges ── */
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:8px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;background:#1a1a2e;color:#fff;transition:transform .15s,box-shadow .15s}
+.badge:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15);color:#fff}
+.badge svg{width:16px;height:16px;fill:currentColor}
+.badge.soft{background:#f1f5f9;color:#334155}
+.badge.soft:hover{background:#e2e8f0;color:#1e293b}
+.badge.green{background:#2d6a4f;color:#fff}
+.badge.green:hover{background:#1b4332;color:#fff}
+
+/* ── teaser ── */
+.teaser{max-width:1000px;margin:0 auto;padding:24px 24px 0}
+.teaser-wrap{border-radius:12px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.06)}
+.teaser-wrap img{width:100%;display:block}
+.teaser-cap{padding:16px 20px;font-size:13px;color:#64748b;background:#f8fafc;line-height:1.6}
+
+/* ── section titles ── */
+.section-title{font-size:28px;font-weight:700;color:#0f172a;margin-bottom:8px;letter-spacing:-.01em}
+.section-sub{font-size:15px;color:#64748b;margin-bottom:32px;max-width:600px}
+section:not(.tight) .section-title{text-align:left}
+
+/* ── abstract ── */
+#abstract{background:#fff;border-top:1px solid #f1f5f9}
+.lead{font-size:16px;color:#334155;margin-bottom:16px;line-height:1.8}
+.lead:last-child{margin-bottom:0}
+.tldr{background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%);border-left:4px solid #2d6a4f;border-radius:8px;padding:18px 22px;margin-bottom:32px;font-size:15.5px;line-height:1.7;color:#1a3d2e}
+.tldr strong.tldr-label{color:#166534;font-weight:700;letter-spacing:.04em;margin-right:4px}
+
+/* ── highlights ── */
+#highlights{background:#f8fafc;border-top:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9}
+#highlights .section-title,#highlights .section-sub{text-align:center}
+#highlights .section-sub{margin-left:auto;margin-right:auto}
+.highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:0}
+.hcard{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:28px 24px;transition:transform .2s,box-shadow .2s}
+.hcard:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.hcard .icon{font-size:28px;margin-bottom:12px}
+.hcard h3{font-size:15px;font-weight:700;color:#0f172a;margin-bottom:8px;letter-spacing:-.01em}
+.hcard .desc{font-size:13px;color:#64748b;line-height:1.6}
+.hcard .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:4px;margin-bottom:12px}
+.tag-harmony{background:#d1fae5;color:#166534}
+.tag-amortize{background:#dbeafe;color:#1e40af}
+.tag-dropout{background:#fce7f3;color:#9d174d}
+
+/* ── contributions ── */
+#contrib{background:#fff}
+.contribs{display:flex;flex-direction:column;gap:20px}
+.contrib{display:flex;gap:20px;align-items:flex-start}
+.contrib .ic{min-width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#2d6a4f,#16a34a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.contrib h4{font-size:16px;font-weight:600;color:#0f172a;margin-bottom:4px}
+.contrib p{font-size:14px;color:#475569;line-height:1.65}
+
+/* ── method ── */
+#method{background:#f8fafc;border-top:1px solid #f1f5f9}
+.figure{margin-top:8px;text-align:center}
+.figure img{border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.05);margin:0 auto;max-width:100%;height:auto}
+.figure figcaption{margin-top:14px;font-size:13px;color:#64748b;line-height:1.65;text-align:left}
+
+/* ── motivation ── */
+#motivation{background:#fff;border-top:1px solid #f1f5f9}
+.motiv-block{margin-bottom:56px}
+.motiv-block:last-child{margin-bottom:0}
+.motiv-h{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:10px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.motiv-h .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2d6a4f,#16a34a);color:#fff;font-size:13px;font-weight:700;flex-shrink:0}
+.motiv-text{font-size:15px;color:#475569;line-height:1.75;margin-bottom:16px}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0 24px}
+.stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:20px 16px;text-align:center;transition:transform .2s,box-shadow .2s}
+.stat:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.05)}
+.stat .num{font-size:22px;font-weight:800;color:#16a34a;margin-bottom:8px;letter-spacing:-.01em;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat .lab{font-size:12px;color:#64748b;line-height:1.5}
+@media(max-width:768px){.stat-grid{grid-template-columns:1fr}}
+
+/* ── results table ── */
+#results{background:#fff;border-top:1px solid #f1f5f9}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px}
+.results{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5}
+.results th{background:#f8fafc;font-weight:600;color:#334155;padding:10px 12px;text-align:center;border-bottom:2px solid #e2e8f0;white-space:nowrap}
+.results td{padding:8px 12px;text-align:center;border-bottom:1px solid #f1f5f9;color:#475569}
+.results td:first-child{text-align:left;font-weight:500;color:#1a1a2e;white-space:nowrap}
+.results tr:hover td{background:#f8fafc}
+.results .best{font-weight:700;color:#0f172a}
+.results .second{text-decoration:underline;text-underline-offset:2px}
+.results .trained{background:#f0fdf4}
+.results .sep{border-bottom:2px solid #e2e8f0}
+.results .group-header{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8}
+
+/* ── bibtex ── */
+#bibtex{background:#f8fafc;border-top:1px solid #f1f5f9}
+.bib-block{position:relative;background:#1e293b;color:#e2e8f0;border-radius:10px;padding:24px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:12px;line-height:1.7;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.bib-block .copy-btn{position:absolute;top:12px;right:12px;background:#334155;border:none;color:#94a3b8;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .2s,color .2s}
+.bib-block .copy-btn:hover{background:#475569;color:#fff}
+
+/* ── footer ── */
+footer{padding:40px 0;text-align:center;font-size:13px;color:#94a3b8;border-top:1px solid #f1f5f9}
+footer a{color:#64748b}
+
+/* ── gallery (tall comparison panels) ── */
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px}
+.gallery figure{margin:0}
+.gallery img{border-radius:10px;box-shadow:0 2px 16px rgba(0,0,0,.06);width:100%;display:block;cursor:zoom-in;transition:transform .15s}
+.gallery img:hover{transform:scale(1.01)}
+.gallery figcaption{margin-top:10px;font-size:12px;color:#64748b;line-height:1.55;text-align:center}
+
+/* ── lightbox ── */
+.lightbox{position:fixed;inset:0;background:rgba(15,23,42,.92);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:95vw;max-height:92vh;border-radius:8px;box-shadow:0 12px 48px rgba(0,0,0,.4)}
+
+/* ── responsive ── */
+@media(max-width:768px){
+  .gallery{grid-template-columns:1fr}
+  .hero{padding:56px 0 36px}
+  section{padding:48px 0}
+  .highlights{grid-template-columns:1fr}
+  .badges{gap:8px}
+  .badge{padding:7px 14px;font-size:13px}
+  .contrib{gap:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ HERO -->
+<header class="hero">
+  <div class="container">
+    <h1 class="title">
+      <span class="hl">MARBLE</span>: <span class="hl">M</span>ulti-<span class="hl">A</span>spect <span class="hl">R</span>eward<br/>
+      <span class="hl">B</span>a<span class="hl">L</span>anc<span class="hl">E</span> for Diffusion RL
+    </h1>
+    <div class="subtitle">
+      A gradient-space framework that preserves reward-specific supervision throughout
+      optimization, enabling simultaneous improvement across all reward dimensions
+      in multi-reward diffusion RL.
+    </div>
+
+    <div class="authors">
+      <span class="name">Canyu Zhao<sup>1</sup></span>,
+      <span class="name">Hao Chen<sup>1</sup></span>,
+      <span class="name">Yunze Tong<sup>1</sup></span>,
+      <span class="name">Yu Qiao<sup>2</sup></span>,
+      <span class="name">Jiacheng Li<sup>2</sup></span>,
+      <span class="name corr">Chunhua Shen<sup>1,3,&#9993;</sup></span>
+    </div>
+
+    <div class="affiliations">
+      <sup>1</sup>Zhejiang University &nbsp;&middot;&nbsp;
+      <sup>2</sup>Hithink &nbsp;&middot;&nbsp;
+      <sup>3</sup>Zhejiang University of Technology<br/>
+      <sup>&#9993;</sup>Corresponding author
+    </div>
+
+    <div class="badges">
+      <a class="badge green" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6zm7 1.5L18.5 9H14a1 1 0 0 1-1-1V3.5z"/></svg>
+        Paper
+      </a>
+      <a class="badge" href="https://github.com/aim-uofa/MARBLE" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+        Code
+      </a>
+      <a class="badge soft" href="#bibtex">
+        <svg viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2z"/></svg>
+        BibTeX
+      </a>
+    </div>
+  </div>
+
+  <!-- teaser -->
+  <div class="teaser">
+    <div class="teaser-wrap">
+      <img src="assets/figures/teaser.png" alt="Comparison of multi-reward training paradigms" />
+      <div class="teaser-cap">
+        <b>Figure 1.</b> Comparison of multi-reward training paradigms.
+        <b>Left:</b> Training one model per reward requires maintaining multiple models.
+        <b>Middle:</b> Sequential training produces a single model but demands handcrafted stage schedules.
+        <b>Right:</b> <span class="m">MARBLE</span> trains a single model on all rewards simultaneously with minimal manual effort.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════ ABSTRACT -->
+<section id="abstract">
+  <div class="narrow">
+    <div class="tldr">
+      <strong class="tldr-label">TL;DR.</strong>
+      <span class="m">MARBLE</span> harmonizes reward-specific policy gradients into a single
+      update direction, simultaneously improving all <em>K</em> rewards in <strong>one
+      training run</strong> &mdash; no manual reward weighting, no multi-stage curriculum,
+      and at near single-reward training cost.
+    </div>
+    <h2 class="section-title">Abstract</h2>
+    <p class="lead">
+      Reinforcement learning (RL) fine-tuning has become the dominant approach for aligning
+      diffusion models with human preferences. However, image assessment is inherently
+      multi-dimensional. Different evaluation criteria must be optimized jointly. Existing
+      practice handles multiple rewards by training one specialist model per reward, optimizing
+      a weighted-sum reward <em>R(x) = &Sigma;<sub>k</sub> w<sub>k</sub> R<sub>k</sub>(x)</em>,
+      or sequentially fine-tuning with a hand-crafted stage schedule. These approaches either
+      fail to produce a unified model that can be jointly trained on all rewards or necessitate
+      heavy manually tuned sequential training. We identify weighted-sum reward aggregation as
+      a key source of this failure. The underlying issue is a sample-level mismatch: most
+      rollouts are <em>specialist samples</em> that are highly informative for certain reward
+      dimensions while being inapplicable or uninformative for others, so weighted summation
+      systematically dilutes their supervision. To preserve this signal, we propose
+      <strong>MARBLE</strong> (<strong>M</strong>ulti-<strong>A</strong>spect
+      <strong>R</strong>eward <strong>B</strong>a<strong>L</strong>anc<strong>E</strong>),
+      a gradient-space framework that maintains an independent advantage estimator for each
+      reward, computes per-reward policy gradients, and harmonizes them into a single update
+      direction without manual reward weighting. We further propose an amortized formulation
+      that exploits the affine structure of the DiffusionNFT loss to reduce the per-step cost
+      from <em>K+1</em> backward passes to near single-reward baseline cost, together with
+      EMA smoothing on the balancing coefficients to stabilize updates against transient
+      single-batch fluctuations. On SD3.5 Medium with five rewards, MARBLE improves all five
+      reward dimensions <strong>simultaneously</strong>, turns the worst-aligned reward's
+      gradient cosine from negative under weighted summation in 80% of mini-batches to
+      consistently positive, and runs at 0.97&times; the training speed of baseline training.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ HIGHLIGHTS -->
+<section class="tight" id="highlights">
+  <div class="container">
+    <h2 class="section-title">Key Ideas</h2>
+    <p class="section-sub">Three techniques that make multi-reward diffusion RL practical.</p>
+
+    <div class="highlights">
+      <div class="hcard">
+        <span class="tag tag-harmony">Gradient Space</span>
+        <h3>Gradient Harmonization</h3>
+        <div class="desc">Per-reward policy gradients are normalized and harmonized via MGDA
+        to find a common descent direction, preserving each reward's learning signal
+        instead of collapsing them into a single scalar.</div>
+      </div>
+      <div class="hcard">
+        <span class="tag tag-amortize">Efficiency</span>
+        <h3>Amortized Formulation</h3>
+        <div class="desc">Because the NFT loss depends on advantages only through an affine mapping,
+        K per-reward backward passes collapse into a single pass with combined advantages &mdash;
+        reducing cost to near-single-reward overhead.</div>
+      </div>
+      <div class="hcard">
+        <span class="tag tag-dropout">Stability</span>
+        <h3>Coefficient Smoothing</h3>
+        <div class="desc">An EMA on the harmonization coefficients prevents a transient
+        weak batch from suppressing a reward across an entire amortization window,
+        keeping cached updates stable between full refreshes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ CONTRIBUTIONS -->
+<section id="contrib">
+  <div class="container">
+    <h2 class="section-title">Contributions</h2>
+    <p class="section-sub">What MARBLE brings to multi-reward diffusion RL.</p>
+
+    <div class="contribs">
+      <div class="contrib">
+        <div class="ic">01</div>
+        <div>
+          <h4>The specialist sample problem</h4>
+          <p>We identify that rollout samples are typically informative for only a subset
+          of reward dimensions, making standard scalar reward aggregation intrinsically
+          inefficient for multi-reward training.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">02</div>
+        <div>
+          <h4>Gradient-space reward balancing</h4>
+          <p>MARBLE decomposes per-reward advantages, computes reward-specific gradients,
+          and harmonizes them via MGDA with a normalize-and-rescale procedure that removes
+          scale disparities while preserving natural gradient magnitude.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">03</div>
+        <div>
+          <h4>Amortized multi-reward training</h4>
+          <p>By exploiting the affine structure of the DiffusionNFT loss, we prove that
+          the convex combination of K per-reward gradients equals a single backward pass
+          with combined advantages, enabling cached MGDA weights with near-zero overhead.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="ic">04</div>
+        <div>
+          <h4>Simultaneous five-reward improvement</h4>
+          <p>On SD3.5 Medium with PickScore, HPSv2, CLIPScore, OCR, and GenEval,
+          MARBLE improves all reward dimensions simultaneously &mdash; weighted-sum
+          baselines consistently fail on specialist rewards.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ MOTIVATION -->
+<section id="motivation">
+  <div class="container">
+    <h2 class="section-title">Why Multi-Reward Diffusion RL Is Hard</h2>
+    <p class="section-sub">Two failure modes of weighted-sum reward aggregation that motivate <span class="m">MARBLE</span>'s gradient-space design.</p>
+
+    <!-- 1: Specialist samples -->
+    <div class="motiv-block">
+      <h3 class="motiv-h"><span class="num">1</span>Specialist samples dilute reward signal</h3>
+      <p class="motiv-text">
+        Most rollouts carry strong signal for only a subset of reward dimensions
+        and are uninformative or inapplicable for the rest &mdash; an image of
+        a cat carries no signal for OCR rewards, and a generation with strong
+        text rendering may be only average aesthetically. Under
+        <em>R(x) = &Sigma;<sub>k</sub> w<sub>k</sub> R<sub>k</sub>(x)</em>,
+        the value of such a <strong>specialist sample</strong> is diluted by
+        the unrelated dimensions, and the resulting advantage no longer reflects
+        the dimension on which the sample is genuinely useful.
+      </p>
+      <figure class="figure">
+        <img src="assets/figures/per_source_heatmap.png" alt="Per-sample per-reward advantage heatmap showing specialist-sample structure" loading="lazy" />
+        <figcaption>
+          <b>Sample-level specialist structure.</b>
+          Each column denotes one sample, each row shows its per-reward $z$-score
+          advantage. High advantages concentrate on source-specific rewards
+          (OCR, GenEval). Few samples achieve positive advantages across all
+          dimensions &mdash; confirming that scalar reward aggregation washes
+          out specialist signal.
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- 2: Gradient conflict -->
+    <div class="motiv-block">
+      <h3 class="motiv-h"><span class="num">2</span>Weighted-sum updates fight individual rewards most of the time</h3>
+      <p class="motiv-text">
+        We empirically confirm the dilution at the gradient level: across
+        multi-reward rollouts on SD3.5 Medium, the weighted-sum update
+        direction is anti-aligned with at least one reward's gradient in
+        <strong>80% of mini-batches</strong>, meaning the shared update
+        actively pushes against some reward most of the time. <span class="m">MARBLE</span>'s
+        harmonized direction <strong>eliminates this conflict</strong>
+        while keeping the average alignment essentially unchanged, and
+        balances the rewards more evenly.
+      </p>
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="num">80% &rarr; 0%</div>
+          <div class="lab">Mini-batches with at least one reward gradient anti-aligned with the update direction<br/>(weighted-sum &rarr; MARBLE)</div>
+        </div>
+        <div class="stat">
+          <div class="num">&minus;0.13 &rarr; +0.37</div>
+          <div class="lab">Worst-reward gradient cosine<br/>min<sub>k</sub> cos(d,&nbsp;g<sub>k</sub>)</div>
+        </div>
+        <div class="stat">
+          <div class="num">0.161 &rarr; 0.006</div>
+          <div class="lab">Across-reward variance var<sub>k</sub> cos(d,&nbsp;g<sub>k</sub>) &mdash; MARBLE balances rewards more evenly</div>
+        </div>
+      </div>
+      <figure class="figure">
+        <img src="assets/figures/harmony.png" alt="Per-batch update-direction harmony comparison" loading="lazy" />
+        <figcaption>
+          <b>Update-direction harmony.</b> Per-batch
+          min<sub>k</sub>, mean<sub>k</sub>, and var<sub>k</sub> of
+          {cos(d,&nbsp;g<sub>k</sub>)} for the weighted-sum direction
+          (top) and the MARBLE harmonized direction (bottom). MARBLE keeps
+          the worst-reward cosine consistently positive across all measured
+          mini-batches.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ METHOD -->
+<section id="method">
+  <div class="container">
+    <h2 class="section-title">Method Overview</h2>
+    <p class="section-sub">From per-reward scoring to harmonized gradient updates.</p>
+    <figure class="figure">
+      <img src="assets/figures/method.png" alt="MARBLE method pipeline" loading="lazy" />
+      <figcaption>
+        <b>Overview of MARBLE.</b> Given a prompt batch, the shared model generates images scored
+        by K reward models independently <b>(Step 1)</b>. Per-reward policy gradients are computed
+        via separate backpropagation passes <b>(Step 2)</b>. A gradient harmonization solver (MGDA)
+        finds a common descent direction that balances all reward objectives <b>(Step 3)</b>,
+        and the shared model is updated accordingly.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ RESULTS -->
+<section id="results">
+  <div class="container">
+    <h2 class="section-title">Quantitative Results</h2>
+    <p class="section-sub">SD3.5 Medium fine-tuned with five rewards: PickScore, CLIPScore, HPSv2.1, OCR, and GenEval. <span style="background:#f0fdf4;padding:1px 6px;border-radius:3px;border:1px solid #d1fae5">Green</span> rows are RL fine-tunes; gray cells are in-domain rewards used during training.</p>
+
+    <div class="table-wrap">
+      <table class="results">
+        <thead>
+          <tr>
+            <th rowspan="2">Model</th>
+            <th colspan="2">Rule-Based</th>
+            <th colspan="6">Model-Based</th>
+            <th rowspan="2">Composite&nbsp;&uarr;</th>
+          </tr>
+          <tr>
+            <th>GenEval</th><th>OCR</th>
+            <th>PickScore</th><th>CLIPScore</th><th>HPSv2.1</th>
+            <th>Aesthetic</th><th>ImgRwd</th><th>UniRwd</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>SD-XL</td><td>0.55</td><td>0.14</td><td>22.42</td><td>0.287</td><td>0.280</td><td>5.60</td><td>0.76</td><td>2.93</td><td>−0.46</td></tr>
+          <tr><td>SD3.5-L</td><td>0.71</td><td>0.68</td><td>22.91</td><td>0.289</td><td>0.288</td><td>5.50</td><td>0.96</td><td>3.25</td><td>+0.12</td></tr>
+          <tr class="sep"><td>FLUX.1-Dev</td><td>0.66</td><td>0.59</td><td>22.84</td><td class="best">0.295</td><td>0.274</td><td>5.71</td><td>0.96</td><td>3.27</td><td>+0.10</td></tr>
+          <tr><td>SD3.5-M (w/o CFG)</td><td>0.24</td><td>0.12</td><td>20.51</td><td>0.237</td><td>0.204</td><td>5.13</td><td>−0.58</td><td>2.02</td><td>−2.32</td></tr>
+          <tr class="sep"><td>SD3.5-M + CFG</td><td>0.63</td><td>0.59</td><td>22.34</td><td>0.285</td><td>0.279</td><td>5.36</td><td>0.85</td><td>3.03</td><td>−0.26</td></tr>
+          <tr><td>+ FlowGRPO (GenEval)</td><td class="best">0.95</td><td>0.66</td><td>22.51</td><td class="second">0.293</td><td>0.274</td><td>5.32</td><td>1.06</td><td>3.18</td><td>+0.12</td></tr>
+          <tr><td>+ FlowGRPO (OCR)</td><td>0.66</td><td class="second">0.92</td><td>22.41</td><td>0.290</td><td>0.280</td><td>5.32</td><td>0.95</td><td>3.15</td><td>+0.01</td></tr>
+          <tr><td>+ FlowGRPO (PickScore)</td><td>0.54</td><td>0.68</td><td class="second">23.50</td><td>0.280</td><td>0.316</td><td>5.90</td><td>1.29</td><td>3.37</td><td>+0.36</td></tr>
+          <tr><td>+ DiffusionNFT (sequential)<sup>†</sup></td><td class="second">0.94</td><td>0.91</td><td class="best">23.80</td><td class="second">0.293</td><td class="second">0.331</td><td>6.01</td><td class="second">1.49</td><td class="second">3.49</td><td class="second">+1.02</td></tr>
+          <tr><td>+ DiffusionNFT (weighted-sum)<sup>‡</sup></td><td>0.92</td><td>0.91</td><td>21.53</td><td>0.267</td><td>0.300</td><td class="second">6.15</td><td>1.16</td><td>3.04</td><td>+0.18</td></tr>
+          <tr class="trained"><td><b>+ MARBLE (ours)</b></td><td class="second">0.94</td><td class="best">0.96</td><td>22.83</td><td>0.286</td><td class="best">0.355</td><td class="best">6.59</td><td class="best">1.53</td><td class="best">3.52</td><td class="best">+1.12</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:10px;line-height:1.6">
+      <b>Bold</b> = best, <u>underline</u> = second best.
+      <i>Composite</i> is the per-row mean of column-wise z-scores
+      (each metric standardized to zero mean and unit variance across the rows of the table)
+      and aggregates performance over all eight metrics; higher is better.
+      <b>Reading:</b> MARBLE achieves the best score on <b>OCR</b>, <b>HPSv2.1</b>, <b>Aesthetic</b>,
+      <b>ImageReward</b>, and <b>UniReward</b> &mdash; five out of eight metrics &mdash; in a
+      single model, and the highest <b>Composite</b> score overall. The weighted-sum baseline
+      collapses on PickScore and CLIPScore, while sequential training matches MARBLE only by
+      training in stages with a hand-crafted curriculum.
+      <sup>†</sup>Sequential multi-stage training. <sup>‡</sup>Single-run weighted-sum aggregation.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ QUALITATIVE -->
+<section id="qualitative" style="background:#f8fafc;border-top:1px solid #f1f5f9">
+  <div class="container">
+    <h2 class="section-title">Qualitative Comparison</h2>
+    <p class="section-sub">MARBLE produces images that satisfy multiple reward dimensions simultaneously, where weighted-sum baselines drop one or more aspects.</p>
+    <figure class="figure">
+      <img src="assets/figures/main_results.jpg" alt="Qualitative comparison: MARBLE vs. baselines on prompts spanning text rendering, counting, attribute binding, and aesthetic quality" loading="lazy" />
+      <figcaption>
+        <b>Qualitative comparison</b> on prompts that span text rendering, object counting,
+        attribute binding, and aesthetic quality. MARBLE renders correct text (OCR), follows
+        compositional constraints (GenEval), and preserves visual quality in the same model;
+        weighted-sum baselines visibly fail on at least one dimension per row.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ MORE COMPARISONS -->
+<section id="more-comparisons" style="background:#f8fafc;padding-top:32px">
+  <div class="container">
+    <h2 class="section-title">More Comparisons</h2>
+    <p class="section-sub">Side-by-side panels covering text rendering, attribute &amp; spatial composition, and counting. Click any panel to enlarge.</p>
+
+    <div class="gallery">
+      <figure>
+        <img src="assets/figures/supp1.jpg" alt="Additional qualitative comparison panel 1" loading="lazy" />
+        <figcaption>Panel 1 &middot; Text rendering &amp; attribute binding</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/figures/supp2.jpg" alt="Additional qualitative comparison panel 2" loading="lazy" />
+        <figcaption>Panel 2 &middot; Spatial layout &amp; composition</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/figures/supp3.jpg" alt="Additional qualitative comparison panel 3" loading="lazy" />
+        <figcaption>Panel 3 &middot; Counting &amp; multi-object scenes</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/figures/supp4.jpg" alt="Additional qualitative comparison panel 4" loading="lazy" />
+        <figcaption>Panel 4 &middot; Mixed prompts</figcaption>
+      </figure>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:24px;line-height:1.6;text-align:center">
+      Across all panels MARBLE produces sharper images with fewer blur and distortion artifacts
+      than DiffusionNFT, and reliably satisfies text rendering, attribute binding, spatial layout,
+      and counting requirements where weighted-sum baselines drop one or more aspects.
+    </p>
+  </div>
+</section>
+
+<!-- lightbox overlay -->
+<div class="lightbox" id="lb" onclick="this.classList.remove('open')"><img id="lb-img" alt="" /></div>
+<script>
+document.querySelectorAll('.gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lb = document.getElementById('lb');
+    document.getElementById('lb-img').src = img.src;
+    lb.classList.add('open');
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('lb').classList.remove('open');
+});
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════ EMA ABLATION -->
+<section id="ema-ablation">
+  <div class="container">
+    <h2 class="section-title">Ablation: Coefficient Smoothing (EMA Decay <i>&rho;</i>)</h2>
+    <p class="section-sub">
+      Between full MGDA solves, MARBLE EMA-smooths the cached harmonization
+      coefficients with decay <i>&rho;</i>. Smaller <i>&rho;</i> tracks the
+      latest gradient geometry but inherits batch noise; larger <i>&rho;</i>
+      smooths more but adapts slowly. <i>&rho; = 0.7</i> is the sweet spot
+      across all reward dimensions.
+    </p>
+
+    <div class="table-wrap">
+      <table class="results">
+        <thead>
+          <tr>
+            <th rowspan="2">EMA decay <i>&rho;</i></th>
+            <th colspan="2">Rule-Based</th>
+            <th colspan="6">Model-Based</th>
+          </tr>
+          <tr>
+            <th>GenEval</th><th>OCR</th>
+            <th>PickScore</th><th>CLIPScore</th><th>HPSv2.1</th>
+            <th>Aesthetic</th><th>ImgRwd</th><th>UniRwd</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><i>&rho;</i> = 0.1</td><td>0.86</td><td>0.80</td><td>21.52</td><td>0.261</td><td>0.292</td><td>5.84</td><td>1.22</td><td>2.98</td></tr>
+          <tr><td><i>&rho;</i> = 0.3</td><td>0.88</td><td>0.84</td><td>21.76</td><td>0.266</td><td>0.312</td><td>6.03</td><td>1.27</td><td>3.04</td></tr>
+          <tr><td><i>&rho;</i> = 0.5</td><td>0.93</td><td>0.95</td><td>22.02</td><td>0.276</td><td>0.340</td><td>6.14</td><td>1.48</td><td>3.43</td></tr>
+          <tr class="trained"><td><b><i>&rho;</i> = 0.7 (default)</b></td><td class="best">0.94</td><td class="best">0.96</td><td class="best">22.83</td><td class="best">0.286</td><td class="best">0.355</td><td class="best">6.59</td><td class="best">1.53</td><td class="best">3.52</td></tr>
+          <tr><td><i>&rho;</i> = 0.9</td><td>0.90</td><td>0.89</td><td>22.14</td><td>0.272</td><td>0.342</td><td>6.26</td><td>1.47</td><td>3.40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#94a3b8;margin-top:10px;line-height:1.6">
+      <b>Bold</b> = best per column. Reading: <i>&rho;</i> too small (0.1, 0.3)
+      lets batch noise in; <i>&rho;</i> too large (0.9) is overly inertial;
+      <i>&rho; = 0.7</i> dominates all eight metrics simultaneously.
+    </p>
+
+    <figure class="figure" style="margin-top:36px">
+      <img src="assets/figures/ema_curves.png" alt="Per-reward training curves under different EMA decay values" loading="lazy" />
+      <figcaption>
+        <b>Training dynamics under different <i>&rho;</i>.</b> Per-reward curves over the course of
+        training. <i>&rho; = 0.1, 0.3</i> are noisy and unstable; <i>&rho; = 0.9</i>
+        adapts too slowly and stalls; <i>&rho; = 0.5, 0.7</i> show clean monotone progress, with
+        <i>&rho; = 0.7</i> reaching the highest plateau across all five rewards simultaneously.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ BIBTEX -->
+<section id="bibtex">
+  <div class="narrow">
+    <h2 class="section-title">BibTeX</h2>
+    <div class="bib-block">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.querySelector('code').textContent).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+<code>@article{zhao2026marble,
+  title   = {MARBLE: Multi-Aspect Reward Balance for Diffusion RL},
+  author  = {Zhao, Canyu and Chen, Hao and Tong, Yunze and Qiao, Yu and Li, Jiacheng and Shen, Chunhua},
+  year    = {2026}
+}</code>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="container">
+    <p>MARBLE &middot; Multi-Aspect Reward Balance for Diffusion RL</p>
+    <p style="margin-top:8px">
+      Template inspired by <a href="https://aim-uofa.github.io" target="_blank">AIM-UoFA</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
