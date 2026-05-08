@@ -16,6 +16,7 @@
 /* ── reset ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+section[id]{scroll-margin-top:24px}
 body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;background:#fff;line-height:1.7;font-size:16px}
 img{max-width:100%;height:auto;display:block}
 a{color:#2d6a4f;text-decoration:none;transition:color .2s}
@@ -60,7 +61,7 @@ section.tight{padding:48px 0}
 
 /* ── section titles ── */
 .section-title{font-size:28px;font-weight:700;color:#0f172a;margin-bottom:8px;letter-spacing:-.01em}
-.section-sub{font-size:15px;color:#64748b;margin-bottom:32px;max-width:600px}
+.section-sub{font-size:15px;color:#64748b;margin-bottom:32px}
 section:not(.tight) .section-title{text-align:left}
 
 /* ── abstract ── */
@@ -579,6 +580,19 @@ document.querySelectorAll('.gallery img').forEach(img => {
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('lb').classList.remove('open');
+});
+// Robust in-page anchor scrolling: avoids stale scroll positions when
+// lazy-loaded images cause layout shifts after the initial click.
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  const id = a.getAttribute('href').slice(1);
+  if (!id) return;
+  a.addEventListener('click', e => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({behavior:'smooth', block:'start'});
+    history.pushState(null, '', '#' + id);
+  });
 });
 </script>
 
