@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Local dev servers / logs / temp
+*.log
+_*.html
+.cache/
+
+# OS / misc
+Thumbs.db

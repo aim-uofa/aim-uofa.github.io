@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ReasonMatch — Eliciting Complex Spatial Reasoning in MLLMs through Wide-Baseline Matching</title>
+<meta name="description" content="ReasonMatch (CVPR 2026): a scalable, verifiable benchmark and Dynamic Correspondence Reinforcement Learning (DCRL) for wide-baseline cross-view region matching in multimodal LLMs." />
+
+<!-- Open Graph / social -->
+<meta property="og:title" content="ReasonMatch — Eliciting Complex Spatial Reasoning in MLLMs through Wide-Baseline Matching" />
+<meta property="og:description" content="CVPR 2026 · ReasonMatch-Bench (2,810 image pairs) and DCRL reach 70.5 F1, outperforming evaluated open- and closed-source MLLM baselines." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/qualitative-cropped.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz@0,18..72;1,18..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --ink:#15171d;
+  --ink-soft:#3c414c;
+  --muted:#697080;
+  --line:#e3e5eb;
+  --bg:#ffffff;
+  --band:#f6f7f9;
+  --band-2:#eceef3;
+  --indigo:#2b3b5c;        /* deep slate navy — primary */
+  --indigo-600:#1f2d47;
+  --indigo-50:#edf0f5;
+  --coral:#9c3a32;         /* muted brick — reserved emphasis */
+  --coral-soft:#f6ece9;
+  --coral-line:#e3cac4;
+  --teal:#216b51;          /* muted green — positive deltas */
+  --radius:8px;
+  --shadow-sm:0 1px 2px rgba(20,24,40,.04);
+  --shadow:0 14px 32px -20px rgba(18,26,52,.20);
+  --maxw:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+a{color:var(--indigo-600);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{line-height:1.16;letter-spacing:-.005em;color:var(--ink);font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:600}
+p{color:var(--ink-soft)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{
+  font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--indigo);margin:0 0 14px;
+}
+
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:saturate(180%) blur(12px);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:center;gap:18px;height:62px;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+.brand:hover{text-decoration:none}
+.brand .dot{width:10px;height:10px;border-radius:2px;background:var(--indigo)}
+.nav-links{display:flex;gap:4px;margin-left:6px}
+.nav-links a{
+  color:var(--ink-soft);font-weight:500;font-size:.92rem;padding:7px 12px;border-radius:9px;
+}
+.nav-links a:hover{background:var(--band-2);color:var(--ink);text-decoration:none}
+.nav-links a.active{color:var(--indigo);background:var(--indigo-50)}
+.nav-cta{margin-left:auto;display:flex;gap:8px;align-items:center}
+.nav-cta .btn{padding:8px 13px;font-size:.86rem}
+.hamburger{display:none;margin-left:auto;background:none;border:1px solid var(--line);border-radius:9px;width:40px;height:38px;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.hamburger span{display:block;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:.2s}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 17px;border-radius:6px;font-weight:600;font-size:.94rem;
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  transition:background .12s ease, border-color .12s ease, color .12s ease;
+  cursor:pointer;white-space:nowrap;
+}
+.btn:hover{text-decoration:none;background:var(--band);border-color:#d4d7df}
+.btn svg{width:16px;height:16px;flex:0 0 auto}
+.btn-primary{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.btn-primary:hover{background:var(--indigo-600);border-color:var(--indigo-600);color:#fff}
+.btn-ghost{background:#fff}
+.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:44px 0 26px;background:var(--band)}
+.hero .wrap{max-width:920px}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:0;align-items:center}
+.hero-copy{min-width:0}
+.badge-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:22px}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.8rem;
+  padding:5px 11px;border-radius:5px;border:1px solid var(--line);
+  background:#fff;color:var(--ink-soft);
+}
+.badge.lead-badge{border-color:var(--indigo);background:var(--indigo);color:#fff}
+.hero h1{
+  font-size:clamp(2.1rem,4.6vw,3.35rem);font-weight:600;margin:.1em 0 .4em;max-width:21ch;letter-spacing:-.01em;
+}
+.hero h1 .accent{color:var(--indigo);font-style:italic}
+.authors{font-size:1.05rem;color:var(--ink);font-weight:400;margin:0 0 6px;max-width:62ch}
+.authors sup{color:var(--coral);font-weight:700}
+.affil{color:var(--muted);font-size:.98rem;margin:.1em 0 4px}
+.legend{color:var(--muted);font-size:.85rem;margin:.2em 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+/* ---------- Sections ---------- */
+section{padding:72px 0;border-top:1px solid var(--line)}
+section.band{background:var(--band)}
+#overview{padding-top:46px}
+.section-head{max-width:64ch;margin-bottom:34px}
+.section-head h2{font-size:clamp(1.55rem,2.9vw,2.1rem);margin:0 0 .35em;font-weight:600}
+.section-head p{font-size:1.06rem;margin:0}
+.lead{font-size:1.18rem;color:var(--ink);font-weight:500;font-family:"Newsreader",Georgia,serif;line-height:1.4}
+
+/* ---------- Stat cards ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+.stat{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;
+  box-shadow:var(--shadow-sm);position:relative;overflow:hidden;
+}
+.stat::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--indigo)}
+.stat:nth-child(1)::after{background:var(--coral)}
+.stat .num{font-family:"Newsreader",Georgia,serif;font-size:2.45rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);line-height:1}
+.stat .num small{font-size:1.05rem;font-weight:600;color:var(--muted);font-family:Inter,sans-serif}
+.stat .lbl{margin-top:10px;color:var(--ink-soft);font-size:.95rem;font-weight:400}
+
+/* ---------- Narrative cards ---------- */
+.challenge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.challenge-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-sm)}
+.challenge-card .tag{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+.challenge-card h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:800;margin:0 0 6px;letter-spacing:0}
+.challenge-card p{margin:0;font-size:.92rem}
+.composition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.composition-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.composition-card h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:800;margin:0 0 14px;letter-spacing:0}
+.bar-row{display:grid;grid-template-columns:84px 1fr 48px;gap:10px;align-items:center;margin:9px 0;font-size:.84rem}
+.bar-row .name{color:var(--ink-soft);white-space:nowrap}
+.bar-row .pct{color:var(--muted);font-variant-numeric:tabular-nums;text-align:right}
+.bar-track{height:8px;background:var(--band-2);border-radius:2px;overflow:hidden}
+.bar-fill{display:block;height:100%;background:var(--indigo)}
+.bar-fill.alt{background:var(--coral)}
+.bar-fill.good{background:var(--teal)}
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.level-card{border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:#fff}
+.level-card .level{display:inline-flex;align-items:center;justify-content:center;width:34px;height:28px;border-radius:5px;background:var(--indigo);color:#fff;font-weight:800;font-size:.82rem;margin-bottom:10px}
+.level-card h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:800;letter-spacing:0;margin:0 0 6px}
+.level-card p{margin:0;font-size:.92rem}
+
+/* ---------- Layout helpers ---------- */
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:start}
+.grid2>*,.subgrid>*,.stats>*{min-width:0}
+.table-scroll{max-width:100%}
+.figure{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow-sm)}
+.figure img{width:100%;height:auto;display:block;border-radius:8px}
+.figure figcaption{color:var(--muted);font-size:.88rem;margin-top:12px;padding:0 4px 4px}
+.callout{
+  border:1px solid var(--line);border-left:3px solid var(--coral);background:#fff;border-radius:6px;
+  padding:18px 22px;color:var(--ink-soft);font-weight:400;
+}
+.callout b{color:var(--ink);font-weight:700}
+
+/* feature list */
+.features{display:grid;gap:14px;margin:26px 0 0;padding:0;list-style:none}
+.features li{display:flex;gap:14px;align-items:flex-start}
+.features .ic{flex:0 0 auto;width:34px;height:34px;border-radius:6px;background:var(--indigo-50);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem}
+.features h4{margin:.1em 0 .2em;font-size:1.02rem;color:var(--ink)}
+.features p{margin:0;font-size:.96rem}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:.82rem;font-weight:500;color:var(--ink-soft);background:var(--band);border:1px solid var(--line);border-radius:5px;padding:5px 11px}
+
+/* formula */
+.formula{
+  background:#0f1117;color:#f4f5fb;border-radius:var(--radius);padding:22px 24px;margin:22px 0;
+  font-family:"Newsreader",Georgia,serif;font-size:1.35rem;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  box-shadow:var(--shadow);
+}
+.formula .tag{font-family:Inter,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa0c8;background:rgba(255,255,255,.06);padding:4px 9px;border-radius:6px}
+.formula i{font-style:italic}
+.formula sub,.formula sup{font-size:.62em}
+
+/* ---------- Tables ---------- */
+.table-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
+.table-card .cap{padding:20px 24px 4px;font-weight:700;color:var(--ink);font-size:1.02rem}
+.table-card .cap span{display:block;font-weight:400;color:var(--muted);font-size:.9rem;margin-top:3px}
+.table-scroll{overflow-x:auto;padding:10px 12px 12px}
+table{border-collapse:collapse;width:100%;min-width:420px;font-size:1rem}
+caption{text-align:left}
+th,td{padding:13px 22px;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  font-size:.76rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  border-bottom:2px solid var(--line);padding-top:8px;padding-bottom:11px;
+}
+tbody td{border-bottom:1px solid var(--line);color:var(--ink-soft)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--band)}
+tbody tr.ours td{background:var(--coral-soft);color:var(--ink);font-weight:700}
+tbody tr.ours:hover td{background:#fce4e1}
+tbody tr.ours td:first-child{color:var(--coral);box-shadow:inset 3px 0 0 var(--coral)}
+.pos{color:var(--teal);font-weight:700}
+.neg{color:var(--coral);font-weight:600}
+td.best{font-weight:700;color:var(--ink)}
+.subgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+
+/* results grouping */
+.results-group{margin-top:56px}
+.results-group:first-of-type{margin-top:40px}
+.group-label{display:flex;align-items:center;gap:14px;margin:0 0 20px}
+.group-label h3{font-size:1.18rem;margin:0;white-space:nowrap}
+.group-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.group-label .kicker{font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+
+/* ---------- Method pipeline diagram ---------- */
+.pipeline{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch;
+  margin:8px 0 14px;counter-reset:step;
+}
+.pstep{
+  position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px 20px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:8px;
+}
+.pstep::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;top:-13px;left:20px;width:26px;height:26px;border-radius:50%;
+  background:var(--indigo);color:#fff;font-size:.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 4px var(--band);
+}
+.pstep.is-final::before{background:var(--coral)}
+.pstep .pk{font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo);margin-top:4px}
+.pstep.is-final .pk{color:var(--coral)}
+.pstep h4{margin:0;font-size:1.06rem;letter-spacing:-.01em}
+.pstep p{margin:0;font-size:.92rem;color:var(--ink-soft)}
+.pstep .plist{margin:2px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.pstep .plist li{font-size:.88rem;color:var(--ink-soft);padding-left:15px;position:relative}
+.pstep .plist li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--coral-line)}
+.pstep .arrow{
+  position:absolute;right:-12px;top:50%;transform:translateY(-50%);z-index:2;
+  width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;color:var(--indigo);font-weight:700;font-size:.9rem;
+}
+.method-foot{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center;margin-top:28px}
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.mcard .ic{width:36px;height:36px;border-radius:6px;background:var(--indigo-50);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;margin-bottom:12px}
+.mcard h4{margin:0 0 .25em;font-size:1.02rem}
+.mcard p{margin:0;font-size:.94rem}
+
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+.evidence-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+.evidence-card h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:800;letter-spacing:0;margin:0 0 14px}
+.gap-bars{display:grid;gap:12px}
+.gap-row{display:grid;grid-template-columns:98px 1fr 44px;gap:12px;align-items:center}
+.gap-row .who{font-weight:700;color:var(--ink-soft);font-size:.9rem}
+.gap-row .score{font-variant-numeric:tabular-nums;text-align:right;font-weight:800}
+.gap-track{height:12px;background:var(--band-2);border-radius:2px;overflow:hidden}
+.gap-fill{display:block;height:100%;background:#aab2c0}
+.gap-row.human .gap-fill{background:var(--teal)}
+.gap-row.ours .gap-fill{background:var(--coral)}
+.transfer-list{display:grid;gap:12px}
+.transfer-item{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.transfer-item:last-child{border-bottom:none;padding-bottom:0}
+.transfer-item b{font-size:1rem}
+.transfer-item span{color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}
+
+.release-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.release-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+.release-card h3{font-family:Inter,sans-serif;font-size:1rem;font-weight:800;letter-spacing:0;margin:0 0 8px}
+.release-card p{margin:0 0 14px;font-size:.94rem}
+.release-card .btn{padding:9px 13px;font-size:.86rem}
+
+/* ---------- HTML bar chart ---------- */
+.chart{display:flex;flex-direction:column;gap:22px}
+.chart-panel{}
+.chart-title{display:flex;align-items:baseline;justify-content:space-between;font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.chart-title .axis{font-weight:500;letter-spacing:.02em;text-transform:none;font-size:.72rem;color:#9aa1ad}
+.cbar{display:grid;grid-template-columns:118px 1fr 34px;align-items:center;gap:12px;height:23px;font-size:.82rem}
+.cname{color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;font-variant-numeric:tabular-nums}
+.ctrack{position:relative;height:8px;background:var(--band-2);border-radius:2px;overflow:hidden}
+.cfill{position:absolute;left:0;top:0;bottom:0;background:#aab2c0;border-radius:2px}
+.cval{font-variant-numeric:tabular-nums;color:var(--ink-soft);text-align:left;font-size:.8rem}
+.cbar.is-ours .cname{color:var(--coral);font-weight:700}
+.cbar.is-ours .cfill{background:var(--coral)}
+.cbar.is-ours .cval{color:var(--coral);font-weight:700}
+
+/* ---------- Citation ---------- */
+.cite-wrap{position:relative}
+pre.bibtex{
+  background:#0f1117;color:#e7e9f4;border-radius:var(--radius);padding:22px 22px;overflow-x:auto;
+  font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;line-height:1.7;margin:0;
+}
+pre.bibtex .k{color:#9aa6ff}
+pre.bibtex .v{color:#ffd9a8}
+.copy-btn{
+  position:absolute;top:14px;right:14px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);
+  color:#fff;border-radius:9px;padding:7px 13px;font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;
+}
+.copy-btn:hover{background:rgba(255,255,255,.18)}
+
+/* ---------- Footer ---------- */
+footer{background:#0f1117;color:#c7cad8;padding:56px 0 40px}
+footer h3{color:#fff;font-size:1.15rem;margin:0 0 6px}
+footer a{color:#aab0ff}
+.foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-bottom{margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);font-size:.86rem;color:#8b91a6;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1060px){
+  .nav-links,.nav-cta{display:none}
+  .nav-links.open{display:flex;position:absolute;top:62px;left:0;right:0;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);padding:10px 16px;gap:2px}
+  .hamburger{display:flex}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .grid2{grid-template-columns:1fr;gap:28px}
+  .stats{grid-template-columns:1fr}
+  .stats.four{grid-template-columns:1fr 1fr}
+  .challenge-grid{grid-template-columns:1fr 1fr}
+  .composition-grid{grid-template-columns:1fr}
+  .level-grid{grid-template-columns:1fr}
+  .evidence-grid{grid-template-columns:1fr}
+  .release-grid{grid-template-columns:1fr}
+  .subgrid{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr 1fr}
+  .pstep .arrow{display:none}
+  .method-foot{grid-template-columns:1fr;gap:24px}
+  .cards3{grid-template-columns:1fr}
+  section{padding:54px 0}
+}
+@media (max-width:540px){
+  .stats.four{grid-template-columns:1fr}
+  .challenge-grid{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr}
+  th,td{padding:12px 16px}
+  .cbar{grid-template-columns:92px 1fr 32px;gap:10px}
+  .bar-row{grid-template-columns:78px 1fr 44px}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr}
+  .actions{flex-direction:column;align-items:stretch}
+  .actions .btn{width:100%;justify-content:center}
+  .hero h1{font-size:1.85rem}
+}
+.figure.center{max-width:920px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="dot"></span>ReasonMatch</a>
+    <div class="nav-links" id="navlinks">
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#results">Results</a>
+      <a href="#examples">Examples</a>
+      <a href="#release">Release</a>
+      <a href="#citation">Citation</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://github.com/aim-uofa/ReasonMatch" target="_blank" rel="noopener" title="Open code repository on GitHub">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Code
+      </a>
+      <a class="btn btn-primary" href="https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench" target="_blank" rel="noopener">Dataset</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<a id="top"></a>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="badge-row">
+          <span class="badge lead-badge">CVPR 2026 · Denver, Colorado</span>
+          <span class="badge">Zhejiang University · Ant Group · Westlake University</span>
+        </div>
+        <h1>Eliciting Complex Spatial Reasoning in MLLMs through <span class="accent">Wide-Baseline Matching</span></h1>
+        <p class="authors">
+          Hao Zhong<sup>*</sup>, Muzhi Zhu<sup>*</sup>, Shenyan Zeng<sup>*</sup>, Anzhou Li, Cong Chen, Hua Geng,
+          Duochao Shi, Wentao Ye, Tao Lin<sup>†</sup>, Hao Chen<sup>†</sup>, Chunhua Shen<sup>†</sup>
+        </p>
+        <p class="legend"><sup style="color:var(--coral)">*</sup> Equal contribution &nbsp;·&nbsp; <sup style="color:var(--coral)">†</sup> Corresponding authors</p>
+
+        <div class="actions">
+          <!-- TODO(release): replace href with the real arXiv URL once assigned -->
+          <a class="btn btn-ghost" href="#" aria-disabled="true" title="arXiv link coming soon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v16H4z" opacity=".0"/><path d="M6 4h9l5 5v11H6z"/><path d="M14 4v5h5"/></svg>
+            arXiv <span style="color:var(--muted);font-weight:500">(soon)</span>
+          </a>
+          <a class="btn btn-primary" href="https://github.com/aim-uofa/ReasonMatch" target="_blank" rel="noopener" title="Open code repository on GitHub">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            Code Repository
+          </a>
+          <a class="btn btn-primary" href="https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/></svg>
+            ModelScope Dataset
+          </a>
+          <a class="btn btn-ghost" href="#citation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            BibTeX
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ================= OVERVIEW ================= -->
+<section id="overview">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">The Question</p>
+      <h2>Can MLLMs match the same physical region across extreme viewpoint changes?</h2>
+      <p class="lead">Physical-world MLLMs need more than object recognition. Wide-baseline matching (WBM)
+        asks a model to bind local cues into a globally consistent cross-view map — demanding geometry,
+        semantics, fine-grained perception, and occlusion reasoning all at once.</p>
+    </div>
+    <p style="max-width:70ch">
+      We turn this physical-world spatial skill into a <b>scalable, verifiable</b> training signal and benchmark.
+      View pairs harvested from RGB-D / SfM reconstructions come with exact, checkable correspondences — so models
+      can be trained with verifiable rewards and evaluated without subjective judgement.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">70.5<small> F1</small></div>
+        <div class="lbl">DCRL on ReasonMatch-Bench — surpassing GPT-5-mini and Gemini-2.5-Pro</div>
+      </div>
+      <div class="stat">
+        <div class="num">2,810</div>
+        <div class="lbl">Stratified image pairs in ReasonMatch-Bench</div>
+      </div>
+      <div class="stat">
+        <div class="num">220k</div>
+        <div class="lbl">Automatically harvested training corpus from RGB-D and SfM reconstructions</div>
+      </div>
+    </div>
+
+    <div class="challenge-grid" aria-label="Wide-baseline matching challenges">
+      <div class="challenge-card">
+        <div class="tag">Viewpoint</div>
+        <h3>Large camera motion</h3>
+        <p>Objects and shelves move from frontal to oblique views, so local appearance alone is ambiguous.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="tag">Visibility</div>
+        <h3>Occlusion and no-match cases</h3>
+        <p>Some annotated regions leave the frame or become hidden, requiring explicit unmatched predictions.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="tag">Perception</div>
+        <h3>Fine-grained labels</h3>
+        <p>Dense visual prompts stress label reading, object boundaries, and small region discrimination.</p>
+      </div>
+      <div class="challenge-card">
+        <div class="tag">Reasoning</div>
+        <h3>Global consistency</h3>
+        <p>Correct matches depend on scene layout, repeated structures, and stable anchors across views.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHOD ================= -->
+<section id="method" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Method</p>
+      <h2>DCRL — Dynamic Correspondence Reinforcement Learning</h2>
+      <p>We harvest RGB-D / SfM view pairs with verifiable supervision and train an 8B MLLM with format and
+        matching rewards — <b>no explicit chain-of-thought labels required</b>.</p>
+    </div>
+
+    <!-- Pipeline diagram -->
+    <div class="pipeline" role="list" aria-label="DCRL training pipeline">
+      <div class="pstep" role="listitem">
+        <span class="pk">Data</span>
+        <h4>220k multi-view pairs</h4>
+        <p>RGB-D videos and SfM reconstructions provide real-world viewpoint diversity.</p>
+        <div class="chips" style="margin-top:6px">
+          <span class="chip">RE10K</span><span class="chip">DL3DV</span><span class="chip">CO3D</span><span class="chip">uCO3D</span><span class="chip">ScanNet</span>
+        </div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="pstep" role="listitem">
+        <span class="pk">Supervision</span>
+        <h4>Verified point pool</h4>
+        <p>Depth or shared 3D landmarks produce 10–50 spatially separated correspondences per pair.</p>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="pstep" role="listitem">
+        <span class="pk">Curriculum</span>
+        <h4>Dynamic scheduling</h4>
+        <ul class="plist">
+          <li>Viewpoint: Identical → Hard</li>
+          <li>Point-level: L1 → L2 → L3</li>
+          <li>Spatial distribution refinement</li>
+        </ul>
+        <span class="arrow" aria-hidden="true">→</span>
+      </div>
+      <div class="pstep is-final" role="listitem">
+        <span class="pk">Outcome</span>
+        <h4>DCRL · 8B MLLM</h4>
+        <p>RL with a holistic matching reward turns matching into a transferable spatial skill.</p>
+      </div>
+    </div>
+
+    <!-- Reward formula + intro -->
+    <div class="method-foot">
+      <p style="margin:0">Supervision is mined directly from multi-view reconstructions, so every region
+        correspondence is geometrically grounded and machine-checkable. The model is optimized end-to-end with
+        reinforcement learning using both format compliance and a holistic matching reward over all query regions:</p>
+      <div class="formula" style="margin:0" aria-label="r_match equals one over n times the sum over i of the indicator that f-hat of i equals f-star of i">
+        <span class="tag">Reward</span>
+        <span><i>r</i><sub>match</sub> &nbsp;=&nbsp; <span style="display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;font-size:.7em">1<span style="border-top:1px solid #f4f5fb;line-height:1.1">n</span></span>
+        &nbsp; <span style="font-size:1.2em">&Sigma;</span><sub style="font-size:.5em">i=1</sub><sup style="font-size:.5em">n</sup>
+        &nbsp; <span style="font-family:Inter,sans-serif;font-size:.7em">𝟙</span>[ <i>f̂</i>(i) = <i>f</i><sup>*</sup>(i) ]</span>
+      </div>
+    </div>
+
+    <!-- Curriculum components -->
+    <div class="cards3">
+      <div class="mcard"><div class="ic">VP</div><h4>Image-level viewpoint progression</h4><p>Overlap bins schedule pairs from near-identical views toward hard wide baselines.</p></div>
+      <div class="mcard"><div class="ic">L1–3</div><h4>Point-level correspondence curriculum</h4><p>L1 unambiguous → L2 selective → L3 partial matching, with distractors and no-match cases.</p></div>
+      <div class="mcard"><div class="ic">SD</div><h4>Spatial distribution refinement</h4><p>Sampling evolves from sparse global anchors toward denser fine-grained spatial layouts.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENCHMARK ================= -->
+<section id="benchmark">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Benchmark</p>
+      <h2>ReasonMatch-Bench</h2>
+      <p>A scalable, verifiable MLLM benchmark of <b>2,810 image pairs</b>, curated from a 220k-pair corpus and
+        balanced across data sources, scene types, and task difficulty levels.</p>
+    </div>
+    <div class="stats four">
+      <div class="stat">
+        <div class="num">2,810</div>
+        <div class="lbl">Evaluation image pairs with machine-checkable correspondences</div>
+      </div>
+      <div class="stat">
+        <div class="num">10–50</div>
+        <div class="lbl">Spatially separated verified correspondences per preprocessed pair</div>
+      </div>
+      <div class="stat">
+        <div class="num">Viewpoint</div>
+        <div class="lbl">Stratified by camera <b>displacement</b> — from modest overlap to extreme wide baselines.</div>
+      </div>
+      <div class="stat">
+        <div class="num">L1–L3</div>
+        <div class="lbl">Progressively harder matching tasks with distractors and unmatched regions</div>
+      </div>
+    </div>
+
+    <div class="composition-grid" aria-label="ReasonMatch-Bench composition">
+      <div class="composition-card">
+        <h3>Data sources</h3>
+        <div class="bar-row"><span class="name">uCO3D</span><span class="bar-track"><span class="bar-fill" style="width:28%"></span></span><span class="pct">28.0%</span></div>
+        <div class="bar-row"><span class="name">ScanNet</span><span class="bar-track"><span class="bar-fill" style="width:27.7%"></span></span><span class="pct">27.7%</span></div>
+        <div class="bar-row"><span class="name">DL3DV</span><span class="bar-track"><span class="bar-fill" style="width:27%"></span></span><span class="pct">27.0%</span></div>
+        <div class="bar-row"><span class="name">RE10K</span><span class="bar-track"><span class="bar-fill" style="width:17.2%"></span></span><span class="pct">17.2%</span></div>
+      </div>
+      <div class="composition-card">
+        <h3>Scene types</h3>
+        <div class="bar-row"><span class="name">Indoor</span><span class="bar-track"><span class="bar-fill alt" style="width:55.1%"></span></span><span class="pct">55.1%</span></div>
+        <div class="bar-row"><span class="name">Object</span><span class="bar-track"><span class="bar-fill alt" style="width:28%"></span></span><span class="pct">28.0%</span></div>
+        <div class="bar-row"><span class="name">Outdoor</span><span class="bar-track"><span class="bar-fill alt" style="width:16.9%"></span></span><span class="pct">16.9%</span></div>
+      </div>
+      <div class="composition-card">
+        <h3>Task levels</h3>
+        <div class="bar-row"><span class="name">L1</span><span class="bar-track"><span class="bar-fill good" style="width:32.5%"></span></span><span class="pct">32.5%</span></div>
+        <div class="bar-row"><span class="name">L2</span><span class="bar-track"><span class="bar-fill good" style="width:36.8%"></span></span><span class="pct">36.8%</span></div>
+        <div class="bar-row"><span class="name">L3</span><span class="bar-track"><span class="bar-fill good" style="width:30.7%"></span></span><span class="pct">30.7%</span></div>
+      </div>
+    </div>
+
+    <div class="level-grid">
+      <div class="level-card">
+        <span class="level">L1</span>
+        <h3>Unambiguous matching</h3>
+        <p>One-to-one correspondences, with no distractors in either view.</p>
+      </div>
+      <div class="level-card">
+        <span class="level">L2</span>
+        <h3>Selective matching</h3>
+        <p>Target-view distractors force the model to select the geometrically consistent counterpart.</p>
+      </div>
+      <div class="level-card">
+        <span class="level">L3</span>
+        <h3>Partial matching</h3>
+        <p>Distractors and unmatched regions appear in both views, modeling occlusion and limited overlap.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:30px">
+      On the <b>hard subset</b>, humans reach <b>84.0 F1</b> while the best model (DCRL) reaches <b>52.0 F1</b> —
+      a substantial headroom that marks wide-baseline matching as an open challenge for MLLMs.
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section id="results" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Results</p>
+      <h2>Targeted RL makes an 8B model outperform far stronger baselines</h2>
+      <p>DCRL reaches <b>70.5 F1</b> on ReasonMatch-Bench, outperforming all evaluated open- and closed-source
+        MLLM baselines while transferring to related spatial-reasoning benchmarks.</p>
+    </div>
+
+    <div class="evidence-grid">
+      <div class="evidence-card">
+        <h3>Hard high-divergence subset</h3>
+        <div class="gap-bars" aria-label="Human and model F1 on the 90-sample high-divergence subset">
+          <div class="gap-row human"><span class="who">Human</span><span class="gap-track"><span class="gap-fill" style="width:84%"></span></span><span class="score">84.0</span></div>
+          <div class="gap-row ours"><span class="who">DCRL</span><span class="gap-track"><span class="gap-fill" style="width:52%"></span></span><span class="score">52.0</span></div>
+          <div class="gap-row"><span class="who">GPT-5-mini</span><span class="gap-track"><span class="gap-fill" style="width:37.2%"></span></span><span class="score">37.2</span></div>
+        </div>
+      </div>
+      <div class="evidence-card">
+        <h3>Transfer beyond matching</h3>
+        <div class="transfer-list">
+          <div class="transfer-item"><b>OmniSpatial</b><span>43.6 → 48.9</span></div>
+          <div class="transfer-item"><b>MindCube</b><span>40.0 → 43.5</span></div>
+          <div class="transfer-item"><b>SAT Real</b><span>70.0 → 75.3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Group 1: Main benchmark -->
+    <div class="results-group">
+      <div class="group-label"><h3>Main benchmark</h3><span class="kicker">ReasonMatch-Bench</span></div>
+      <div class="grid2" style="align-items:stretch">
+        <div class="table-card">
+          <div class="cap">Overall ReasonMatch-Bench F1<span>Higher is better · 2,810 image pairs</span></div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Model / Setting</th><th>F1</th></tr></thead>
+              <tbody>
+                <tr><td>Qwen3-VL-8B-Instruct</td><td>27.5</td></tr>
+                <tr><td>GPT-4o (241106)</td><td>33.5</td></tr>
+                <tr><td>Claude-4.5-Sonnet</td><td>41.7</td></tr>
+                <tr><td>Gemini-2.5-Pro</td><td>42.8</td></tr>
+                <tr><td>Qwen3-VL-235B</td><td>49.2</td></tr>
+                <tr><td>GPT-5-Chat</td><td>51.5</td></tr>
+                <tr><td>GPT-5-mini</td><td>57.9</td></tr>
+                <tr class="ours"><td>Qwen3-VL-8B + DCRL</td><td class="best">70.5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <figure class="figure" style="display:flex;flex-direction:column;justify-content:center;padding:22px 24px">
+          <div class="chart" role="img" aria-label="Overall F1 chart: DCRL 70.5, GPT-5-mini 57.9, GPT-5-Chat 51.5, Qwen3-VL-235B 49.2, Gemini-2.5-Pro 42.8, Claude-4.5-Sonnet 41.7, GPT-4o 33.5, Qwen3-VL-8B 27.5. Selected DCRL difficulty slices: Outdoor L1 90.9, Indoor L1 84.6, Outdoor L3 73.6, Indoor L3 67.0, Object L3 33.7.">
+            <div class="chart-panel">
+              <div class="chart-title"><span>Overall</span><span class="axis">F1 · 0–100</span></div>
+              <div class="cbar is-ours"><span class="cname">DCRL</span><span class="ctrack"><span class="cfill" style="width:70.5%"></span></span><span class="cval">70.5</span></div>
+              <div class="cbar"><span class="cname">GPT-5-mini</span><span class="ctrack"><span class="cfill" style="width:57.9%"></span></span><span class="cval">57.9</span></div>
+              <div class="cbar"><span class="cname">GPT-5-Chat</span><span class="ctrack"><span class="cfill" style="width:51.5%"></span></span><span class="cval">51.5</span></div>
+              <div class="cbar"><span class="cname">Qwen3-VL-235B</span><span class="ctrack"><span class="cfill" style="width:49.2%"></span></span><span class="cval">49.2</span></div>
+              <div class="cbar"><span class="cname">Gemini-2.5-Pro</span><span class="ctrack"><span class="cfill" style="width:42.8%"></span></span><span class="cval">42.8</span></div>
+              <div class="cbar"><span class="cname">Claude-4.5-Sonnet</span><span class="ctrack"><span class="cfill" style="width:41.7%"></span></span><span class="cval">41.7</span></div>
+              <div class="cbar"><span class="cname">GPT-4o</span><span class="ctrack"><span class="cfill" style="width:33.5%"></span></span><span class="cval">33.5</span></div>
+              <div class="cbar"><span class="cname">Qwen3-VL-8B</span><span class="ctrack"><span class="cfill" style="width:27.5%"></span></span><span class="cval">27.5</span></div>
+            </div>
+            <div class="chart-panel">
+              <div class="chart-title"><span>DCRL by task difficulty</span><span class="axis">selected F1</span></div>
+              <div class="cbar is-ours"><span class="cname">Outdoor L1</span><span class="ctrack"><span class="cfill" style="width:90.9%"></span></span><span class="cval">90.9</span></div>
+              <div class="cbar is-ours"><span class="cname">Indoor L1</span><span class="ctrack"><span class="cfill" style="width:84.6%"></span></span><span class="cval">84.6</span></div>
+              <div class="cbar is-ours"><span class="cname">Outdoor L3</span><span class="ctrack"><span class="cfill" style="width:73.6%"></span></span><span class="cval">73.6</span></div>
+              <div class="cbar is-ours"><span class="cname">Indoor L3</span><span class="ctrack"><span class="cfill" style="width:67.0%"></span></span><span class="cval">67.0</span></div>
+              <div class="cbar is-ours"><span class="cname">Object L3</span><span class="ctrack"><span class="cfill" style="width:33.7%"></span></span><span class="cval">33.7</span></div>
+            </div>
+          </div>
+          <figcaption>Full-benchmark overall F1 and selected DCRL difficulty slices. Object-centric L3 remains challenging.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Group 2: Generalization & transfer -->
+    <div class="results-group">
+      <div class="group-label"><h3>Generalization &amp; transfer</h3><span class="kicker">Held-out skills &amp; datasets</span></div>
+      <div class="subgrid">
+        <div class="table-card">
+          <div class="cap">Transfer to external spatial benchmarks<span>Skill transfers from matching to other spatial tasks</span></div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Benchmark</th><th>Base</th><th>DCRL</th><th>Gain</th></tr></thead>
+              <tbody>
+                <tr class="ours"><td>ReasonMatch</td><td>27.5</td><td class="best">70.5</td><td class="pos">+43.0</td></tr>
+                <tr><td>OmniSpatial</td><td>43.6</td><td>48.9</td><td class="pos">+5.3</td></tr>
+                <tr><td>MindCube</td><td>40.0</td><td>43.5</td><td class="pos">+3.5</td></tr>
+                <tr><td>SAT Real</td><td>70.0</td><td>75.3</td><td class="pos">+5.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="cap">Why reinforcement learning?<span>RL transfers under distribution shift; SFT does not</span></div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Strategy</th><th>OmniSpatial</th><th>SAT Real</th><th>ReasonMatch</th></tr></thead>
+              <tbody>
+                <tr><td>Base</td><td>43.6</td><td>70.0</td><td>27.5</td></tr>
+                <tr><td>SFT</td><td>42.6</td><td>41.3</td><td>51.0</td></tr>
+                <tr class="ours"><td>DCRL</td><td class="best">48.9</td><td class="best">75.3</td><td class="best">70.5</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Group 3: Curriculum design -->
+    <div class="results-group">
+      <div class="group-label"><h3>Curriculum design</h3><span class="kicker">Ablation</span></div>
+      <div class="table-card">
+        <div class="cap">Dynamic curriculum beats fixed-difficulty training<span>ReasonMatch-Bench F1 under the same RL setup</span></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Training strategy</th><th>ReasonMatch F1</th><th>Δ vs. uniform</th></tr></thead>
+            <tbody>
+              <tr><td>Uniform sampling</td><td>65.3</td><td>—</td></tr>
+              <tr><td>Easy-only samples</td><td>59.9</td><td class="neg">−10.6</td></tr>
+              <tr><td>Hard-only samples</td><td>62.3</td><td class="neg">−8.2</td></tr>
+              <tr class="ours"><td>Dynamic curriculum</td><td class="best">70.5</td><td class="pos">+5.2</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXAMPLES ================= -->
+<section id="examples">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Qualitative</p>
+      <h2>Reasoning over a wide-baseline pair</h2>
+      <p>Given two views of the same scene, the model must map region IDs from image&nbsp;A to image&nbsp;B.
+        DCRL reasons over multi-tier scene structure; the base-style model over-relies on the nearest anchors.</p>
+    </div>
+    <figure class="figure center">
+      <img src="assets/qualitative-cropped.jpg" alt="A cross-view matching example on a plant-shelf scene. Qwen3-VL+DCRL produces correct multi-tier shelf reasoning and viewpoint-invariant matching, while GPT-5-mini produces a wrong inference by over-relying on nearest anchors." loading="lazy" />
+      <figcaption><b>Left:</b> Qwen3-VL + DCRL — correct, via multi-tier shelf reasoning and viewpoint-invariant matching.
+        <b>Right:</b> GPT-5-mini — wrong, from over-reliance on nearest anchors.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= RELEASE ================= -->
+<section id="release" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Open Release</p>
+      <h2>Code, benchmark archives, and evaluation scripts</h2>
+      <p>The release is designed for reproducible evaluation and recipe inspection. Training data is not included;
+        training entry points are provided for users with compatible LMDB-formatted data.</p>
+    </div>
+    <div class="release-grid">
+      <div class="release-card">
+        <h3>Code repository</h3>
+        <p>Paper-specific training, reward, buffer, and evaluation code built on top of a vendored verl stack.</p>
+        <a class="btn btn-primary" href="https://github.com/aim-uofa/ReasonMatch" target="_blank" rel="noopener">Open GitHub</a>
+      </div>
+      <div class="release-card">
+        <h3>Benchmark data</h3>
+        <p>ModelScope release includes <code>reasonmatch_bench.tar.gz</code> and <code>ood_dataset.tar.gz</code>.</p>
+        <a class="btn btn-primary" href="https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench" target="_blank" rel="noopener">Open Dataset</a>
+      </div>
+      <div class="release-card">
+        <h3>Evaluation protocol</h3>
+        <p>Evaluation expects an OpenAI-compatible chat endpoint and reports benchmark summaries from saved predictions.</p>
+        <a class="btn btn-ghost" href="#citation">Citation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CITATION ================= -->
+<section id="citation" class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Citation</p>
+      <h2>BibTeX</h2>
+      <p>If you find ReasonMatch useful, please cite our work.</p>
+    </div>
+    <div class="cite-wrap">
+      <button class="copy-btn" id="copyBib" aria-label="Copy BibTeX">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="copyLabel">Copy</span>
+      </button>
+<pre class="bibtex" id="bibtex"><span class="k">@InProceedings</span>{Zhong_2026_CVPR,
+  <span class="k">author</span>    = <span class="v">{Zhong, Hao and Zhu, Muzhi and Zeng, Shenyan and Li, Anzhou and Chen, Cong and Geng, Hua and Shi, Duochao and Ye, Wentao and Lin, Tao and Chen, Hao and Shen, Chunhua}</span>,
+  <span class="k">title</span>     = <span class="v">{Eliciting Complex Spatial Reasoning in MLLMs through Wide-Baseline Matching}</span>,
+  <span class="k">booktitle</span> = <span class="v">{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}</span>,
+  <span class="k">month</span>     = <span class="v">{June}</span>,
+  <span class="k">year</span>      = <span class="v">{2026}</span>,
+  <span class="k">pages</span>     = <span class="v">{16768-16778}</span>
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h3>ReasonMatch</h3>
+        <p style="margin:.2em 0 0;max-width:42ch">Eliciting complex spatial reasoning in multimodal LLMs through wide-baseline matching · CVPR 2026.</p>
+        <p style="margin:.6em 0 0;color:#8b91a6">Zhejiang University · Ant Group · Westlake University</p>
+      </div>
+      <div class="foot-links">
+        <a href="https://github.com/aim-uofa/ReasonMatch" target="_blank" rel="noopener">GitHub Code</a>
+        <a href="https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench" target="_blank" rel="noopener">ModelScope Dataset</a>
+        <a href="mailto:haoz0206@zju.edu.cn">Contact</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ReasonMatch authors. Code released under the Apache License 2.0.</span>
+      <span>Built for the open-source release.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Mobile nav toggle
+  var burger=document.getElementById('hamburger');
+  var links=document.getElementById('navlinks');
+  burger.addEventListener('click',function(){
+    var open=links.classList.toggle('open');
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  });
+  links.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){links.classList.remove('open');burger.setAttribute('aria-expanded','false');}
+  });
+
+  // Scroll-spy: highlight active section in nav
+  var sections=['overview','method','benchmark','results','examples','release','citation']
+    .map(function(id){return document.getElementById(id);}).filter(Boolean);
+  var navAnchors={};
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    var id=a.getAttribute('href').slice(1); navAnchors[id]=a;
+  });
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        Object.values(navAnchors).forEach(function(a){a.classList.remove('active');});
+        var a=navAnchors[en.target.id]; if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s);});
+
+  // Copy BibTeX
+  var btn=document.getElementById('copyBib');
+  var label=document.getElementById('copyLabel');
+  btn.addEventListener('click',function(){
+    var text=document.getElementById('bibtex').innerText;
+    navigator.clipboard.writeText(text).then(function(){
+      label.textContent='Copied!';
+      setTimeout(function(){label.textContent='Copy';},1800);
+    }).catch(function(){
+      label.textContent='Press ⌘/Ctrl+C';
+      setTimeout(function(){label.textContent='Copy';},1800);
+    });
+  });
+})();
+</script>
+</body>
+</html>
