@@ -36,15 +36,15 @@ For **GitHub Pages**, put the contents of this `webpage/` directory at the site 
 
 - Code (pending public visibility): <https://github.com/aim-uofa/ReasonMatch>
 - Dataset (ModelScope): <https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench>
+- arXiv: <http://arxiv.org/abs/2606.03577>
 
 ## ⚠️ Placeholders to fill before going public
 
 Search `index.html` for `TODO(release)` and update:
 
-1. **arXiv URL** — hero "arXiv" button is currently disabled (`href="#"`, labelled "soon").
-2. **GitHub URL / visibility** — code buttons point to <https://github.com/aim-uofa/ReasonMatch>; make sure the repository is public before launch.
-3. **Contact email** — footer uses `mailto:haoz0206@zju.edu.cn`.
-4. **BibTeX** — CVPR proceedings metadata is filled; add arXiv metadata only if needed.
+1. **GitHub URL / visibility** — code buttons point to <https://github.com/aim-uofa/ReasonMatch>; make sure the repository is public before launch.
+2. **Contact email** — footer uses `mailto:haoz0206@zju.edu.cn`.
+3. **BibTeX** — CVPR proceedings metadata is filled; add arXiv metadata only if needed.
 
 All numbers and claims on the page are taken verbatim from the final poster
 (`~/Desktop/reasonmatch-cvpr2026.pdf`) and `paper/` — the source of truth. If any result
