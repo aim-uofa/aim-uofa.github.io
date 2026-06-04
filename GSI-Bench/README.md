@@ -31,6 +31,7 @@ Replace the placeholder `href="#"` in the hero badges with the real URLs once av
 - **Paper (PDF)** — camera-ready / arXiv PDF link
 - **arXiv** — arXiv abstract page
 - **Code** — GitHub repo
-- **Dataset** — HuggingFace / ModelScope / Google Drive, etc.
+- **Hugging Face** — <https://huggingface.co/datasets/GSI-Bench/GSI-Bench>
+- **ModelScope** — <https://www.modelscope.cn/models/zzzmmz/GSI-Bench>
 
 All numerical results, tables, figures, and captions come directly from the paper — no values modified.

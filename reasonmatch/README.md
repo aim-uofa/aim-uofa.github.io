@@ -35,6 +35,7 @@ For **GitHub Pages**, put the contents of this `webpage/` directory at the site 
 ## Links used
 
 - Code (pending public visibility): <https://github.com/aim-uofa/ReasonMatch>
+- Dataset (Hugging Face): <https://huggingface.co/datasets/ReasonMatch/ReasonMatch>
 - Dataset (ModelScope): <https://www.modelscope.cn/datasets/jxzh2020/ReasonMatchBench>
 - arXiv: <http://arxiv.org/abs/2606.03577>
 
