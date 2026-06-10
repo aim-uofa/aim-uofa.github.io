@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 250 250">
+  <defs>
+    <style>
+      .e {
+        fill: #68201b;
+        letter-spacing: -.01em;
+      }
+
+      .f {
+        fill: url(#c);
+      }
+
+      .g {
+        fill: #7a7656;
+      }
+
+      .g, .h, .i, .j, .k, .l, .m, .n {
+        stroke-linecap: round;
+      }
+
+      .g, .h, .i, .k, .l, .o, .n {
+        stroke: #334155;
+      }
+
+      .g, .h, .i, .k, .l, .n {
+        stroke-width: 4px;
+      }
+
+      .p {
+        fill: #490a08;
+      }
+
+      .q, .h {
+        fill: #88372f;
+      }
+
+      .r, .i {
+        fill: #591410;
+      }
+
+      .s {
+        fill: url(#d);
+        isolation: isolate;
+        opacity: .5;
+      }
+
+      .t {
+        fill: #290100;
+      }
+
+      .u {
+        fill: #98443b;
+      }
+
+      .v {
+        fill: #b75e54;
+      }
+
+      .w {
+        fill: #a85147;
+      }
+
+      .x {
+        fill: #111827;
+      }
+
+      .y {
+        fill: url(#b);
+        fill-opacity: .2;
+      }
+
+      .j, .m {
+        stroke: #606060;
+      }
+
+      .j, .m, .o {
+        stroke-width: 3px;
+      }
+
+      .j, .m, .n {
+        fill: none;
+      }
+
+      .k {
+        fill: #fff;
+      }
+
+      .l {
+        fill: #6c7a82;
+      }
+
+      .z {
+        font-family: Calibri-Bold, Calibri;
+        font-size: 32px;
+        font-weight: 700;
+      }
+
+      .m {
+        stroke-dasharray: 7.57 7.57;
+      }
+
+      .aa {
+        fill: #390504;
+      }
+
+      .o {
+        fill: #bb8243;
+      }
+    </style>
+    <linearGradient id="b" data-name="未命名的渐变 119" x1="124.89" y1="11.72" x2="124.89" y2="244.72" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bb8243"/>
+      <stop offset=".5" stop-color="#7e7654"/>
+      <stop offset=".54" stop-color="#7a7656"/>
+      <stop offset="1" stop-color="#6c7a82"/>
+    </linearGradient>
+    <radialGradient id="c" data-name="未命名的渐变 235" cx="124.89" cy="128.22" fx="124.89" fy="128.22" r="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".83" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fff"/>
+    </radialGradient>
+    <linearGradient id="d" data-name="未命名的渐变 110" x1="127.99" y1="189" x2="127.99" y2="47.27" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bb8243"/>
+      <stop offset=".5" stop-color="#7e7654"/>
+      <stop offset=".54" stop-color="#7a7656"/>
+      <stop offset="1" stop-color="#6c7a82"/>
+    </linearGradient>
+  </defs>
+  <circle class="y" cx="124.89" cy="128.22" r="116.5"/>
+  <circle class="f" cx="124.89" cy="128.22" r="118"/>
+  <polygon class="s" points="125 47.27 184.65 105.99 155 189 95 189 71.33 105 125 47.27"/>
+  <g>
+    <line class="j" x1="95" y1="189" x2="98.5" y2="189"/>
+    <line class="m" x1="106.07" y1="189" x2="147.71" y2="189"/>
+    <line class="j" x1="151.5" y1="189" x2="155" y2="189"/>
+  </g>
+  <g>
+    <line class="i" x1="125" y1="45" x2="70.33" y2="105"/>
+    <line class="i" x1="125" y1="45" x2="185" y2="105"/>
+    <line class="n" x1="70.33" y1="105" x2="42.9" y2="189"/>
+    <line class="i" x1="70.33" y1="105" x2="95" y2="189"/>
+    <line class="i" x1="185" y1="105" x2="155" y2="189"/>
+    <line class="n" x1="185" y1="105" x2="208" y2="189"/>
+  </g>
+  <g>
+    <circle class="l" cx="125" cy="47.5" r="12.5"/>
+    <circle class="g" cx="70.33" cy="107" r="10"/>
+    <circle class="g" cx="185" cy="107" r="10"/>
+    <circle class="o" cx="42.9" cy="191" r="9"/>
+    <circle class="o" cx="95" cy="190" r="9"/>
+    <circle class="o" cx="155" cy="189" r="8"/>
+    <circle class="o" cx="208" cy="189" r="8"/>
+  </g>
+  <polygon class="h" points="117 81.89 117 121.89 155 101.89 117 81.89"/>
+  <rect class="k" x="28" y="133.33" width="197.33" height="36.67" rx="9.94" ry="9.94"/>
+  <g>
+    <line class="j" x1="94.89" y1="188.89" x2="98.39" y2="188.89"/>
+    <line class="m" x1="105.96" y1="188.89" x2="147.6" y2="188.89"/>
+    <line class="j" x1="151.39" y1="188.89" x2="154.89" y2="188.89"/>
+  </g>
+  <text class="z" transform="translate(33.31 161.11)"><tspan class="v" x="0" y="0">M</tspan><tspan class="w" x="27.97" y="0">e</tspan><tspan class="u" x="44.08" y="0">m</tspan><tspan class="q" x="70.11" y="0">D</tspan><tspan class="e" x="90.28" y="0">r</tspan><tspan class="r" x="101.3" y="0">e</tspan><tspan class="p" x="117.41" y="0">a</tspan><tspan class="aa" x="133.2" y="0">m</tspan><tspan class="t" x="159.23" y="0">e</tspan><tspan class="x" x="175.34" y="0">r</tspan></text>
+</svg>
