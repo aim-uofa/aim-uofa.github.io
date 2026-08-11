@@ -134,6 +134,11 @@ a { color: hsl(204, 86%, 53%); }
 .main-results-table td.second {
   background: #f0f0f0;
 }
+.transfer-results-table td.best {
+  background: #dcdcdc;
+  font-weight: 700;
+}
+.transfer-results-table td.second { background: #f0f0f0; }
 .table-caption { margin-top: .7rem; }
 .compact-table { margin-top: 1.25rem; }
 .diagnostic-block { margin-top: 3.25rem; }
