@@ -1,0 +1,206 @@
+/* This file deliberately keeps the StaMo/Nerfies project-page styling intact.
+   SMA-specific rules below only size the paper's own figures and results table. */
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  color: #111;
+  background: #fff;
+}
+
+.container.is-max-desktop {
+  width: 100%;
+}
+
+a { color: hsl(204, 86%, 53%); }
+
+.footer .icon-link,
+.publication-authors a {
+  color: hsl(204, 86%, 53%) !important;
+}
+
+.link-block { display: inline-block; margin: 5px; vertical-align: middle; }
+.link-block a { margin: 0; }
+
+.dnerf { font-variant: small-caps; }
+
+.teaser .hero-body { padding-top: 0; padding-bottom: 3rem; }
+.teaser { font-family: 'Google Sans', sans-serif; }
+.teaser video { object-fit: fill; }
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 600;
+}
+
+.sma-title-accent { color: hsl(204, 86%, 53%); }
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors a:hover { text-decoration: underline; }
+
+.author-block { display: inline-block; }
+
+.publication-venue { color: #555; width: fit-content; font-weight: 600; }
+.publication-awards { color: #fff; width: fit-content; font-weight: bolder; }
+
+.publication-links { margin-top: 1.25rem; }
+.publication-links .button {
+  min-width: 130px;
+  height: 2.5em;
+  min-height: 2.5em;
+  line-height: 1.5;
+}
+.publication-links .icon { margin-right: .35em; }
+.disabled-link { cursor: default; }
+.disabled-link small { display: inline-block; font-size: .68em; line-height: 1; opacity: .78; }
+
+.contribution {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1rem;
+  margin-top: .35rem;
+}
+
+.abstract-section .content { font-size: 1rem; }
+
+.full-figure,
+.analysis-figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.benchmark-figure { max-width: 1100px; }
+.case-figure { max-width: 1050px; }
+
+.method-columns { margin-top: 2.25rem; }
+.method-columns h3 {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.finding {
+  margin: 1.6rem 0 0;
+  padding: .9rem 1.15rem;
+  border-left: 4px solid #bdbdbd;
+  background: #f1f1f1;
+  color: #111;
+}
+.finding strong {
+  font-family: 'Google Sans', sans-serif;
+  margin-right: .45rem;
+}
+.finding p { display: inline; }
+
+/* Results use StaMo's unboxed content rhythm; only the data grid adds rules. */
+.results-intro { max-width: 920px; margin: 0 auto 1.3rem; }
+.table-scroll { overflow-x: auto; }
+.results-table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  border-top: 2px solid #202020;
+  border-bottom: 2px solid #202020;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+.results-table th,
+.results-table td {
+  padding: .46rem .5rem;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.results-table thead th {
+  font-family: 'Google Sans', sans-serif;
+  font-size: .94rem;
+  font-weight: 600;
+  border-bottom: 1.5px solid #202020;
+}
+.results-table th:first-child,
+.results-table td:nth-child(2) { text-align: left; }
+.results-table tbody th { font-weight: 400; }
+.results-table .group-start > * { border-top: 1px solid #767676; }
+.results-table .ours { background: #f2f2f2; }
+.results-table .ours td:first-child { font-family: 'Google Sans', sans-serif; }
+.main-results-table td.best {
+  background: #dcdcdc;
+  font-weight: 700;
+}
+.main-results-table td.second {
+  background: #f0f0f0;
+}
+.table-caption { margin-top: .7rem; }
+.compact-table { margin-top: 1.25rem; }
+.diagnostic-block { margin-top: 3.25rem; }
+.diagnostic-block:first-of-type { margin-top: 0; }
+.figure-medium { max-width: 760px; }
+.figure-compact { max-width: 660px; }
+.experiment-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+.experiment-copy { min-width: 0; }
+.experiment-visual { min-width: 0; }
+.experiment-visual .analysis-figure { max-width: 100%; }
+.experiment-visual .has-text-grey { text-align: left; }
+.experiment-copy .table-scroll { overflow-x: visible; }
+.experiment-copy .results-table {
+  min-width: 0;
+  width: 100%;
+  table-layout: fixed;
+  font-size: .82rem;
+}
+.experiment-copy .results-table th,
+.experiment-copy .results-table td {
+  padding: .35rem .3rem;
+  white-space: normal;
+}
+.experiment-copy .results-table th:first-child,
+.experiment-copy .results-table td:first-child { width: 48%; }
+
+.citation-box {
+  position: relative;
+  padding: 1.4rem;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+.citation-box pre {
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  text-align: left;
+}
+.copy-button {
+  position: absolute;
+  top: .7rem;
+  right: .7rem;
+  font: inherit;
+  font-size: .78rem;
+}
+.copy-status {
+  display: block;
+  min-height: 1.2em;
+  margin-top: .4rem;
+  color: hsl(204, 86%, 53%);
+  font-size: .8rem;
+}
+
+@media screen and (max-width: 768px) {
+  .container.is-max-desktop { width: 100%; max-width: 100%; }
+  .publication-title { font-size: 2rem !important; overflow-wrap: anywhere; }
+  .publication-authors { overflow-wrap: anywhere; }
+  .publication-links { display: flex; flex-wrap: wrap; justify-content: center; }
+  .publication-links .button { min-width: auto; }
+  .method-columns { margin-top: 1.4rem; }
+  .results-table { font-size: .82rem; }
+  .experiment-pair { grid-template-columns: 1fr; gap: 1rem; }
+  .experiment-visual .has-text-grey { text-align: center; }
+}
