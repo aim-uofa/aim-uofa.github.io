@@ -145,6 +145,7 @@ a { color: hsl(204, 86%, 53%); }
 .diagnostic-block:first-of-type { margin-top: 0; }
 .figure-medium { max-width: 760px; }
 .figure-compact { max-width: 660px; }
+.hyperparameter-figure { max-width: 760px; margin: 1.5rem auto 0; }
 .experiment-pair {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
