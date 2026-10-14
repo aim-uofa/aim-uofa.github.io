@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163d55">
+  <title>More Methods, Better Agents? | Self-Distillation in Agentic RL</title>
+  <meta name="description" content="A reality check on self-distillation in agentic reinforcement learning: 11 methods, 4 benchmarks, 3 model sizes, and 132 training runs evaluated for performance, stability, and cost.">
+  <link rel="canonical" href="https://aim-uofa.github.io/Self-Distillation-AgentRL/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="More Methods, Better Agents?">
+  <meta property="og:description" content="A Reality Check on Self-Distillation in Agentic Reinforcement Learning. An independent evaluation of performance, training stability, and computational cost.">
+  <meta property="og:url" content="https://aim-uofa.github.io/Self-Distillation-AgentRL/">
+  <meta property="og:image" content="https://aim-uofa.github.io/Self-Distillation-AgentRL/assets/overview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a class="wordmark" href="#top" aria-label="Self-Distillation in Agentic RL, back to top">
+        <svg viewBox="0 0 26 26" width="26" height="26" fill="none" aria-hidden="true"><path d="M4 21V12M13 21V5M22 21V9" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg>
+        <span>Self-Distillation <span class="wordmark-light">/ Agentic RL</span></span>
+      </a>
+      <nav aria-label="Page sections">
+        <a href="#overview">Overview</a>
+        <a href="#results">Results</a>
+        <a href="#training">Training</a>
+        <a href="#cost">Cost</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="paper-title">
+      <h1 id="paper-title">More Methods,<br class="mobile-break"> Better Agents?
+        <span class="subtitle">A Reality Check on Self-Distillation<br class="desktop-break"> in Agentic Reinforcement Learning</span>
+      </h1>
+      <div class="resource-links">
+        <a class="button primary" href="https://github.com/aim-uofa/Self-Distillation-AgentRL" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-12-2 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Code
+        </a>
+        <span class="button unavailable" aria-disabled="true">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Zm0 0v5h5M8 12h8M8 16h6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          arXiv <span class="soon">Coming soon</span>
+        </span>
+        <a class="button secondary" href="#results">Explore the results <span aria-hidden="true">↗</span></a>
+      </div>
+      <dl class="study-stats" aria-label="Study at a glance">
+        <div><dt>11</dt><dd>training methods</dd></div>
+        <div><dt>4</dt><dd>agent benchmarks</dd></div>
+        <div><dt>3</dt><dd>model sizes</dd></div>
+        <div><dt>132</dt><dd>training runs</dd></div>
+        <div><dt>12,124.4</dt><dd>recorded H800 GPU-hours</dd></div>
+      </dl>
+    </section>
+
+    <section class="motivation" aria-labelledby="motivation-title">
+      <h2 id="motivation-title">Why we did this study</h2>
+      <p>As more self-distillation methods are proposed for agentic reinforcement learning, we wanted to understand which ideas are worth building on. We invested in a shared evaluation to understand where these methods help, where they struggle, and what they cost. A method need not win everywhere to be useful. We hope that making both its strengths and limitations visible helps others choose a starting point and build more reliable agents.</p>
+    </section>
+
+    <section class="section" id="overview" aria-labelledby="overview-title">
+      <div class="section-heading"><p class="section-number">01 / The study</p><h2 id="overview-title">A common ground for comparison</h2></div>
+      <figure class="paper-figure overview-figure">
+        <a class="zoomable" href="assets/overview.png" data-title="Study overview" aria-label="Enlarge the study overview">
+          <img src="assets/overview.png" alt="The study addresses heterogeneous experimental conditions, reused baseline scores, and incomplete evaluation through a common benchmark spanning methods, environments, model sizes, repeated evaluation, training dynamics, and cost." width="3600" height="1038" fetchpriority="high">
+        </a>
+        <figcaption><span>From fragmented comparisons to a shared evaluation of performance, stability, and cost.</span><a href="assets/overview.pdf" target="_blank" rel="noopener">Vector PDF ↗</a></figcaption>
+      </figure>
+      <div class="abstract">
+        <h3>Abstract</h3>
+        <p>Self-distillation methods for agentic reinforcement learning are proliferating, but comparisons often reuse baseline scores obtained under different experimental conditions. Direct comparisons remain limited, with less attention paid to training stability and computational cost. We compare ten representative methods against GRPO across four benchmarks and three model sizes, conducting 132 training runs and repeated final evaluation over eight rollout seeds. The results show that gains over GRPO are setting-dependent, strong final performance can mask unstable training, and additional computation does not consistently translate into better performance. This independent benchmark supports a more reliable and cost-aware assessment of progress in agent training.</p>
+      </div>
+      <div class="findings" aria-label="Three main findings">
+        <article><span class="finding-number">1</span><h3>No universal winner</h3><p>Method rankings change with the benchmark and model size. Gains in selected settings do not establish broad superiority over GRPO.</p></article>
+        <article><span class="finding-number">2</span><h3>Endpoints are not trajectories</h3><p>A strong final score can hide collapse, recovery, or late regression during training.</p></article>
+        <article><span class="finding-number">3</span><h3>More compute ≠ more progress</h3><p>Equal training steps do not mean equal cost, and extra teacher computation does not guarantee better results.</p></article>
+      </div>
+    </section>
+
+    <section class="section scope-section" aria-labelledby="scope-title">
+      <div class="scope-intro"><p class="section-number">Experimental scope</p><h2 id="scope-title">One framework.<br>Twelve settings.</h2><p>Three model sizes across four interactive environments, with 100 training steps per run and validation every five steps.</p></div>
+      <div class="scope-details">
+        <h3>Benchmarks</h3>
+        <dl class="benchmark-list">
+          <div><dt>ALFWorld</dt><dd>Household tasks <span>Success rate · 140 games</span></dd></div>
+          <div><dt>ScienceWorld</dt><dd>Scientific experiments <span>Task score · 200 tasks</span></dd></div>
+          <div><dt>Search-QA</dt><dd>Retrieval-assisted question answering <span>Exact-match accuracy · 3,125 questions</span></dd></div>
+          <div><dt>WebShop</dt><dd>Web-based shopping <span>Task score &amp; success rate · 128 goals</span></dd></div>
+        </dl>
+        <h3 class="methods-title">GRPO and ten alternatives</h3>
+        <p class="method-list"><strong>GRPO</strong><span>GRPO+OPSD</span><span>SDAR</span><span>Skill-SD</span><span>RLSD</span><span>OCSD</span><span>OVCSD</span><span>AgentOPSD</span><span>ADRS</span><span>ICSD</span><span>PCSD</span></p>
+        <p class="scope-note">Final evaluation uses the same fixed task sets as validation, with eight rollout seeds at temperature 0.4. All methods are evaluated without privileged teacher context.</p>
+      </div>
+    </section>
+
+    <section class="section" id="results" aria-labelledby="results-title">
+      <div class="section-heading"><p class="section-number">02 / Final performance</p><h2 id="results-title">Gains depend on where you look</h2><p>No method consistently outperforms GRPO across all twelve settings. Even a strong aggregate result can coexist with substantial losses on individual tasks.</p></div>
+      <div class="figure-heading"><h3>ALFWorld &amp; ScienceWorld</h3><a href="assets/results-alfworld-scienceworld.png" target="_blank" rel="noopener">Full-resolution table ↗</a></div>
+      <figure class="paper-figure table-figure">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="ALFWorld and ScienceWorld results; scroll horizontally on small screens">
+          <a class="zoomable" href="assets/results-alfworld-scienceworld.png" data-title="Table 2 — ALFWorld and ScienceWorld" aria-label="Enlarge Table 2: ALFWorld and ScienceWorld">
+            <img src="assets/results-alfworld-scienceworld.png" alt="Table 2 from the paper: pretrained and eleven trained methods on ALFWorld and ScienceWorld, for Qwen3.5-2B, 4B, and 9B, with subset and overall results reported as mean plus or minus standard deviation over eight rollout seeds." width="2850" height="2313" loading="lazy">
+          </a>
+        </div>
+        <figcaption>Original Table 2, including its caption, cropped from the paper at 450 DPI. ScienceWorld reports task score, not full-success rate.</figcaption>
+      </figure>
+      <div class="figure-heading"><h3>Search-QA &amp; WebShop</h3><a href="assets/results-searchqa-webshop.png" target="_blank" rel="noopener">Full-resolution table ↗</a></div>
+      <figure class="paper-figure table-figure">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Search-QA and WebShop results; scroll horizontally on small screens">
+          <a class="zoomable" href="assets/results-searchqa-webshop.png" data-title="Table 3 — Search-QA and WebShop" aria-label="Enlarge Table 3: Search-QA and WebShop">
+            <img src="assets/results-searchqa-webshop.png" alt="Table 3 from the paper: Search-QA exact-match accuracy across seven subsets and overall, alongside WebShop score and success rate, for all three model sizes and all methods. Results are means and standard deviations over eight rollout seeds." width="2850" height="2832" loading="lazy">
+          </a>
+        </div>
+        <figcaption>Original Table 3, cropped from the paper at 450 DPI. Search-QA Overall gives equal weight to each question, not each subset.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="training" aria-labelledby="training-title">
+      <div class="section-heading"><p class="section-number">03 / Training dynamics</p><h2 id="training-title">The path matters, not just the endpoint</h2><p>Validation trajectories reveal behavior that final rankings miss. Across 132 runs and 2,772 validation checkpoints, the study examines learning progress, peak-to-final declines, and low-performing outcomes.</p></div>
+      <figure class="paper-figure">
+        <a class="zoomable" href="assets/training-curves.png" data-title="Validation trajectories across all twelve settings" aria-label="Enlarge validation curves">
+          <img src="assets/training-curves.png" alt="Twelve panels of validation curves for eleven methods over 100 training steps, arranged by ALFWorld, ScienceWorld, Search-QA, and WebShop across 2B, 4B, and 9B models. Trajectories exhibit substantial variation in progress and stability." width="3600" height="2755" loading="lazy">
+        </a>
+        <figcaption><span>Full training trajectories across four benchmarks and three model sizes.</span><a href="assets/training-curves.pdf" target="_blank" rel="noopener">Vector PDF ↗</a></figcaption>
+      </figure>
+      <div class="callout"><h3>A closer look at instability</h3><p>On 4B ALFWorld, AgentOPSD undergoes a large decline before recovering, GRPO+OPSD remains low after collapse, and OCSD loses part of its earlier gains. A final score alone does not distinguish these training histories.</p></div>
+      <figure class="paper-figure compact-figure">
+        <a class="zoomable" href="assets/stability-cases.png" data-title="Training stability case studies" aria-label="Enlarge the training stability case studies">
+          <img src="assets/stability-cases.png" alt="Selected training trajectories illustrating collapse and recovery, persistent low performance, and late regression on Qwen3.5-4B ALFWorld, with GRPO as a reference." width="3600" height="1268" loading="lazy">
+        </a>
+        <figcaption><span>Selected cases from the paper’s training-dynamics analysis.</span><a href="assets/stability-cases.pdf" target="_blank" rel="noopener">Vector PDF ↗</a></figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="cost" aria-labelledby="cost-title">
+      <div class="section-heading"><p class="section-number">04 / Computational cost</p><h2 id="cost-title">What does a better score cost?</h2><p>Fixed-step comparisons are not fixed-compute comparisons. Rollout length and teacher computation vary across methods, so we pair final performance with measured training time in every setting.</p></div>
+      <figure class="paper-figure">
+        <a class="zoomable" href="assets/cost-performance.png" data-title="Final performance versus training time" aria-label="Enlarge the cost-performance comparison">
+          <img src="assets/cost-performance.png" alt="Twelve scatter plots compare eight-seed mean final performance with measured training time for every method and model–benchmark setting. Dashed horizontal lines mark pretrained performance; additional training cost does not consistently yield better performance." width="3600" height="2952" loading="lazy">
+        </a>
+        <figcaption><span>Final performance versus net training time. All runs use eight H800 GPUs; dashed lines indicate pretrained means.</span><a href="assets/cost-performance.pdf" target="_blank" rel="noopener">Vector PDF ↗</a></figcaption>
+      </figure>
+      <p class="closing-insight">A useful improvement must be judged by <strong>where it works, how reliably it learns, and the resources it requires.</strong></p>
+    </section>
+
+    <section class="code-section" aria-labelledby="code-title">
+      <div><p class="section-number">Explore the study</p><h2 id="code-title">Run the comparisons</h2><p>Environment setup, benchmark preparation, training, checkpoint merging, and repeated evaluation are documented in the repository.</p></div>
+      <a class="button primary" href="https://github.com/aim-uofa/Self-Distillation-AgentRL" target="_blank" rel="noopener noreferrer">View code on GitHub <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>More Methods, Better Agents? <span>Self-Distillation in Agentic Reinforcement Learning</span></p>
+    <p><a href="https://aim-uofa.github.io/Self-Distillation-AgentRL/">Project page</a><span aria-hidden="true"> · </span><a href="https://github.com/aim-uofa/Self-Distillation-AgentRL">Code</a><span aria-hidden="true"> · </span>arXiv: Coming soon</p>
+    <p class="template-credit">Page layout inspired by <a href="https://zhongzero.github.io/OutDreamer/">OutDreamer</a>. Figures and tables are reproduced directly from the paper.</p>
+  </footer>
+
+  <dialog class="image-dialog" aria-labelledby="image-dialog-title">
+    <div class="dialog-toolbar"><h2 id="image-dialog-title">Paper figure</h2><div><a class="dialog-original" href="assets/overview.png" target="_blank" rel="noopener">Open original ↗</a><button class="dialog-close" type="button" autofocus aria-label="Close enlarged image">Close <span aria-hidden="true">×</span></button></div></div>
+    <div class="dialog-body"><img class="dialog-image" alt=""></div>
+    <p class="dialog-hint">Scroll to inspect the full-resolution image. Press Esc to close.</p>
+  </dialog>
+</body>
+</html>
