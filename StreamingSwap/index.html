@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="From Short Clips to Real-Time Streams: Identity-Aware Supervision and Context-Efficient Generation for Video Face Swapping.">
+<title>StreamingSwap — From Short Clips to Real-Time Streams</title>
+<link rel="icon" type="image/png" href="assets/streamingswap-favicon-v2.png">
+<link rel="stylesheet" href="styles.css"><script defer src="content.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<section class="hero" aria-labelledby="project-title">
+<div class="container">
+<div class="project-wordmark"><img class="project-logo" src="assets/streamingswap-logo-transparent.png" alt="StreamingSwap" fetchpriority="high"></div>
+<h1 id="project-title"><span>From Short Clips to Real-Time Streams:</span><span class="paper-subtitle">Identity-Aware Supervision and Context-Efficient Generation for Video Face Swapping</span></h1>
+<div id="authors" class="authors" aria-label="Authors"></div>
+<div id="affiliations" class="affiliations"></div>
+<div id="author-notes" class="author-notes"></div>
+<div id="author-contact" class="author-contact"></div>
+<div id="links" class="resource-links" aria-label="Project resources"></div>
+<div class="metrics" aria-label="Final streaming model performance">
+<div><strong>21.174 <span>FPS</span></strong><span>End-to-end throughput</span></div>
+<div><strong>1 <span>RTX 4090</span></strong><span>Single-GPU inference</span></div>
+<div><strong>10 <span>minutes</span></strong><span>Maximum evaluated video length</span></div>
+</div>
+<nav class="section-nav" aria-label="Page sections"><a href="#showcase">Applications</a><a href="#abstract">Abstract</a><a href="#analysis">Analysis</a><a href="#method">Method</a><a href="#experiments">Experiments</a><a href="#data">Data Construction</a></nav>
+</div>
+</section>
+<section id="showcase" class="section container showcase">
+<div class="section-heading"><span class="section-kicker">APPLICATION SHOWCASE</span><h2>Applications</h2></div>
+<div class="gallery-heading featured-heading"><h3>Real-time Streaming Test</h3><p class="gallery-description">Streaming Demonstration</p></div>
+<div id="featured-video" class="feature-frame"></div>
+<p class="figure-caption">We tested real-time streaming on a 19-minute live-streaming video sampled at 20 FPS.</p>
+<div id="galleries" class="application-galleries"></div>
+<p class="media-note">The demos are for research and model evaluation only; harmful or unethical use is not supported.</p>
+</section>
+<section id="abstract" class="section section-tint"><div class="reading-container">
+<div class="section-heading"><span class="section-kicker">OVERVIEW</span><h2>Abstract</h2></div>
+<p id="abstract-text" class="abstract-text">Video face swapping transfers the reference identity to a target video while preserving its other attributes and motion. Despite recent progress in reference-guided flow-based methods, jointly achieving faithful identity transfer, high fidelity, and real-time generation over long video streams remains challenging. To address this challenge, we rethink the task-specific structure of reference-guided video face swapping. First, face swapping changes only identity while preserving most visual content, yet flow-matching supervision is weakly sensitive to these changes. We therefore develop <em>Joint Rec-ID Loss</em>, which balances explicit identity supervision and latent reconstruction according to the noise level. Second, the target video already provides non-edited attributes and temporal dynamics, enabling generation with fewer spatial tokens and shorter temporal contexts through <em>Face-RoI Generation</em> and <em>Short-Context Rollout Training</em>. By integrating these designs, we propose <span class="smallcaps">StreamingSwap</span>, a reference-guided flow-matching framework for real-time streaming video face swapping. We also introduce <em>HumanFaceVid</em>, comprising 1,000 hours of cinematic training data and evaluation sets of 200 short and 200 long videos. Experiments demonstrate that our method achieves competitive identity transfer and visual quality at 20 FPS on a single NVIDIA RTX 4090 GPU, with stable generation over videos up to 10 minutes long.</p>
+<p class="source-note">Abstract · pp. 1–2 · Original paper text</p>
+</div></section>
+<section id="analysis" class="section container">
+<div class="section-heading"><span class="section-kicker">TASK-SPECIFIC ANALYSIS</span><h2>What limits the capability and speed of reference-guided face swapping?</h2></div>
+<article class="analysis-question">
+<div class="analysis-heading"><span class="question-label">Q1 · IDENTITY SENSITIVITY</span><h3>How strongly does the flow-matching objective penalize identity-transfer failures?</h3></div>
+<p>Face swapping changes only identity while preserving most target content, making latent reconstruction supervision weakly sensitive to identity changes. Identity similarity varies by more than 0.75, but mean face-region latent MSE varies by less than 0.05.</p>
+<figure class="paper-figure"><a href="assets/analysis-identity.png" target="_blank" rel="noopener" aria-label="Open Figure 2a: identity sensitivity"><img src="assets/analysis-identity.png" alt="Figure 2a: identity similarity varies substantially while face-region reconstruction error changes little" width="1800" height="450"></a><figcaption><strong>Figure 2(a).</strong> Reconstruction error is weakly sensitive to identity changes.</figcaption></figure>
+<p class="analysis-takeaway"><strong>Design implication:</strong> Training needs to directly supervise source identity to complement the weak sensitivity of latent reconstruction to identity changes.</p>
+</article>
+<article class="analysis-question">
+<div class="analysis-heading"><span class="question-label">Q2 · CONTEXT REQUIREMENTS</span><h3>How much spatial and temporal context is actually required to preserve fidelity?</h3></div>
+<p>The target video already supplies content and motion, allowing more compact spatial and temporal context.</p>
+<div class="context-grid">
+<section class="context-analysis"><h4>Spatial context: focus on the face</h4><p>Keeping 39% of spatial tokens largely preserves quality while increasing throughput from about 1.3 to 2.2 FPS.</p>
+<figure class="paper-figure"><a href="assets/analysis-spatial.png" target="_blank" rel="noopener" aria-label="Open Figure 2b: spatial context"><img src="assets/analysis-spatial.png" alt="Figure 2b: smaller spatial coverage retains quality while improving speed and reducing computation" width="900" height="439"></a><figcaption><strong>Figure 2(b).</strong> Spatial coverage versus identity, fidelity, speed, and computation.</figcaption></figure></section>
+<section class="context-analysis"><h4>Temporal context: keep local continuity</h4><p>Six neighboring latent frames retain most quality with less computation; reducing context to two causes a sharp quality drop.</p>
+<figure class="paper-figure"><a href="assets/analysis-temporal.png" target="_blank" rel="noopener" aria-label="Open Figure 2c: temporal context"><img src="assets/analysis-temporal.png" alt="Figure 2c: short temporal context reduces computation but overly short context lowers quality" width="890" height="439"></a><figcaption><strong>Figure 2(c).</strong> Temporal context versus identity, fidelity, speed, and computation.</figcaption></figure></section>
+</div>
+<p class="analysis-takeaway"><strong>Design implication:</strong> Generation needs to exploit the target-provided content and motion to concentrate computation on face-region tokens and a short temporal context.</p>
+<p class="source-note">Section 3 · pp. 4–5 · Context-analysis speeds refer to the initialization model.</p>
+</article>
+</section>
+<section id="method" class="section section-tint"><div class="container">
+<div class="section-heading"><span class="section-kicker">METHODOLOGY</span><h2>Method Overview</h2></div>
+<p class="section-intro">Phase I restricts processing to face-region tokens and balances latent reconstruction with identity supervision according to noise level. Phase II uses self-rollout with short generated histories, enabling streaming inference while retaining bidirectional attention within each chunk.</p>
+<figure class="paper-figure"><a href="assets/method.png" target="_blank" rel="noopener" aria-label="Open Figure 3 at full resolution"><img src="assets/method.png" alt="Figure 3: Phase-I identity-aware Face-RoI training and Phase-II self-rollout training" width="1800" height="815"></a></figure>
+<div class="method-grid">
+<article><span class="method-number">01</span><h3>Joint Rec-ID Loss</h3><p>Balance explicit identity supervision with reconstruction according to noise level, preserving identity and target attributes together.</p></article>
+<article><span class="method-number">02</span><h3>Face-RoI Generation</h3><p>Generate face-region tokens and blend them with the target video, avoiding redundant background computation.</p></article>
+<article><span class="method-number">03</span><h3>Short-Context Rollout Training</h3><p>Train on generated history to reduce error accumulation; retain bidirectional attention within each short window.</p></article>
+</div><p class="source-note">Section 4 · pp. 6–7 · Data preparation in Appendix B</p>
+</div></section>
+<section id="experiments" class="section container">
+<div class="section-heading"><span class="section-kicker">EXPERIMENTAL EVIDENCE</span><h2>Comparisons with Existing Methods</h2></div>
+<p class="section-intro">HumanFaceVid: 200 short and 200 long videos. All speed measurements use a single RTX 4090.</p>
+<div class="benchmark" id="short-experiment"><div class="benchmark-heading"><h3>Short Videos</h3><span>HumanFaceVid · 200 videos</span></div><div id="short-table"></div><p class="table-caption">Table 1 · Short-video results · ↑ Higher is better · ↓ Lower is better</p><h4>Short-video Visual Comparisons</h4><div id="short-comparisons"></div></div>
+<div class="benchmark" id="long-experiment"><div class="benchmark-heading"><h3>Long Videos</h3><span>HumanFaceVid · 200 videos</span></div><div id="long-table"></div><p class="table-caption">Table 1 · Long-video results · ↑ Higher is better · ↓ Lower is better</p><h4>Long-video Visual Comparisons</h4><div id="long-comparisons"></div></div>
+<div class="result-note"><p>StreamingSwap balances identity, target fidelity, and visual quality at 21.174 FPS. InSwapper and DreamID-V achieve higher identity scores, but the visual comparisons show that higher embedding similarity does not necessarily imply better perceptual quality or target fidelity.</p></div>
+<p class="source-note">Table 1 · FPS counts new output frames; latency is per inference run (Appendix D).</p>
+</section>
+<section id="data" class="section section-tint"><div class="container">
+<div class="section-heading"><span class="section-kicker">HUMANFACEVID</span><h2>Data Construction</h2></div>
+<p class="section-intro">Built from OpenHumanVid, HumanFaceVid provides 1,000 hours of training data and 200 short / 200 long evaluation videos. Reversed-pair training uses synthetic inputs and original real videos as ground truth.</p>
+<figure class="paper-figure"><a href="assets/data-construction.png" target="_blank" rel="noopener" aria-label="Open Figure 6: data preparation and role-reversed training"><img src="assets/data-construction.png" alt="Figure 6: real videos and same-identity images are prepared, synthetic inputs are generated, and reversed pairs reconstruct the original real video"></a><figcaption><strong>Figure 6.</strong> Data preparation and role-reversed training for HumanFaceVid.</figcaption></figure>
+</div></section>
+<section id="resources" class="section"><div class="reading-container"><div class="section-heading"><span class="section-kicker">RESOURCES</span><h2>Citation</h2></div><div class="citation-toolbar"><span>BibTeX</span><button id="copy-citation" disabled>Copy · TODO</button></div><pre id="citation"></pre><details class="pending"><summary>TODO · Materials to complete</summary><ul><li>Public Paper, arXiv, Code and Dataset links.</li><li>Final BibTeX entry, publication venue and year.</li></ul></details></div></section>
+</main>
+<footer><div class="container"><span>StreamingSwap · Local project page demo</span><p>Organization inspired by <a href="https://phys2real.github.io/" target="_blank" rel="noopener">Phys2Real</a> · Visual reference: <a href="https://aim-uofa.github.io/MemDreamer/" target="_blank" rel="noopener">MemDreamer</a></p></div></footer>
+</body></html>
