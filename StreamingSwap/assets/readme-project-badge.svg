@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="251" height="52" viewBox="0 0 251 52" role="img" aria-label="Project page">
+  <rect width="251" height="52" fill="#172E48"/>
+  <g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="29" cy="26" r="13"/>
+    <path d="M16 26h26M29 13c-4 4-6 8-6 13s2 9 6 13M29 13c4 4 6 8 6 13s-2 9-6 13"/>
+  </g>
+  <text x="59" y="33" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" letter-spacing="2.3">PROJECT PAGE</text>
+</svg>
