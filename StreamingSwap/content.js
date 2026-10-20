@@ -82,8 +82,16 @@ window.PAGE = {
     "name": "Zhejiang University of Technology"
   }
 ],
- links: {paper:'', code:'', arxiv:'', dataset:''}, // TODO: public URLs
- citation: '', // TODO: final BibTeX, author list, venue and year
+ links: {paper:'https://arxiv.org/abs/2610.26681', code:'https://github.com/aim-uofa/StreamingSwap', dataset:''},
+ citation: `@misc{luo2026streamingswap,
+  title={From Short Clips to Real-Time Streams: Identity-Aware Supervision and Context-Efficient Generation for Video Face Swapping},
+  author={Zekai Luo and Yuwei Liang and Ruiqi Ma and Haoyu Huang and Xuehao Wang and Huanyi Zheng and Mingyu Liu and Linhao Zhong and Chenchen Jing and Yuling Xi and Hao Chen},
+  year={2026},
+  eprint={2610.26681},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2610.26681}
+}`,
  featured: {file:'realtime-live',label:'Real-time Streaming'},
  galleries: [
   {id:'film',label:'Professional Film',description:'Preserving Cinematic Realism',cases:[{file:'film-walter'},{file:'film-odyssey'}]},

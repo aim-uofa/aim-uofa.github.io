@@ -52,17 +52,16 @@ $('author-notes').textContent = config.authorNotes || '';
 const icons = {
   paper: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h4M9 12h6M9 16h6"/>',
   code: '<path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 20"/>',
-  arxiv: '<path d="m5 3 14 18M19 3 5 21M8 12h8"/>',
   dataset: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0"/>'
 };
-for (const [key, label] of [['paper', 'Paper'], ['code', 'Code'], ['arxiv', 'arXiv'], ['dataset', 'Dataset']]) {
+for (const [key, label] of [['paper', 'Paper'], ['code', 'Code'], ['dataset', 'Dataset']]) {
   const url = safeUrl(config.links[key]);
   const element = make(url ? 'a' : 'button', 'resource-pill');
   const icon = make('span', 'resource-icon');
   icon.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[key]}</svg>`;
   element.append(icon, make('span', '', label));
   if (url) { element.href = url; element.target = '_blank'; element.rel = 'noopener'; }
-  else { element.disabled = true; element.title = `TODO: public ${label} URL`; element.append(make('span', 'todo-badge', 'TODO')); }
+  else { element.disabled = true; element.title = `${label} coming soon`; element.append(make('span', 'todo-badge', '(coming soon)')); }
   $('links').append(element);
 }
 function videoCard(item, accessibleLabel) {
