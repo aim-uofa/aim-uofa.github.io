@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="186" height="52" viewBox="0 0 186 52" role="img" aria-label="Paper coming soon">
-  <rect width="186" height="52" fill="#A7262B"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="247" height="52" viewBox="0 0 247 52" role="img" aria-label="Paper coming soon">
+  <rect width="247" height="52" fill="#A7262B"/>
   <g fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 10h13l6 6v25H21z"/>
     <path d="M34 10v6h6M26 23h10M26 28h10M26 33h7"/>
   </g>
-  <text x="57" y="27" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" letter-spacing="2.8">PAPER</text>
-  <text x="58" y="42" fill="#FFE3E3" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="700" letter-spacing="1.9">COMING SOON</text>
+  <text x="57" y="33" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" letter-spacing="2.8">PAPER</text>
+  <text x="131" y="32" fill="#FFE3E3" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600">(coming soon)</text>
 </svg>
