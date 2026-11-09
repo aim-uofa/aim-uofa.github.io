@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SD-OPD: Reinforcing What the Student Has Learned</title>
+  <meta name="description" content="Student-Delta On-Policy Distillation reinforces a student's own post-training preferences under teacher guidance, improving mathematical reasoning.">
+  <meta name="author" content="Bozhen Fang, Linhao Zhong, Xuehao Wang, Huanyi Zheng, Hao Chen, Chunhua Shen">
+  <meta name="keywords" content="SD-OPD, on-policy distillation, knowledge distillation, language models, mathematical reasoning, student delta">
+  <meta name="theme-color" content="#245c55">
+  <link rel="canonical" href="https://aim-uofa.github.io/SD-OPD/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AIM · Zhejiang University">
+  <meta property="og:title" content="SD-OPD: Reinforcing What the Student Has Learned">
+  <meta property="og:description" content="The student supplies the update strength. The teacher guides the direction. Discover Student-Delta On-Policy Distillation.">
+  <meta property="og:url" content="https://aim-uofa.github.io/SD-OPD/">
+  <meta property="og:image" content="https://aim-uofa.github.io/SD-OPD/static/images/method.png">
+  <meta property="og:image:width" content="3200">
+  <meta property="og:image:height" content="1151">
+  <meta property="og:image:alt" content="SD-OPD: student rollout, token scoring, student–base delta, teacher sign gate, and student update.">
+  <meta property="article:published_time" content="2026-11-05">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SD-OPD: Reinforcing What the Student Has Learned">
+  <meta name="twitter:description" content="Teacher-guided reinforcement of the student's own post-training preferences.">
+  <meta name="twitter:image" content="https://aim-uofa.github.io/SD-OPD/static/images/method.png">
+  <meta name="twitter:image:alt" content="Overview of Student-Delta On-Policy Distillation.">
+  <meta name="citation_title" content="Reinforcing What the Student Has Learned: Teacher-Guided On-Policy Distillation">
+  <meta name="citation_author" content="Fang, Bozhen">
+  <meta name="citation_author" content="Zhong, Linhao">
+  <meta name="citation_author" content="Wang, Xuehao">
+  <meta name="citation_author" content="Zheng, Huanyi">
+  <meta name="citation_author" content="Chen, Hao">
+  <meta name="citation_author" content="Shen, Chunhua">
+  <meta name="citation_publication_date" content="2026/11/05">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2611.07722">
+  <meta name="citation_arxiv_id" content="2611.07722">
+  <link rel="icon" type="image/svg+xml" href="static/images/favicon.svg">
+  <link rel="preload" href="static/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/css/index.css">
+  <script src="static/js/index.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Reinforcing What the Student Has Learned: Teacher-Guided On-Policy Distillation",
+    "name": "Reinforcing What the Student Has Learned: Teacher-Guided On-Policy Distillation",
+    "description": "Student-Delta On-Policy Distillation uses the student's post-training changes to supply update strength and teacher feedback to select its direction.",
+    "author": [
+      {"@type": "Person", "name": "Bozhen Fang"},
+      {"@type": "Person", "name": "Linhao Zhong"},
+      {"@type": "Person", "name": "Xuehao Wang"},
+      {"@type": "Person", "name": "Huanyi Zheng"},
+      {"@type": "Person", "name": "Hao Chen"},
+      {"@type": "Person", "name": "Chunhua Shen"}
+    ],
+    "datePublished": "2026-11-05",
+    "dateModified": "2026-11-06",
+    "url": "https://aim-uofa.github.io/SD-OPD/",
+    "sameAs": "https://arxiv.org/abs/2611.07722",
+    "identifier": "arXiv:2611.07722",
+    "image": "https://aim-uofa.github.io/SD-OPD/static/images/method.png",
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="container nav-inner" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="SD-OPD, back to top"><img class="brand-mark" src="static/images/favicon.svg" width="27" height="27" alt="">SD-OPD</a>
+      <div class="nav-links">
+        <a class="optional-nav" href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#BibTeX">Citation</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="paper-title">
+      <p class="eyebrow">SD-OPD · On-Policy Distillation</p>
+      <h1 id="paper-title"><span>Reinforcing What the Student</span> <span>Has Learned:</span><span class="title-secondary">Teacher-Guided On-Policy Distillation</span></h1>
+      <div class="authors">
+        <span><a href="https://github.com/fangbozhen" target="_blank" rel="noopener noreferrer">Bozhen Fang</a><sup>1,*</sup></span>
+        <span><a href="https://github.com/zhongzero" target="_blank" rel="noopener noreferrer">Linhao Zhong</a><sup>1,2,*</sup></span>
+        <span>Xuehao Wang<sup>1</sup></span>
+        <span>Huanyi Zheng<sup>1</sup></span>
+        <span><a href="https://stan-haochen.github.io/" target="_blank" rel="noopener noreferrer">Hao Chen</a><sup>1</sup></span>
+        <span><a href="https://cshen.github.io/" target="_blank" rel="noopener noreferrer">Chunhua Shen</a><sup>1,†</sup></span>
+      </div>
+      <div class="affiliations"><span><sup>1</sup> Zhejiang University, State Lab of CAD &amp; CG</span><span><sup>2</sup> Ant Group</span></div>
+      <p class="author-notes"><sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>†</sup> Corresponding author</p>
+      <div class="publication-links">
+        <a class="button primary" href="https://arxiv.org/pdf/2611.07722" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H5v18h14V8zM14 3v5h5M8 12h8M8 16h6"/></svg>Paper</a>
+        <a class="button" href="https://arxiv.org/abs/2611.07722" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 10 16M17 4 7 20"/></svg>arXiv</a>
+        <a class="button" href="https://github.com/aim-uofa/sd-opd" target="_blank" rel="noopener noreferrer"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5m8-10 5 5-5 5m-3-13-2 20"/></svg>Code</a>
+        <a class="button" href="#BibTeX"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h5v6H5zm9 0h5v6h-5zM10 13c0 4-2 5-4 5m13-5c0 4-2 5-4 5"/></svg>BibTeX</a>
+      </div>
+    </section>
+
+    <section class="teaser container" aria-label="SD-OPD overview">
+      <p class="teaser-lead"><strong>The student supplies the update strength.<br>The teacher guides the direction.</strong><br>Reinforce what the student has learned, using its own pretrained base as a reference.</p>
+      <figure>
+        <a class="figure-link" href="static/images/method.png" target="_blank" rel="noopener" data-zoom data-caption="SD-OPD overview: the student signal evolves each round; the teacher and pretrained base stay frozen." aria-label="Enlarge the SD-OPD method overview">
+          <img src="static/images/method.png" width="3200" height="1151" fetchpriority="high" alt="SD-OPD pipeline. Student responses are scored by the rollout student, frozen student base, and frozen teacher. Centered student–base deltas are retained where their signs agree with teacher feedback, then used in clipped policy updates.">
+          <span class="zoom-hint" aria-hidden="true">Click to enlarge ↗</span>
+        </a>
+        <figcaption><strong>Student-Delta On-Policy Distillation (SD-OPD).</strong> Student–base differences set the coefficients; teacher feedback selects their direction. The student signal is refreshed after every training round.</figcaption>
+      </figure>
+      <div class="highlights">
+        <div class="highlight"><strong>+7.76–10.37 <small>pp</small></strong><p>Six-task average improvement over OPD<br>across five teacher–student configurations</p></div>
+        <div class="highlight"><strong>30 / 30</strong><p>Benchmark comparisons improved over OPD<br>across six mathematics tasks</p></div>
+        <div class="highlight"><strong>76.11<small>%</small></strong><p>8B student average pass@1<br>versus its 30B-A3B teacher’s 73.82%</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="abstract" aria-labelledby="abstract-title">
+      <div class="container narrow">
+        <div class="section-heading"><h2 id="abstract-title">Abstract</h2></div>
+        <div class="prose">
+          <p>On-policy distillation (OPD) improves language-model reasoning through dense teacher feedback on student-generated responses. We first observe an amplitude disparity in this feedback: on math reasoning responses, style-related positions exhibit <strong>3.5 times</strong> the mean absolute teacher–student log-probability difference of mathematical positions. Scaling OPD updates by these discrepancies thus directs much of the update strength toward matching the teacher’s expression. We instead take the student’s own pretrained base as a reference: the student–base difference records the token preferences acquired during post-training and provides supervision that does not depend on the student’s distance from the teacher.</p>
+          <p>Building on this reference, we propose <strong>Student-Delta On-Policy Distillation (SD-OPD)</strong>, which uses centered student–base differences as update coefficients, keeps each coefficient only when its sign agrees with centered teacher–student feedback, and recomputes the student signal every training round. Across 5 teacher–student configurations with Qwen3 students of 1.7B to 8B parameters, SD-OPD improves six-task mathematics average pass@1 (avg@16) over OPD by <strong>7.76 to 10.37 percentage points.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tinted" id="observation" aria-labelledby="observation-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">The observation</p>
+          <h2 id="observation-title">Where does the update strength go?</h2>
+          <p class="section-intro">Teacher–student disagreement reflects differences in expression as well as reasoning. On the same math responses, its mean absolute magnitude is <strong>3.5× larger at style-related positions</strong> than at mathematical positions.</p>
+        </div>
+        <figure class="observation-figure">
+          <a class="figure-link" href="static/images/feedback-amplitude.svg" target="_blank" rel="noopener" data-zoom data-caption="Figure 2. Token-level feedback on 8,192 student responses to 1,024 DAPO-Math questions. All panels share the same scale." aria-label="Enlarge the token feedback analysis">
+            <img src="static/images/feedback-amplitude.svg" width="1425" height="400" loading="lazy" alt="Four bar charts compare teacher–student and student–base feedback before and after sign gating. Raw teacher feedback is 1.226 for style-related tokens and 0.347 for mathematical tokens. Gated student–base feedback is 0.227 and 0.074 respectively.">
+            <span class="zoom-hint" aria-hidden="true">Click to enlarge ↗</span>
+          </a>
+          <figcaption><strong>Same responses, different sources of update strength.</strong> The gated panels retain identical positions and directions, differing only in magnitude source. Student–base differences also contain stylistic preferences, motivating teacher-guided selection. <a href="https://arxiv.org/html/2611.07722v2#S3" target="_blank" rel="noopener noreferrer">Paper §3 ↗</a></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">The method</p>
+          <h2 id="method-title">Student-derived strength. Teacher-guided selection.</h2>
+          <p class="section-intro">The student’s difference from its own pretrained base records the token preferences acquired during post-training. SD-OPD uses that difference as an evolving source of supervision.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-number">01 / MEASURE</div><h3>Use the student’s own delta</h3><p>Score student-generated responses with the current student and its frozen base. Center their log-probability differences to obtain student-derived update coefficients, A<sub>S</sub>.</p></article>
+          <article class="step"><div class="step-number">02 / SELECT</div><h3>Keep directions the teacher supports</h3><p>Center the teacher–student feedback, A<sub>T</sub>. Keep a student coefficient only when the two signs agree. Positive agreement reinforces a token; negative agreement suppresses it.</p></article>
+          <article class="step"><div class="step-number">03 / REFRESH</div><h3>Build on the evolving student</h3><p>Use the selected coefficients in clipped policy updates, then refresh the student signal for the next rollout round. The teacher and pretrained base remain frozen throughout.</p></article>
+        </div>
+        <div class="formula">
+          <div class="equation" role="math" aria-label="A SD-OPD equals the indicator that A S times A T is positive, multiplied by A S"><i>A</i><sub>SD-OPD</sub> = 𝟙[<i>A</i><sub>S</sub> · <i>A</i><sub>T</sub> &gt; 0] · <i>A</i><sub>S</sub></div>
+          <p>Opposite signs or exact zeros give no update. Training approximates centering with the student’s top 1,024 candidates.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tinted" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Main results</p>
+          <h2 id="results-title">Consistent gains across teachers and student sizes</h2>
+          <p class="section-intro">SD-OPD achieves the highest six-task student average in all five configurations, with matched rollout and response budgets. Students range from 1.7B to 8B parameters.</p>
+        </div>
+        <div class="legend" aria-label="Chart legend"><span><i class="swatch" aria-hidden="true"></i>OPD</span><span><i class="swatch exopd" aria-hidden="true"></i>ExOPD</span><span><i class="swatch sdopd" aria-hidden="true"></i>SD-OPD</span></div>
+        <div class="chart-grid">
+          <div class="chart-setting"><p class="chart-label">Qwen3-4B →<strong>Qwen3-1.7B</strong></p><div class="chart-bars" role="img" aria-label="Qwen3-4B-Instruct-2507 → Qwen3-1.7B. OPD 42.87, ExOPD 47.08, SD-OPD 52.64 percent."><div class="chart-bar " style="--score:42.87" aria-hidden="true"><span>42.87</span></div><div class="chart-bar exopd" style="--score:47.08" aria-hidden="true"><span>47.08</span></div><div class="chart-bar sdopd" style="--score:52.64" aria-hidden="true"><span>52.64</span></div></div><p class="chart-gain">+9.77 pp vs. OPD</p></div>
+          <div class="chart-setting"><p class="chart-label">Qwen3-30B-A3B →<strong>Qwen3-1.7B</strong></p><div class="chart-bars" role="img" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B. OPD 43.15, ExOPD 44.97, SD-OPD 53.14 percent."><div class="chart-bar " style="--score:43.15" aria-hidden="true"><span>43.15</span></div><div class="chart-bar exopd" style="--score:44.97" aria-hidden="true"><span>44.97</span></div><div class="chart-bar sdopd" style="--score:53.14" aria-hidden="true"><span>53.14</span></div></div><p class="chart-gain">+9.99 pp vs. OPD</p></div>
+          <div class="chart-setting"><p class="chart-label">MiMo-7B →<strong>Qwen3-1.7B</strong></p><div class="chart-bars" role="img" aria-label="MiMo-7B-RL-0530 → Qwen3-1.7B. OPD 50.65, ExOPD 44.40, SD-OPD 59.29 percent."><div class="chart-bar " style="--score:50.65" aria-hidden="true"><span>50.65</span></div><div class="chart-bar exopd" style="--score:44.40" aria-hidden="true"><span>44.40</span></div><div class="chart-bar sdopd" style="--score:59.29" aria-hidden="true"><span>59.29</span></div></div><p class="chart-gain">+8.64 pp vs. OPD</p></div>
+          <div class="chart-setting"><p class="chart-label">Qwen3-30B-A3B →<strong>Qwen3-4B</strong></p><div class="chart-bars" role="img" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-4B. OPD 62.79, ExOPD 67.10, SD-OPD 70.55 percent."><div class="chart-bar " style="--score:62.79" aria-hidden="true"><span>62.79</span></div><div class="chart-bar exopd" style="--score:67.10" aria-hidden="true"><span>67.10</span></div><div class="chart-bar sdopd" style="--score:70.55" aria-hidden="true"><span>70.55</span></div></div><p class="chart-gain">+7.76 pp vs. OPD</p></div>
+          <div class="chart-setting"><p class="chart-label">Qwen3-30B-A3B →<strong>Qwen3-8B</strong></p><div class="chart-bars" role="img" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-8B. OPD 65.74, ExOPD 67.04, SD-OPD 76.11 percent."><div class="chart-bar " style="--score:65.74" aria-hidden="true"><span>65.74</span></div><div class="chart-bar exopd" style="--score:67.04" aria-hidden="true"><span>67.04</span></div><div class="chart-bar sdopd" style="--score:76.11" aria-hidden="true"><span>76.11</span></div></div><p class="chart-gain">+10.37 pp vs. OPD</p></div></div>
+        <p class="chart-caption">Six-task average pass@1 (%), shared 0–100 scale. Gains are SD-OPD − OPD in percentage points.<br>Qwen teachers use Instruct-2507 checkpoints; MiMo uses MiMo-7B-RL-0530.</p>
+        <div class="results-explorer">
+          <div class="results-toolbar" hidden>
+            <label for="setting-select">Explore a teacher → student setting</label>
+            <select id="setting-select" aria-controls="results-panels">
+              <option value="setting-0">Qwen3-4B-Instruct-2507 → Qwen3-1.7B</option>
+              <option value="setting-1">Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B</option>
+              <option value="setting-2">MiMo-7B-RL-0530 → Qwen3-1.7B</option>
+              <option value="setting-3">Qwen3-30B-A3B-Instruct-2507 → Qwen3-4B</option>
+              <option value="setting-4">Qwen3-30B-A3B-Instruct-2507 → Qwen3-8B</option>
+            </select>
+          </div>
+          <div id="results-panels" aria-live="polite">
+            <section class="result-panel" id="setting-0" aria-labelledby="setting-0-title"><h3 id="setting-0-title">Qwen3-4B-Instruct-2507 → Qwen3-1.7B</h3><div class="table-scroll" role="region" aria-label="Qwen3-4B-Instruct-2507 → Qwen3-1.7B benchmark scores" tabindex="0"><table><caption>Pass@1 (%) · average over 16 responses per problem</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">AIME24</th><th scope="col">AIME25</th><th scope="col">AIME26</th><th scope="col">HMMT25</th><th scope="col">AMC23</th><th scope="col">MATH500</th><th scope="col">Average</th></tr></thead>
+                <tbody><tr class=""><th scope="row">Initial student</th><td>13.12</td><td>8.54</td><td>7.71</td><td>6.67</td><td>44.69</td><td>69.40</td><td>25.02</td></tr>
+                  <tr class=""><th scope="row">OPD</th><td>32.08</td><td>26.25</td><td>24.38</td><td>16.88</td><td>73.75</td><td>83.90</td><td>42.87</td></tr>
+                  <tr class=""><th scope="row">ExOPD</th><td>40.42</td><td>28.12</td><td>28.75</td><td>20.00</td><td>79.06</td><td>86.11</td><td>47.08</td></tr>
+                  <tr class="ours"><th scope="row">SD-OPD</th><td><strong>45.42</strong></td><td><strong>33.33</strong></td><td><strong>40.62</strong></td><td><strong>21.04</strong></td><td><strong>86.72</strong></td><td><strong>88.72</strong></td><td><strong>52.64</strong></td></tr>
+                  <tr class="gain"><th scope="row">Δ vs. OPD</th><td>+13.33</td><td>+7.08</td><td>+16.25</td><td>+4.17</td><td>+12.97</td><td>+4.83</td><td>+9.77</td></tr>
+                  <tr class="teacher"><th scope="row">Teacher</th><td>58.75</td><td>44.38</td><td>53.12</td><td>29.17</td><td>93.44</td><td>93.33</td><td>62.03</td></tr>
+                </tbody>
+              </table></div></section>
+<section class="result-panel" id="setting-1" aria-labelledby="setting-1-title"><h3 id="setting-1-title">Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B</h3><div class="table-scroll" role="region" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B benchmark scores" tabindex="0"><table><caption>Pass@1 (%) · average over 16 responses per problem</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">AIME24</th><th scope="col">AIME25</th><th scope="col">AIME26</th><th scope="col">HMMT25</th><th scope="col">AMC23</th><th scope="col">MATH500</th><th scope="col">Average</th></tr></thead>
+                <tbody><tr class=""><th scope="row">Initial student</th><td>13.12</td><td>8.54</td><td>7.71</td><td>6.67</td><td>44.69</td><td>69.40</td><td>25.02</td></tr>
+                  <tr class=""><th scope="row">OPD</th><td>31.87</td><td>27.08</td><td>26.67</td><td>16.67</td><td>72.03</td><td>84.60</td><td>43.15</td></tr>
+                  <tr class=""><th scope="row">ExOPD</th><td>35.00</td><td>29.38</td><td>30.83</td><td>17.71</td><td>71.09</td><td>85.84</td><td>44.97</td></tr>
+                  <tr class="ours"><th scope="row">SD-OPD</th><td><strong>44.79</strong></td><td><strong>37.08</strong></td><td><strong>40.21</strong></td><td><strong>18.33</strong></td><td><strong>88.91</strong></td><td><strong>89.53</strong></td><td><strong>53.14</strong></td></tr>
+                  <tr class="gain"><th scope="row">Δ vs. OPD</th><td>+12.92</td><td>+10.00</td><td>+13.54</td><td>+1.67</td><td>+16.88</td><td>+4.93</td><td>+9.99</td></tr>
+                  <tr class="teacher"><th scope="row">Teacher</th><td>77.08</td><td>60.00</td><td>72.29</td><td>42.50</td><td>95.31</td><td>95.74</td><td>73.82</td></tr>
+                </tbody>
+              </table></div></section>
+<section class="result-panel" id="setting-2" aria-labelledby="setting-2-title"><h3 id="setting-2-title">MiMo-7B-RL-0530 → Qwen3-1.7B</h3><div class="table-scroll" role="region" aria-label="MiMo-7B-RL-0530 → Qwen3-1.7B benchmark scores" tabindex="0"><table><caption>Pass@1 (%) · average over 16 responses per problem</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">AIME24</th><th scope="col">AIME25</th><th scope="col">AIME26</th><th scope="col">HMMT25</th><th scope="col">AMC23</th><th scope="col">MATH500</th><th scope="col">Average</th></tr></thead>
+                <tbody><tr class=""><th scope="row">Initial student</th><td>13.12</td><td>8.54</td><td>7.71</td><td>6.67</td><td>44.69</td><td>69.40</td><td>25.02</td></tr>
+                  <tr class=""><th scope="row">OPD</th><td>43.54</td><td>36.67</td><td>34.58</td><td>21.25</td><td>79.84</td><td>88.01</td><td>50.65</td></tr>
+                  <tr class=""><th scope="row">ExOPD</th><td>35.42</td><td>30.00</td><td>27.50</td><td>20.62</td><td>67.81</td><td>85.02</td><td>44.40</td></tr>
+                  <tr class="ours"><th scope="row">SD-OPD</th><td><strong>54.37</strong></td><td><strong>43.33</strong></td><td><strong>45.21</strong></td><td><strong>31.04</strong></td><td><strong>90.94</strong></td><td><strong>90.84</strong></td><td><strong>59.29</strong></td></tr>
+                  <tr class="gain"><th scope="row">Δ vs. OPD</th><td>+10.83</td><td>+6.67</td><td>+10.63</td><td>+9.79</td><td>+11.09</td><td>+2.83</td><td>+8.64</td></tr>
+                  <tr class="teacher"><th scope="row">Teacher</th><td>75.21</td><td>63.12</td><td>63.75</td><td>42.92</td><td>86.56</td><td>89.61</td><td>70.20</td></tr>
+                </tbody>
+              </table></div></section>
+<section class="result-panel" id="setting-3" aria-labelledby="setting-3-title"><h3 id="setting-3-title">Qwen3-30B-A3B-Instruct-2507 → Qwen3-4B</h3><div class="table-scroll" role="region" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-4B benchmark scores" tabindex="0"><table><caption>Pass@1 (%) · average over 16 responses per problem</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">AIME24</th><th scope="col">AIME25</th><th scope="col">AIME26</th><th scope="col">HMMT25</th><th scope="col">AMC23</th><th scope="col">MATH500</th><th scope="col">Average</th></tr></thead>
+                <tbody><tr class=""><th scope="row">Initial student</th><td>21.46</td><td>18.54</td><td>14.37</td><td>11.67</td><td>68.91</td><td>81.49</td><td>36.07</td></tr>
+                  <tr class=""><th scope="row">OPD</th><td>60.62</td><td>46.25</td><td>54.79</td><td>33.54</td><td>89.22</td><td>92.34</td><td>62.79</td></tr>
+                  <tr class=""><th scope="row">ExOPD</th><td>66.67</td><td>55.21</td><td>60.00</td><td>35.42</td><td>92.03</td><td><strong>93.27</strong></td><td>67.10</td></tr>
+                  <tr class="ours"><th scope="row">SD-OPD</th><td><strong>69.79</strong></td><td><strong>62.29</strong></td><td><strong>60.62</strong></td><td><strong>42.08</strong></td><td><strong>95.78</strong></td><td>92.74</td><td><strong>70.55</strong></td></tr>
+                  <tr class="gain"><th scope="row">Δ vs. OPD</th><td>+9.17</td><td>+16.04</td><td>+5.83</td><td>+8.54</td><td>+6.56</td><td>+0.40</td><td>+7.76</td></tr>
+                  <tr class="teacher"><th scope="row">Teacher</th><td>77.08</td><td>60.00</td><td>72.29</td><td>42.50</td><td>95.31</td><td>95.74</td><td>73.82</td></tr>
+                </tbody>
+              </table></div></section>
+<section class="result-panel" id="setting-4" aria-labelledby="setting-4-title"><h3 id="setting-4-title">Qwen3-30B-A3B-Instruct-2507 → Qwen3-8B</h3><div class="table-scroll" role="region" aria-label="Qwen3-30B-A3B-Instruct-2507 → Qwen3-8B benchmark scores" tabindex="0"><table><caption>Pass@1 (%) · average over 16 responses per problem</caption>
+                <thead><tr><th scope="col">Method</th><th scope="col">AIME24</th><th scope="col">AIME25</th><th scope="col">AIME26</th><th scope="col">HMMT25</th><th scope="col">AMC23</th><th scope="col">MATH500</th><th scope="col">Average</th></tr></thead>
+                <tbody><tr class=""><th scope="row">Initial student</th><td>26.46</td><td>20.42</td><td>15.42</td><td>10.83</td><td>66.72</td><td>82.35</td><td>37.03</td></tr>
+                  <tr class=""><th scope="row">OPD</th><td>67.71</td><td>54.37</td><td>55.00</td><td>32.71</td><td>91.56</td><td>93.11</td><td>65.74</td></tr>
+                  <tr class=""><th scope="row">ExOPD</th><td>68.96</td><td>51.25</td><td>61.46</td><td>32.92</td><td>93.91</td><td><strong>93.75</strong></td><td>67.04</td></tr>
+                  <tr class="ours"><th scope="row">SD-OPD</th><td><strong>80.42</strong></td><td><strong>68.96</strong></td><td><strong>67.50</strong></td><td><strong>48.75</strong></td><td><strong>97.34</strong></td><td>93.70</td><td><strong>76.11</strong></td></tr>
+                  <tr class="gain"><th scope="row">Δ vs. OPD</th><td>+12.71</td><td>+14.58</td><td>+12.50</td><td>+16.04</td><td>+5.78</td><td>+0.59</td><td>+10.37</td></tr>
+                  <tr class="teacher"><th scope="row">Teacher</th><td>77.08</td><td>60.00</td><td>72.29</td><td>42.50</td><td>95.31</td><td>95.74</td><td>73.82</td></tr>
+                </tbody>
+              </table></div></section>
+          </div>
+        </div>
+        <p class="table-note">Table 1 from the <a href="https://arxiv.org/pdf/2611.07722v2#page=6" target="_blank" rel="noopener noreferrer">paper</a>. Pass@1 (%) averaged over 16 sampled responses per problem (avg@16), evaluated in non-thinking mode. <strong>Bold</strong> marks the highest student score per column. Teacher scores are references. Averages and gains use unrounded scores, so they may differ slightly from arithmetic on the displayed values. HMMT25 denotes the February competition.</p>
+        <div class="result-callout"><h3>The student can surpass its teacher.</h3><p>With Qwen3-30B-A3B-Instruct-2507 as the teacher, the 8B student reaches <strong>76.11%</strong> average pass@1, exceeding the teacher’s <strong>73.82%</strong> by <strong>2.29 percentage points</strong>. It also exceeds this teacher on AIME 2024, AIME 2025, HMMT 2025, and AMC 2023.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="analysis" aria-labelledby="analysis-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">A closer look</p><h2 id="analysis-title">Selection and refresh both matter</h2></div>
+        <div class="analysis-grid">
+          <article>
+            <h3>What happens without them?</h3>
+            <table class="ablation-table">
+              <caption>Qwen3-4B-Instruct-2507 → Qwen3-1.7B · Table 2</caption>
+              <thead><tr><th scope="col">Variant</th><th scope="col">Average pass@1</th></tr></thead>
+              <tbody><tr class="ours"><th scope="row">SD-OPD</th><td><strong>52.64%</strong></td></tr>
+                  <tr><th scope="row">Frozen student signal</th><td>34.47%</td></tr>
+                  <tr><th scope="row">Without teacher gate</th><td>0.00%</td></tr>
+                </tbody>
+
+              </table>
+            <p><strong>Teacher selection is essential in this setting.</strong> Removing the sign gate collapses performance to zero on all six tasks. Fixing the student–base source at the initial student also hurts performance, showing the value of refreshing supervision as the student learns.</p>
+          </article>
+          <article>
+            <h3>A more concentrated policy</h3>
+            <figure>
+              <a class="figure-link" href="static/images/training-dynamics.svg" target="_blank" rel="noopener" data-zoom data-caption="Figure 4. First 50 rollout rounds for Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B. Curves are unsmoothed." aria-label="Enlarge the training dynamics figure"><img src="static/images/training-dynamics.svg" width="718" height="400" loading="lazy" alt="Early training curves: OPD, ExOPD, and SD-OPD all increase response length, while SD-OPD develops lower policy entropy."><span class="zoom-hint" aria-hidden="true">Click to enlarge ↗</span></a>
+              <figcaption>First 50 rollout rounds, Qwen3-30B-A3B-Instruct-2507 → Qwen3-1.7B.</figcaption>
+            </figure>
+            <p>SD-OPD maintains long responses while concentrating next-token predictions. Over rounds 41–50, mean entropy is <strong>0.158 nats</strong>, compared with 0.314 for OPD and 0.308 for ExOPD.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="BibTeX" aria-labelledby="citation-title">
+      <div class="container narrow">
+        <div class="citation-heading"><h2 id="citation-title">BibTeX</h2><div class="citation-actions"><a href="citation.bib" download>Download .bib</a><button id="copy-bibtex" class="button" type="button" aria-label="Copy BibTeX citation"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></svg><span>Copy</span></button></div></div>
+        <pre><code id="bibtex-code">@misc{fang2026reinforcingstudentlearnedteacherguided,
+  title={Reinforcing What the Student Has Learned:
+         Teacher-Guided On-Policy Distillation},
+  author={Bozhen Fang and Linhao Zhong and Xuehao Wang and
+          Huanyi Zheng and Hao Chen and Chunhua Shen},
+  year={2026},
+  eprint={2611.07722},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  url={https://arxiv.org/abs/2611.07722},
+}</code></pre>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container">
+    <p>SD-OPD · Zhejiang University &amp; Ant Group · 2026</p>
+    <p>Adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a> and <a href="https://nerfies.github.io/" target="_blank" rel="noopener noreferrer">Nerfies</a>.</p>
+    <p>Website licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license noopener noreferrer" target="_blank">CC BY-SA 4.0</a>.</p>
+  </div></footer>
+
+  <dialog class="figure-dialog" id="figure-dialog" aria-label="Enlarged paper figure" aria-describedby="figure-caption">
+    <button class="button dialog-close" type="button" autofocus aria-label="Close enlarged figure">Close ×</button>
+    <img alt="">
+    <p id="figure-caption"></p>
+    <p><a id="figure-original" target="_blank" rel="noopener">Open original figure ↗</a></p>
+  </dialog>
+</body>
+</html>
