@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RoboHarness-RL: Agentic Reinforcement Learning for VLM-Based Robot Manipulation</title>
+<meta name="description" content="RoboHarness-RL trains a compact vision-language model to manipulate robots through tool calls. Explore task demonstrations and hierarchical memory.">
+<meta name="author" content="Liyang Li, Mingyu Liu, Xiaoman Li, Zhiyue Zhao, Jin-Chuan Shi, Canyu Zhao, Haokai Zhang, Jinyuan Tian, Linhao Zhong, Hao Chen, Chunhua Shen">
+<meta name="theme-color" content="#363636"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="gallery.css"><script defer src="gallery-data.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#demos">Skip to demonstrations</a>
+<header class="nav"><a class="wordmark" href="#top">RoboHarness<span>-RL</span></a><nav aria-label="Main navigation"><a href="#demos">Demos</a><a href="#method">Method</a><a href="#results">Results</a></nav></header>
+<main id="top">
+<section class="hero wrap">
+<h1><span>RoboHarness-RL</span><br>Agentic Reinforcement Learning<br class="desktop-break"> for VLM-Based Robot Manipulation</h1>
+<div class="authors" aria-label="Authors"><span>Liyang Li</span><span>Mingyu Liu</span><span>Xiaoman Li</span><span>Zhiyue Zhao</span><span>Jin-Chuan Shi</span><span>Canyu Zhao</span><span class="author-break" aria-hidden="true"></span><span>Haokai Zhang</span><span>Jinyuan Tian</span><span>Linhao Zhong</span><span>Hao Chen<sup>†</sup></span><span>Chunhua Shen<sup>†</sup></span></div>
+<p class="affiliation">Zhejiang University, State Key Lab of CAD &amp; CG</p>
+<p class="author-note">† Corresponding authors.</p>
+<div class="resource-links"><span class="pill dark" aria-disabled="true" title="arXiv link will be added when available">Paper</span><span class="resource-status">Code coming soon</span></div>
+<p class="lead">A 9B Qwen3.5 model learns to use tools, respond to feedback, and complete manipulation tasks.</p>
+<figure class="hero-teaser"><img src="assets/teaser.png" width="2600" height="937" fetchpriority="high" alt="RoboHarness-RL teaser: teacher demonstrations and agentic reinforcement learning, benchmark success rates, and an example where RL adapts after an error while SFT repeats it."></figure>
+<div class="headline-results"><div><span>RoboTwin 2.0 · clean</span><strong>31.2 <i>→</i> <em>44.0%</em></strong><small>SFT to RL · +12.8 points</small></div><div><span>LIBERO-Pro</span><strong>57.8 <i>→</i> <em>73.3%</em></strong><small>SFT to RL · +15.5 points</small></div><div><span>RoboTwin 2.0 · randomized</span><strong>26.4 <i>→</i> <em>38.0%</em></strong><small>Unseen scene conditions · +11.6 points</small></div></div>
+</section>
+
+
+
+<section class="section wrap" id="method">
+<div class="section-heading"><p class="eyebrow">THE METHOD</p><h2>A VLM policy. A robot harness.<br>Learning from interaction.</h2><p>RoboHarness-RL trains Qwen3.5-9B to issue perception, planning, and control tool calls.</p></div>
+<figure class="framework"><img src="assets/framework.png" alt="RoboHarness-RL framework showing LiteHarness and two-stage policy training" loading="lazy"><figcaption>The VLM specifies actions through tools; no VLA or world action model generates the actions.</figcaption></figure>
+</section>
+<section class="section soft" id="results"><div class="wrap">
+<div class="section-heading"><h2>Higher success. Less repetition.</h2><p>SFT and RL use the same 9B backbone and LiteHarness, evaluated on matched instances.</p></div>
+<section class="result-group" aria-labelledby="success-heading"><div class="result-heading"><h3 id="success-heading">Task success</h3></div><div class="charts"><article class="chart"><h4>RoboTwin · clean</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:31.2000%"></div></div><span class="bar-value">31.2%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:44.0000%"></div></div><span class="bar-value">44.0%</span></div><p>+12.8 percentage points</p></article><article class="chart"><h4>LIBERO-Pro</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:57.8000%"></div></div><span class="bar-value">57.8%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:73.3000%"></div></div><span class="bar-value">73.3%</span></div><p>+15.5 percentage points</p></article><article class="chart"><h4>RoboTwin · randomized</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:26.4000%"></div></div><span class="bar-value">26.4%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:38.0000%"></div></div><span class="bar-value">38.0%</span></div><p>+11.6 percentage points</p></article></div></section>
+<section class="result-group" aria-labelledby="repetition-heading"><div class="result-heading"><h3 id="repetition-heading">Repetitive calls</h3></div><div class="charts"><article class="chart"><h4>RoboTwin · clean</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:69.3333%"></div></div><span class="bar-value">10.4%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:18.6667%"></div></div><span class="bar-value">2.8%</span></div><p>7.6 percentage points lower</p></article><article class="chart"><h4>LIBERO-Pro</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:60.6667%"></div></div><span class="bar-value">9.1%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:38.0000%"></div></div><span class="bar-value">5.7%</span></div><p>3.4 percentage points lower</p></article><article class="chart"><h4>RoboTwin · randomized</h4><div class="bar-row"><span class="bar-label">SFT</span><div class="bar-track"><div class="bar" style="width:72.6667%"></div></div><span class="bar-value">10.9%</span></div><div class="bar-row"><span class="bar-label">RL</span><div class="bar-track"><div class="bar rl" style="width:16.6667%"></div></div><span class="bar-value">2.5%</span></div><p>8.4 percentage points lower</p></article></div></section>
+</div></section>
+
+
+<section class="section soft" id="demos" aria-label="Video gallery"><div class="wrap"><div class="section-heading"><h2>More Examples</h2><p class="media-note">Selected successful evaluation episodes from the round-25 RL policy. Replays run at 1× simulation time; model inference and query waiting time are omitted. Use the video controls to enable action and feedback captions.</p></div>
+<div class="gallery-toolbar"><div class="benchmark-tabs" role="group" aria-label="Benchmark"><button class="active" data-benchmark="all" aria-pressed="true">All tasks</button><button data-benchmark="robotwin" aria-pressed="false">RoboTwin 2.0</button><button data-benchmark="libero" aria-pressed="false">LIBERO-Pro</button></div></div>
+<div id="video-grid" class="video-grid"></div><div id="empty" class="empty" hidden><h3>No videos found.</h3><p>Try another dataset.</p><button class="pill" id="clear-filters">All tasks</button></div>
+</div></section>
+</main>
+<footer class="wrap"><span>RoboHarness-RL</span><span>Zhejiang University, State Key Lab of CAD &amp; CG</span></footer>
+<noscript><p class="wrap">Enable JavaScript to explore the demonstrations and video gallery. The method overview is available above.</p></noscript>
+</body></html>

@@ -1,0 +1,96 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:06.412
+Calls 1–2: query/feedback span 6.6 s cut.
+RL round 25 | 1x | call 3 | grasp_execute; completed
+
+00:00:06.412 --> 00:00:08.268
+Calls 4–5: query/feedback span 2.6 s cut.
+RL round 25 | 1x | call 6 | move_pose; reached
+
+00:00:08.268 --> 00:00:09.388
+Calls 7–7: query/feedback span 0.4 s cut.
+RL round 25 | 1x | call 8 | move_pose; executed, target not reached
+
+00:00:09.388 --> 00:00:10.588
+RL round 25 | 1x | call 9 | set_gripper right: open; executed
+
+00:00:10.588 --> 00:00:13.356
+Calls 10–10: query/feedback span 0.8 s cut.
+RL round 25 | 1x | call 11 | recover_pose right: home; reached
+
+00:00:13.356 --> 00:00:17.656
+Calls 12–13: query/feedback span 7.2 s cut.
+RL round 25 | 1x | call 14 | grasp_execute; aborted
+
+00:00:17.656 --> 00:00:18.856
+RL round 25 | 1x | call 15 | set_gripper left: close; executed
+
+00:00:18.856 --> 00:00:19.660
+RL round 25 | 1x | call 16 | move_pose; reached
+
+00:00:19.660 --> 00:00:20.912
+Calls 17–17: query/feedback span 1.8 s cut.
+RL round 25 | 1x | call 18 | move_pose; reached
+
+00:00:20.912 --> 00:00:21.904
+Calls 19–19: query/feedback span 0.3 s cut.
+RL round 25 | 1x | call 20 | move_pose; executed, target not reached
+
+00:00:21.904 --> 00:00:23.104
+RL round 25 | 1x | call 21 | set_gripper left: open; executed
+
+00:00:23.104 --> 00:00:24.480
+RL round 25 | 1x | call 22 | move_pose; reached
+
+00:00:24.480 --> 00:00:26.912
+RL round 25 | 1x | call 23 | recover_pose left: home; reached
+
+00:00:26.912 --> 00:00:33.452
+Calls 24–25: query/feedback span 6.2 s cut.
+RL round 25 | 1x | call 26 | grasp_execute; completed
+
+00:00:33.452 --> 00:00:34.896
+Calls 27–27: query/feedback span 0.7 s cut.
+RL round 25 | 1x | call 28 | move_pose; reached
+
+00:00:34.896 --> 00:00:35.800
+Calls 29–29: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 30 | move_pose; executed, target not reached
+
+00:00:35.800 --> 00:00:37.000
+RL round 25 | 1x | call 31 | set_gripper right: open; executed
+
+00:00:37.000 --> 00:00:38.304
+RL round 25 | 1x | call 32 | move_pose; reached
+
+00:00:38.304 --> 00:00:39.104
+RL round 25 | 1x | call 33 | wait_ticks; executed
+
+00:00:39.104 --> 00:00:41.704
+RL round 25 | 1x | call 34 | recover_pose right: home; reached
+
+00:00:41.704 --> 00:00:46.428
+Calls 35–37: query/feedback span 6.8 s cut.
+RL round 25 | 1x | call 38 | grasp_execute; aborted
+
+00:00:46.428 --> 00:00:47.628
+RL round 25 | 1x | call 39 | set_gripper left: close; executed
+
+00:00:47.628 --> 00:00:48.712
+RL round 25 | 1x | call 40 | move_pose; reached
+
+00:00:48.712 --> 00:00:49.996
+RL round 25 | 1x | call 41 | move_to; reached
+
+00:00:49.996 --> 00:00:50.828
+RL round 25 | 1x | call 42 | move_pose; reached
+
+00:00:50.828 --> 00:00:51.472
+RL round 25 | 1x | call 43 | set_gripper left: open; executed
+
+00:00:51.534 --> 00:00:53.534
+Calls 44–45: query/feedback span 1.4 s cut.
+RL round 25 | source official success; replay success

@@ -1,0 +1,70 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:03.450
+Calls 0–0: query/feedback span 0.6 s cut.
+RL round 25 | 1x | call 1 | move_pose; reached
+
+00:00:03.450 --> 00:00:07.800
+Calls 2–9: query/feedback span 13.7 s cut.
+RL round 25 | 1x | call 10 | move_pose; reached
+
+00:00:07.800 --> 00:00:11.550
+Calls 11–12: query/feedback span 3.3 s cut.
+RL round 25 | 1x | call 13 | move_pose; reached
+
+00:00:11.550 --> 00:00:13.350
+RL round 25 | 1x | call 14 | move_pose; reached
+
+00:00:13.350 --> 00:00:13.900
+RL round 25 | 1x | call 15 | set_gripper close
+
+00:00:13.900 --> 00:00:16.100
+RL round 25 | 1x | call 16 | move_pose delta [0, 0, 0.08] m; reached
+
+00:00:16.100 --> 00:00:20.900
+Calls 17–17: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 18 | move_to; reached
+
+00:00:20.900 --> 00:00:25.150
+RL round 25 | 1x | call 19 | move_pose; executed, target not reached
+
+00:00:25.150 --> 00:00:25.900
+Calls 20–20: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 21 | set_gripper open
+
+00:00:25.900 --> 00:00:28.600
+RL round 25 | 1x | call 22 | move_to; reached
+
+00:00:28.600 --> 00:00:34.650
+Calls 23–23: query/feedback span 0.7 s cut.
+RL round 25 | 1x | call 24 | move_pose; reached
+
+00:00:34.650 --> 00:00:38.200
+Calls 25–26: query/feedback span 2.6 s cut.
+RL round 25 | 1x | call 27 | move_pose; reached
+
+00:00:38.200 --> 00:00:40.300
+RL round 25 | 1x | call 28 | move_pose; executed, target not reached
+
+00:00:40.300 --> 00:00:40.850
+Calls 29–29: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 30 | set_gripper close
+
+00:00:40.850 --> 00:00:42.400
+RL round 25 | 1x | call 31 | move_pose delta [0, 0, 0.08] m; reached
+
+00:00:42.400 --> 00:00:49.600
+Calls 32–32: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 33 | move_to; reached
+
+00:00:49.600 --> 00:00:51.350
+RL round 25 | 1x | call 34 | move_pose; reached
+
+00:00:51.350 --> 00:00:51.700
+RL round 25 | 1x | call 35 | set_gripper open
+
+00:00:51.734 --> 00:00:53.734
+Calls 36–38: query/feedback span 2.3 s cut.
+RL round 25 | source official success; replay success

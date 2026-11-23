@@ -1,0 +1,66 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:03.600
+Calls 0–1: query/feedback span 3.2 s cut.
+RL round 25 | 1x | call 2 | move_pose; reached
+
+00:00:03.600 --> 00:00:10.250
+Calls 3–4: query/feedback span 3.7 s cut.
+RL round 25 | 1x | call 5 | move_pose; reached
+
+00:00:10.250 --> 00:00:12.650
+Calls 6–7: query/feedback span 4.5 s cut.
+RL round 25 | 1x | call 8 | move_pose; reached
+
+00:00:12.650 --> 00:00:14.300
+RL round 25 | 1x | call 9 | move_pose; reached
+
+00:00:14.300 --> 00:00:14.750
+RL round 25 | 1x | call 10 | set_gripper close
+
+00:00:14.750 --> 00:00:16.800
+RL round 25 | 1x | call 11 | move_pose delta [0, 0, 0.12] m; reached
+
+00:00:16.800 --> 00:00:23.600
+Calls 12–14: query/feedback span 9.5 s cut.
+RL round 25 | 1x | call 15 | move_to; reached
+
+00:00:23.600 --> 00:00:27.050
+RL round 25 | 1x | call 16 | move_pose; executed, target not reached
+
+00:00:27.050 --> 00:00:27.750
+Calls 17–17: query/feedback span 0.1 s cut.
+RL round 25 | 1x | call 18 | set_gripper open
+
+00:00:27.750 --> 00:00:30.400
+RL round 25 | 1x | call 19 | move_to; reached
+
+00:00:30.400 --> 00:00:37.700
+Calls 20–22: query/feedback span 5.3 s cut.
+RL round 25 | 1x | call 23 | move_pose; reached
+
+00:00:37.700 --> 00:00:42.150
+Calls 24–25: query/feedback span 3.7 s cut.
+RL round 25 | 1x | call 26 | move_pose; reached
+
+00:00:42.150 --> 00:00:44.900
+RL round 25 | 1x | call 27 | move_pose; reached
+
+00:00:44.900 --> 00:00:45.350
+RL round 25 | 1x | call 28 | set_gripper close
+
+00:00:45.350 --> 00:00:49.450
+RL round 25 | 1x | call 29 | move_pose delta [0, 0, 0.12] m; reached
+
+00:00:49.450 --> 00:00:57.250
+Calls 30–30: query/feedback span 0.1 s cut.
+RL round 25 | 1x | call 31 | move_to; reached
+
+00:00:57.250 --> 00:00:59.350
+RL round 25 | 1x | call 32 | move_pose; executed, target not reached
+
+00:00:59.400 --> 00:01:01.400
+Calls 33–34: query/feedback span 1.4 s cut.
+RL round 25 | source official success; replay success

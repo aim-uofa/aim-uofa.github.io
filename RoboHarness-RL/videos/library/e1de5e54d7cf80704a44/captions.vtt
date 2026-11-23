@@ -1,0 +1,22 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:06.000
+Calls 1–2: query/feedback span 4.6 s cut.
+RL round 25 | 1x | call 3 | grasp_execute; completed
+
+00:00:06.000 --> 00:00:07.100
+Calls 4–7: query/feedback span 10.0 s cut.
+RL round 25 | 1x | call 8 | move_pose; reached
+
+00:00:07.100 --> 00:00:08.296
+Calls 9–9: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 10 | move_pose; executed, target not reached
+
+00:00:08.296 --> 00:00:08.940
+RL round 25 | 1x | call 11 | set_gripper left: open right: open; executed
+
+00:00:09.000 --> 00:00:11.000
+Calls 12–13: query/feedback span 1.7 s cut.
+RL round 25 | source official success; replay success

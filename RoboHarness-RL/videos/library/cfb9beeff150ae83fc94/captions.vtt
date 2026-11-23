@@ -1,0 +1,74 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:02.200
+Calls 1–5: query/feedback span 37.6 s cut.
+RL round 25 | 1x | call 6 | move_pose; reached
+
+00:00:02.200 --> 00:00:03.028
+RL round 25 | 1x | call 7 | move_pose; executed, target not reached
+
+00:00:03.028 --> 00:00:04.228
+RL round 25 | 1x | call 8 | set_gripper left: close; executed
+
+00:00:04.228 --> 00:00:04.740
+RL round 25 | 1x | call 9 | move_pose; reached
+
+00:00:04.740 --> 00:00:05.940
+RL round 25 | 1x | call 10 | set_gripper left: open; executed
+
+00:00:05.940 --> 00:00:08.512
+Calls 11–11: query/feedback span 0.9 s cut.
+RL round 25 | 1x | call 12 | recover_pose left: home; reached
+
+00:00:08.512 --> 00:00:16.964
+Calls 13–14: query/feedback span 8.6 s cut.
+RL round 25 | 1x | call 15 | grasp_execute; completed
+
+00:00:16.964 --> 00:00:18.428
+Calls 16–18: query/feedback span 8.9 s cut.
+RL round 25 | 1x | call 19 | move_pose; reached
+
+00:00:18.428 --> 00:00:19.648
+Calls 20–21: query/feedback span 5.2 s cut.
+RL round 25 | 1x | call 22 | move_pose; reached
+
+00:00:19.648 --> 00:00:20.448
+RL round 25 | 1x | call 23 | wait_ticks; executed
+
+00:00:20.448 --> 00:00:21.828
+Calls 24–24: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 25 | move_pose; reached
+
+00:00:21.828 --> 00:00:22.628
+Calls 26–26: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 27 | wait_ticks; executed
+
+00:00:22.628 --> 00:00:24.340
+Calls 28–28: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 29 | move_pose; reached
+
+00:00:24.340 --> 00:00:25.140
+Calls 30–30: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 31 | wait_ticks; executed
+
+00:00:25.140 --> 00:00:25.940
+Calls 32–32: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 33 | wait_ticks; executed
+
+00:00:25.940 --> 00:00:26.740
+Calls 34–34: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 35 | wait_ticks; executed
+
+00:00:26.740 --> 00:00:27.540
+Calls 36–36: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 37 | wait_ticks; executed
+
+00:00:27.540 --> 00:00:28.992
+Calls 38–38: query/feedback span 0.0 s cut.
+RL round 25 | 1x | call 39 | move_pose; executed
+
+00:00:29.034 --> 00:00:31.034
+Calls 40–41: query/feedback span 2.0 s cut.
+RL round 25 | source official success; replay success

@@ -1,0 +1,72 @@
+WEBVTT
+
+NOTE 1x simulation clock. Policy inference and query waiting time are omitted.
+
+00:00:00.000 --> 00:00:04.250
+Calls 0–0: query/feedback span 2.6 s cut.
+RL round 25 | 1x | call 1 | move_pose; reached
+
+00:00:04.250 --> 00:00:12.250
+Calls 2–2: query/feedback span 0.4 s cut.
+RL round 25 | 1x | call 3 | move_pose; reached
+
+00:00:12.250 --> 00:00:18.400
+Calls 4–4: query/feedback span 0.4 s cut.
+RL round 25 | 1x | call 5 | move_pose; reached
+
+00:00:18.400 --> 00:00:21.900
+Calls 6–7: query/feedback span 8.7 s cut.
+RL round 25 | 1x | call 8 | move_pose; reached
+
+00:00:21.900 --> 00:00:22.300
+RL round 25 | 1x | call 9 | move_pose; reached
+
+00:00:22.300 --> 00:00:22.950
+RL round 25 | 1x | call 10 | set_gripper close
+
+00:00:22.950 --> 00:00:24.750
+RL round 25 | 1x | call 11 | move_pose delta [0, 0, 0.08] m; reached
+
+00:00:24.750 --> 00:00:28.050
+Calls 12–13: query/feedback span 4.4 s cut.
+RL round 25 | 1x | call 14 | move_to; reached
+
+00:00:28.050 --> 00:00:28.350
+RL round 25 | 1x | call 15 | move_pose; reached
+
+00:00:28.350 --> 00:00:29.100
+RL round 25 | 1x | call 16 | set_gripper open
+
+00:00:29.100 --> 00:00:31.300
+RL round 25 | 1x | call 17 | move_pose delta [0, 0, 0.12] m; reached
+
+00:00:31.300 --> 00:00:39.450
+Calls 18–18: query/feedback span 0.5 s cut.
+RL round 25 | 1x | call 19 | move_pose; reached
+
+00:00:39.450 --> 00:00:45.000
+Calls 20–21: query/feedback span 13.9 s cut.
+RL round 25 | 1x | call 22 | move_pose; reached
+
+00:00:45.000 --> 00:00:45.400
+RL round 25 | 1x | call 23 | move_pose; reached
+
+00:00:45.400 --> 00:00:46.200
+RL round 25 | 1x | call 24 | set_gripper close
+
+00:00:46.200 --> 00:00:48.500
+RL round 25 | 1x | call 25 | move_pose delta [0, 0, 0.08] m; reached
+
+00:00:48.500 --> 00:00:57.250
+Calls 26–28: query/feedback span 6.7 s cut.
+RL round 25 | 1x | call 29 | move_to; reached
+
+00:00:57.250 --> 00:00:57.450
+RL round 25 | 1x | call 30 | move_pose; reached
+
+00:00:57.450 --> 00:00:57.650
+RL round 25 | 1x | call 31 | set_gripper open
+
+00:00:57.700 --> 00:00:59.700
+Calls 32–33: query/feedback span 1.5 s cut.
+RL round 25 | source official success; replay success
