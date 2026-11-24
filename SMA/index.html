@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Spatial Memory Agent: Experience-Grounded Procedure Memory for Spatial Intelligence.">
-  <meta property="og:title" content="Spatial Memory Agent">
-  <meta property="og:description" content="Experience-grounded procedure memory for spatial intelligence.">
+  <meta name="description" content="Spatial Memory Agent: Experience-Grounded Procedural Memory for Spatial Intelligence.">
+  <meta property="og:title" content="Spatial Memory Agent: Experience-Grounded Procedural Memory for Spatial Intelligence">
+  <meta property="og:description" content="Experience-grounded procedural memory for spatial intelligence.">
   <meta property="og:image" content="assets/images/teaser.png">
-  <title>Spatial Memory Agent</title>
+  <title>Spatial Memory Agent: Experience-Grounded Procedural Memory for Spatial Intelligence</title>
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -19,7 +19,7 @@
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered"><div class="column has-text-centered">
-          <h1 class="title is-1 publication-title"><span class="sma-title-accent">S</span>patial <span class="sma-title-accent">M</span>emory <span class="sma-title-accent">A</span>gent: Experience-Grounded Procedure Memory for Spatial Intelligence</h1>
+          <h1 class="title is-1 publication-title"><span class="sma-title-accent">S</span>patial <span class="sma-title-accent">M</span>emory <span class="sma-title-accent">A</span>gent: Experience-Grounded Procedural Memory for Spatial Intelligence</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block"><a href="https://openreview.net/profile?id=~Haokai_Zhang4">Haokai Zhang</a><sup>1,*</sup>,</span>
             <span class="author-block"><a href="https://openreview.net/profile?id=~Yuhang_Ding2">Yuhang Ding</a><sup>1,*</sup>,</span>
@@ -49,7 +49,14 @@
   <section class="section abstract-section">
     <div class="container is-max-desktop"><div class="columns is-centered has-text-centered"><div class="column is-four-fifths">
       <h2 class="title is-3">Abstract</h2>
-      <div class="content has-text-justified"><p>Spatial intelligence is becoming a foundation for embodied agents, robotic planning, and multimodal assistants. To improve the spatial reasoning ability of VLM agents, existing work has mainly followed two lines: post-training methods such as supervised fine-tuning and reinforcement learning, and agentic systems that call external spatial tools to gather intermediate evidence. We study a complementary and underexplored route: can a frozen VLM agent improve its spatial reasoning through <b>parameter-update-free self-evolution</b>, without depending on external expert spatial tools at inference time? We present <b>Spatial Memory Agent (SMA)</b>, an <b>experience-grounded runtime framework</b> that converts verified spatial experience into reusable transferable lessons. In a verifiable spatial environment, SMA queries the frozen VLM, obtains a predicted answer and reward, and uses <b>verifier-guided reflection</b> to distill compact transferable lessons. SMA assigns each lesson a <b>Transfer Reliability Score (TRS)</b>, initialized uniformly and calibrated from later retrieval outcomes as visit evidence of future transfer reliability. During <b>read-only deployment</b>, SMA retrieves lessons by semantic filtering and similarity-TRS combined ranking to guide frozen-model inference. Across five representative spatial benchmarks and four base VLMs, SMA achieves the highest macro average in every base-model block and the best accuracy in most of the 20 evaluations, establishing a practical parameter-update-free path for spatial self-evolution across the evaluated frozen model scales and environments.</p></div>
+      <div class="content has-text-justified">
+        <p>
+          Spatial intelligence is becoming a foundation for embodied agents, robotic planning, and multimodal assistants. To improve the spatial reasoning ability of VLMs, existing work has mainly followed two lines. One line uses post-training methods, such as supervised fine-tuning and reinforcement learning. Another line adopts an agentic paradigm in which the model calls external spatial tools to gather intermediate spatial evidence.
+          We study a complementary and underexplored route: Can a frozen VLM agent improve its spatial reasoning through <b>parameter-update-free self-evolution</b>, without depending on external expert spatial tools at inference time? We present <b>Spatial Memory Agent (SMA)</b>, an experience-grounded runtime memory framework that converts verified spatial experience into reusable transferable lessons.
+          Specifically, SMA first queries the frozen VLM in a verifiable spatial environment, obtains a predicted answer and reward, and uses verifier-guided reflection to distill compact transferable lessons stored in memory cards. SMA further assigns each memory card a <b>Transfer Reliability Score (TRS)</b>, which is initialized uniformly and calibrated from later retrieval outcomes as visit evidence of future transfer reliability.
+          During read-only deployment, SMA retrieves memory cards through semantic filtering and combined similarity&ndash;TRS ranking, allowing the retrieved memory to guide frozen model inference. Experiments across five representative spatial benchmarks show that SMA achieves the best macro-average accuracy for all four base VLMs and the best accuracy in most individual evaluations, establishing a practical parameter-update-free path for spatial self-evolution through reusable experience.
+        </p>
+      </div>
     </div></div></div>
   </section>
 
@@ -114,7 +121,7 @@
   <section class="section" id="cases"><div class="container is-max-desktop"><h2 class="title is-3 has-text-centered">Qualitative Case Study</h2><div class="content has-text-centered"><img class="full-figure case-figure" src="assets/images/case-study.png" alt="Qualitative SMA case study"><p class="has-text-grey"><b>Figure 8.</b> Qualitative examples of retrieved high-TRS procedure memories across five spatial reasoning cases.</p></div></div></section>
 
   <section class="section citation-section"><div class="container is-max-desktop"><div class="columns is-centered"><div class="column is-four-fifths"><h2 class="title is-3 has-text-centered">BibTeX</h2><div class="citation-box"><button class="copy-button" type="button" data-copy="bibtex">Copy</button><pre id="bibtex">@misc{zhang2026spatialmemoryagent,
-  title         = {Spatial Memory Agent: Experience-Grounded Procedure Memory for Spatial Intelligence},
+  title         = {Spatial Memory Agent: Experience-Grounded Procedural Memory for Spatial Intelligence},
   author        = {Zhang, Haokai and Ding, Yuhang and Zhou, Yunshu and Du, Xinze and Zhang, Shengtao and Zhao, Zhiyue and Xi, Yuling and Chen, Hao},
   year          = {2026},
   eprint        = {2608.12743},
