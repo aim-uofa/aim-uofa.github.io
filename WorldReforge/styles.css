@@ -65,6 +65,7 @@ html{scroll-padding-top:105px}.site-header{position:sticky;top:0;z-index:10;back
 
 .hero-links .button{gap:8px;min-height:50px;white-space:nowrap}
 .button-icon{width:18px;height:18px;flex:none;fill:currentColor}
+#arxiv-link .button-icon{color:#b31b1b}
 .play-icon circle{fill:none;stroke:currentColor;stroke-width:1.6}
 .resource-placeholder:disabled{cursor:default;color:#74828c;border-color:#dde4e9;background:#f7f9fa}
 .resource-label{display:flex;flex-direction:column;gap:2px;line-height:1.1}
