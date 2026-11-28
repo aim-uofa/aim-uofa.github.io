@@ -17,40 +17,82 @@ body {
   background: linear-gradient(180deg, #f0f6f7, #fcfdfd 77%, #fff);
 }
 
-.publication-header::before,
-.publication-header::after {
-  content: "";
+.publication-backdrop {
   position: absolute;
+  inset: 0;
   z-index: -1;
-  inset-block: 0;
-  width: min(49vw, 50rem);
+  background: url("../videos/hero.jpg") center 45% / cover no-repeat;
   pointer-events: none;
 }
 
-.publication-header::before {
-  inset-inline-start: 0;
-  background:
-    linear-gradient(90deg, #eff7f52b 0%, #f7fbfa7a 54%, #f8fbfa00 66%),
-    url("../backgrounds/header-scene.webp") 48% 55% / cover no-repeat;
-  opacity: 0.68;
-  mask-image:
-    linear-gradient(90deg, #000 18%, #000a 55%, transparent 98%),
-    linear-gradient(0deg, transparent 0%, #000 28%);
-  mask-composite: intersect;
+.publication-backdrop video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;
+  opacity: 0;
 }
 
-.publication-header::after {
-  inset-inline-end: 0;
+.publication-backdrop video[data-ready] {
+  opacity: 1;
+}
+
+.publication-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background:
-    url("../backgrounds/header-map.webp") calc(100% + 1.9rem) 60% / auto 112% no-repeat,
-    repeating-linear-gradient(0deg, #386b711e 0 1px, transparent 1px 1.45rem),
-    repeating-linear-gradient(90deg, #386b711e 0 1px, transparent 1px 1.45rem);
-  mix-blend-mode: multiply;
-  opacity: 0.44;
-  mask-image:
-    linear-gradient(270deg, #000 12%, #000b 46%, transparent 94%),
-    linear-gradient(0deg, transparent 0%, #000 33%);
-  mask-composite: intersect;
+    linear-gradient(180deg, #ffffff16, transparent 52%, #fff 100%),
+    linear-gradient(90deg, #f8fbfbc0 0%, #fbfdfde5 25%, #fbfdfdf4 50%, #fbfdfde5 75%, #f8fbfbc0 100%);
+}
+
+.publication-motion-toggle {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  z-index: 1;
+  display: grid;
+  width: 1.85rem;
+  height: 1.85rem;
+  place-items: center;
+  border: 1px solid #b5c8cb;
+  border-radius: 50%;
+  background: #ffffffe0;
+  color: #345963;
+  cursor: pointer;
+}
+
+.publication-motion-toggle[hidden] {
+  display: none;
+}
+
+.publication-motion-toggle::before {
+  content: "";
+  width: 0.52rem;
+  height: 0.63rem;
+  border-inline: 2px solid currentColor;
+}
+
+.publication-motion-toggle[data-paused]::before {
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border: 5px solid transparent;
+  border-left: 7px solid currentColor;
+  border-right: 0;
+}
+
+.publication-motion-toggle:hover,
+.publication-motion-toggle:focus-visible {
+  background: #fff;
+  color: #114350;
+}
+
+.publication-motion-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .publication-header .hero-body {
@@ -722,19 +764,10 @@ body {
     padding: 1.8rem 1.05rem 0.8rem;
   }
 
-  .publication-header::before,
-  .publication-header::after {
-    width: 52%;
-  }
-
-  .publication-header::before {
-    opacity: 0.38;
-    background-position: 55% 30%;
-  }
-
-  .publication-header::after {
-    opacity: 0.28;
-    background-size: auto 68%, auto, auto;
+  .publication-backdrop::after {
+    background:
+      linear-gradient(180deg, #ffffff16, transparent 44%, #fff 100%),
+      linear-gradient(90deg, #f8fbfbce, #fbfdfded 50%, #f8fbfbce);
   }
 
   .project-subtitle {
@@ -812,6 +845,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .publication-backdrop video,
+  .publication-motion-toggle {
+    visibility: hidden;
+  }
+
   .project-name {
     animation: none;
   }

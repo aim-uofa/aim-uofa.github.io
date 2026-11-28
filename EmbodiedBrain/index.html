@@ -14,11 +14,17 @@
   <link rel="stylesheet" href="static/css/result-demos.css">
   <script defer src="static/js/replay-gallery.js"></script>
   <script defer src="static/js/method-walkthrough.js"></script>
+  <script defer src="static/js/title-background.js"></script>
+  <script defer src="static/js/g1-rgbbev.js"></script>
   <link rel="stylesheet" href="static/css/design-cases.css">
   <script defer src="static/js/design-cases.js"></script>
 </head>
 <body>
   <header class="hero publication-header">
+    <div class="publication-backdrop" aria-hidden="true">
+      <video data-title-background data-src="static/videos/hero.mp4" muted loop playsinline preload="none"></video>
+    </div>
+    <button class="publication-motion-toggle" type="button" data-title-motion aria-label="Pause background video" title="Pause background video" hidden></button>
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
@@ -72,7 +78,7 @@
     <section class="hero teaser" aria-label="EmbodiedBrain teaser video">
       <div class="hero-body">
         <div class="container is-max-desktop">
-          <video class="showreel" src="static/videos/hero.mp4" poster="static/videos/hero.jpg" autoplay controls muted loop playsinline preload="metadata" aria-label="EmbodiedBrain episode highlights"></video>
+          <video class="showreel" src="static/videos/showcase-rgbbev-continuous.mp4" poster="static/videos/showcase-rgbbev.jpg" autoplay controls muted loop playsinline preload="metadata" aria-label="EmbodiedBrain showcase with a persistent RGB replay map showing recorded position and traveled path"></video>
           <p class="subtitle has-text-centered">What do long-horizon embodied agents call for in a 3D visual harness?</p>
         </div>
       </div>
@@ -84,8 +90,8 @@
           <div class="column is-four-fifths">
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-left">
-              <p>What do embodied agents call for in a 3D visual harness?<br>
-                To unleash the capabilities of existing vision–language models (VLMs) for embodied decision-making, we present EmbodiedBrain, a 3D visual harness that combines a model-managed memory bank, a flexible joint action space and pluggable task interfaces.
+              <p><strong>What do embodied agents call for in a 3D visual harness?</strong><br>
+                To unleash the capabilities of existing vision–language models (VLMs) for embodied decision-making, we present <strong>EmbodiedBrain</strong>, a 3D visual harness that combines a model-managed memory bank, a flexible joint action space and pluggable task interfaces.
                 The memory bank retains task-relevant information, including progress records, object locations, visual evidence and scene knowledge, while stored locations are visualized on bird's-eye views (BEV) alongside scene geometry and interaction history. Through joint action space, the model actively manages the memory bank and selects navigation targets by pointing in overhead view or BEV. Moreover, pluggable task interfaces then translate model actions into task-specific operations, adapting EmbodiedBrain to multiple embodied tasks.
                 Experiments across vision-and-language navigation, object-goal navigation, lifelong tasks, embodied question answering and interaction tasks show competitive results without task-specific policy fine-tuning. Deployment on a Unitree G1 further validates EmbodiedBrain's effectiveness on a real-world long-horizon task requiring planning and memory. Further analyses offer insights into the design principles underlying its effectiveness. Code will be released.</p>
             </div>
@@ -215,8 +221,8 @@
                 <h3>Waypoint reached · D30 to D31</h3>
                 <div class="method-feedback-grid">
                   <figure>
-                    <video data-method-video controls muted playsinline preload="none" poster="static/figures/method-goat-pov.webp" src="static/videos/method-goat-motion.mp4" aria-label="D30 first-person replay reconstructed from the recorded simulator motion"></video>
-                    <figcaption><strong>D30 execution replay</strong><span>First-person motion rendered along the recorded camera trajectory.</span></figcaption>
+                    <video data-method-video controls muted playsinline preload="none" poster="static/videos/method-goat-motion-rgbbev.jpg" src="static/videos/method-goat-motion-rgbbev.mp4" aria-label="D30 first-person replay with agent pose and traveled path on RGB BEV"></video>
+                    <figcaption><strong>D30 execution replay</strong><span>First-person motion with the corresponding pose and traveled path on RGB BEV.</span></figcaption>
                   </figure>
                   <div class="method-feedback-frames">
                     <figure>
@@ -280,8 +286,8 @@
         </nav>
         <details class="replay-context-note results-replay-context">
           <summary>How to read the BEV and memory</summary>
-          <p>The occupancy BEV is the recorded model input for that decision. It keeps the original path, previous pose (<strong>P</strong>), and any memory, object, or exploration markers present in that run. A model-selected point is shown on its actual action source: occupancy BEV or overhead. Some replays pair the BEV with the separate RGB reconstruction and previous-view attachments.</p>
-          <p>The POV follows recorded simulator frames or camera poses sampled along the logged actions. The decision context updates at the next model decision.</p>
+          <p>The RGB BEV shows a fixed-orientation reconstruction for the replay, with the recorded agent pose and traveled path. Updates follow the available pose samples. Decision-sampled demos update at recorded decisions and show the last confirmed pose between samples.</p>
+          <p>The recorded occupancy BEV or overhead view shows the actual source of the model’s selected point. The BEV point counts below are logged requests. The traveled path follows execution feedback.</p>
         </details>
         <div class="results-layout">
         <nav class="results-nav" aria-label="Result tables">
@@ -298,7 +304,7 @@
         <section class="result-block" id="result-vln" aria-labelledby="result-vln-title">
           <h3 class="title is-4" id="result-vln-title">Vision-and-Language Navigation</h3>
           <div class="table-container result-table-wrap" tabindex="0" role="region" aria-label="Vision-and-language navigation results">
-            <table class="table is-fullwidth result-table" aria-describedby="result-vln-note">
+            <table class="table is-fullwidth result-table">
               <caption>Table 1. <strong>Vision-and-language navigation.</strong> SR/SPL (%). Training-based methods use full val-unseen splits; †: zero-shot methods use the same 100-episode subset on R2R-CE [12, 21, 95]. ‡: EmbodiedBrain uses 100-episode subset on RxR-CE. “—” denotes unreported metrics.</caption>
               <colgroup span="1"></colgroup>
               <colgroup span="2"></colgroup>
@@ -339,55 +345,55 @@
           </div>
           <section class="replay-strip" id="replay-vln" data-replay-strip aria-labelledby="result-vln-title replay-vln-title">
             <div class="replay-strip-heading">
-              <h4 class="title is-5" id="replay-vln-title">Episode replays</h4>
+              <h4 class="title is-5" id="replay-vln-title">Demos</h4>
               <button type="button" class="button is-small replay-autoplay" data-replay-toggle aria-controls="replay-vln-track">Pause autoplay</button>
             </div>
             <div class="replay-window">
               <button type="button" class="replay-arrow replay-arrow-prev" data-replay-prev aria-label="Previous vision-and-language navigation example" aria-controls="replay-vln-track"></button>
               <div class="replay-track" id="replay-vln-track" data-replay-track tabindex="0" role="region" aria-label="Vision-and-language navigation videos">
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-01.jpg" data-src="static/videos/vln-01.mp4" aria-label="Pass the pool and reach the bar"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-01-rgbbev.jpg" data-src="static/videos/vln-01-rgbbev.mp4" aria-label="Walk alongside the pool to the bar"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">R2R-CE <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Pass the pool and reach the bar</h5>
-                    <p>Follow landmarks through the poolside route and inspect the original BEV click.</p>
-                    <a class="replay-watch" href="static/videos/vln-01.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Pass the pool and reach the bar">Open full-size video</a>
+                    <p class="replay-card-meta">R2R-CE · RGB BEV demo · 2 BEV point requests</p>
+                    <h5>Walk alongside the pool to the bar</h5>
+                    <p>Two BEV waypoint requests carry the agent alongside the pool toward the bar.</p>
+                    <a class="replay-watch" href="static/videos/vln-01-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Walk alongside the pool to the bar">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-02.jpg" data-src="static/videos/vln-02.mp4" aria-label="Navigate past the painting"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-02-rgbbev.jpg" data-src="static/videos/vln-02-rgbbev.mp4" aria-label="Navigate past the painting"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">R2R-CE <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">R2R-CE · RGB BEV demo</p>
                     <h5>Navigate past the painting</h5>
                     <p>Use the large painting as a landmark and continue through the doorway.</p>
-                    <a class="replay-watch" href="static/videos/vln-02.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Navigate past the painting">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/vln-02-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Navigate past the painting">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-03.jpg" data-src="static/videos/vln-03.mp4" aria-label="Go downstairs to the bathroom"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-03-rgbbev.jpg" data-src="static/videos/vln-03-rgbbev.mp4" aria-label="Go downstairs to the bathroom"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">RxR-CE <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">RxR-CE · RGB BEV demo · 1 BEV point request</p>
                     <h5>Go downstairs to the bathroom</h5>
                     <p>Follow a language guide across floors, with the map and action source updated at recorded decisions.</p>
-                    <a class="replay-watch" href="static/videos/vln-03.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Go downstairs to the bathroom">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/vln-03-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Go downstairs to the bathroom">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-04.jpg" data-src="static/videos/vln-04.mp4" aria-label="Follow the route to the window"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-04-rgbbev.jpg" data-src="static/videos/vln-04-rgbbev.mp4" aria-label="Leave the fitness area and enter the TV room"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">RxR-CE <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Follow the route to the window</h5>
-                    <p>Move through multiple rooms while the model updates route progress and chooses waypoints.</p>
-                    <a class="replay-watch" href="static/videos/vln-04.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Follow the route to the window">Open full-size video</a>
+                    <p class="replay-card-meta">R2R-CE · RGB BEV demo · 2 BEV point requests</p>
+                    <h5>Leave the fitness area and enter the TV room</h5>
+                    <p>Follow the instruction past the wine room, using BEV and overhead navigation points.</p>
+                    <a class="replay-watch" href="static/videos/vln-04-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Leave the fitness area and enter the TV room">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-05.jpg" data-src="static/videos/vln-05.mp4" aria-label="Stand between the closet and sink"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/vln-05-rgbbev.jpg" data-src="static/videos/vln-05-rgbbev.mp4" aria-label="Follow the hallway to the door"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">R2R-CE <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Stand between the closet and sink</h5>
-                    <p>Follow the route from the bathroom through the kitchen to the instructed location.</p>
-                    <a class="replay-watch" href="static/videos/vln-05.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Stand between the closet and sink">Open full-size video</a>
+                    <p class="replay-card-meta">R2R-CE · RGB BEV demo · 2 BEV point requests</p>
+                    <h5>Follow the hallway to the door</h5>
+                    <p>The agent follows a route instruction and selects two waypoints through the BEV.</p>
+                    <a class="replay-watch" href="static/videos/vln-05-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Follow the hallway to the door">Open full-size video</a>
                   </div>
                 </article>
               </div>
@@ -395,7 +401,6 @@
             </div>
             <div class="replay-dots" data-replay-dots role="group" aria-label="Vision-and-language navigation slide positions"></div>
           </section>
-          <p class="result-note" id="result-vln-note">Training-based methods use the full val-unseen splits. † The R2R-CE zero-shot results use the same ON-100 subset. ‡ EmbodiedBrain uses a randomly sampled set of 100 English-guide episodes from RxR-CE val-unseen. HarnessVLN reports RxR-CE on the full val-unseen split. An em dash indicates an unreported metric.</p>
         </section>
 
         <section class="result-block" id="result-objectnav" aria-labelledby="result-objectnav-title">
@@ -433,55 +438,55 @@
           </div>
           <section class="replay-strip" id="replay-objectnav" data-replay-strip aria-labelledby="result-objectnav-title replay-objectnav-title">
             <div class="replay-strip-heading">
-              <h4 class="title is-5" id="replay-objectnav-title">Episode replays</h4>
+              <h4 class="title is-5" id="replay-objectnav-title">Demos</h4>
               <button type="button" class="button is-small replay-autoplay" data-replay-toggle aria-controls="replay-objectnav-track">Pause autoplay</button>
             </div>
             <div class="replay-window">
               <button type="button" class="replay-arrow replay-arrow-prev" data-replay-prev aria-label="Previous object-goal navigation example" aria-controls="replay-objectnav-track"></button>
               <div class="replay-track" id="replay-objectnav-track" data-replay-track tabindex="0" role="region" aria-label="Object-goal navigation videos">
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-01.jpg" data-src="static/videos/objectnav-01.mp4" aria-label="Find a bed"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-04-rgbbev.jpg" data-src="static/videos/objectnav-04-rgbbev.mp4" aria-label="Find a plant"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM3D-v2 <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Find a bed</h5>
-                    <p>Search from the current viewpoint and check the object at the destination.</p>
-                    <a class="replay-watch" href="static/videos/objectnav-01.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a bed">Open full-size video</a>
+                    <p class="replay-card-meta">HM3D-v2 · RGB BEV demo · 3 BEV point requests</p>
+                    <h5>Find a plant</h5>
+                    <p>Three model-selected BEV waypoints guide the search.</p>
+                    <a class="replay-watch" href="static/videos/objectnav-04-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a plant">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-02.jpg" data-src="static/videos/objectnav-02.mp4" aria-label="Find a sofa"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-05-rgbbev.jpg" data-src="static/videos/objectnav-05-rgbbev.mp4" aria-label="Find a chair"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM3D-v2 <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Find a sofa</h5>
-                    <p>Follow waypoint actions through an unseen room layout.</p>
-                    <a class="replay-watch" href="static/videos/objectnav-02.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a sofa">Open full-size video</a>
+                    <p class="replay-card-meta">HM3D-v2 · RGB BEV demo · 5 BEV point requests</p>
+                    <h5>Find a chair</h5>
+                    <p>The agent uses BEV waypoints to navigate toward the chair.</p>
+                    <a class="replay-watch" href="static/videos/objectnav-05-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a chair">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-03.jpg" data-src="static/videos/objectnav-03.mp4" aria-label="Find a television"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-03-rgbbev.jpg" data-src="static/videos/objectnav-03-rgbbev.mp4" aria-label="Find a television"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM3D-v2 <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">HM3D-v2 · RGB BEV demo · 4 BEV point requests</p>
                     <h5>Find a television</h5>
                     <p>Inspect the scene and navigate toward the television.</p>
-                    <a class="replay-watch" href="static/videos/objectnav-03.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a television">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/objectnav-03-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a television">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-04.jpg" data-src="static/videos/objectnav-04.mp4" aria-label="Find a chair"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-01-rgbbev.jpg" data-src="static/videos/objectnav-01-rgbbev.mp4" aria-label="Find a bed"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM3D-v2 <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Find a chair</h5>
-                    <p>Use the recorded spatial view while searching for an object goal.</p>
-                    <a class="replay-watch" href="static/videos/objectnav-04.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a chair">Open full-size video</a>
+                    <p class="replay-card-meta">HM3D-v2 · RGB BEV demo · 2 BEV point requests</p>
+                    <h5>Find a bed</h5>
+                    <p>Search from the current viewpoint and check the object at the destination.</p>
+                    <a class="replay-watch" href="static/videos/objectnav-01-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a bed">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-05.jpg" data-src="static/videos/objectnav-05.mp4" aria-label="Find a plant"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/objectnav-02-rgbbev.jpg" data-src="static/videos/objectnav-02-rgbbev.mp4" aria-label="Find a sofa"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM3D-v2 <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Find a plant</h5>
-                    <p>Follow the continuous camera replay as the agent explores and locates the plant.</p>
-                    <a class="replay-watch" href="static/videos/objectnav-05.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a plant">Open full-size video</a>
+                    <p class="replay-card-meta">HM3D-v2 · RGB BEV demo · 2 BEV point requests</p>
+                    <h5>Find a sofa</h5>
+                    <p>Follow waypoint actions through an unseen room layout.</p>
+                    <a class="replay-watch" href="static/videos/objectnav-02-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find a sofa">Open full-size video</a>
                   </div>
                 </article>
               </div>
@@ -512,55 +517,55 @@
           </div>
           <section class="replay-strip" id="replay-lifelong" data-replay-strip aria-labelledby="result-goat-title replay-lifelong-title">
             <div class="replay-strip-heading">
-              <h4 class="title is-5" id="replay-lifelong-title">Episode replays</h4>
+              <h4 class="title is-5" id="replay-lifelong-title">Demos</h4>
               <button type="button" class="button is-small replay-autoplay" data-replay-toggle aria-controls="replay-lifelong-track">Pause autoplay</button>
             </div>
             <div class="replay-window">
               <button type="button" class="replay-arrow replay-arrow-prev" data-replay-prev aria-label="Previous lifelong tasks example" aria-controls="replay-lifelong-track"></button>
               <div class="replay-track" id="replay-lifelong-track" data-replay-track tabindex="0" role="region" aria-label="Lifelong tasks videos">
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-01.jpg" data-src="static/videos/lifelong-01.mp4" aria-label="Return to the remembered microwave"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-01-rgbbev.jpg" data-src="static/videos/lifelong-01-rgbbev.mp4" aria-label="Return to the remembered microwave"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">GOAT-Bench <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">GOAT-Bench · RGB BEV demo · 9 BEV point requests</p>
                     <h5>Return to the remembered microwave</h5>
                     <p>The current image goal retrieves an earlier observation. The remembered location and actual waypoint remain distinct.</p>
-                    <a class="replay-watch" href="static/videos/lifelong-01.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Return to the remembered microwave">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/lifelong-01-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Return to the remembered microwave">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-02.jpg" data-src="static/videos/lifelong-02.mp4" aria-label="Find the marble-patterned refrigerator"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-04-rgbbev.jpg" data-src="static/videos/lifelong-04-rgbbev.mp4" aria-label="Start a new search from a remembered room"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">GOAT-Bench <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Find the marble-patterned refrigerator</h5>
-                    <p>Use scene knowledge gathered under earlier goals to guide a later search.</p>
-                    <a class="replay-watch" href="static/videos/lifelong-02.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find the marble-patterned refrigerator">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-03.jpg" data-src="static/videos/lifelong-03.mp4" aria-label="Locate a picture from scene memory"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">GOAT-Bench <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Locate a picture from scene memory</h5>
-                    <p>Retrieve scene information relevant to the new target.</p>
-                    <a class="replay-watch" href="static/videos/lifelong-03.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Locate a picture from scene memory">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-04.jpg" data-src="static/videos/lifelong-04.mp4" aria-label="Start a new search from a remembered room"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">GOAT-Bench <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">GOAT-Bench · RGB BEV demo · 5 BEV point requests</p>
                     <h5>Start a new search from a remembered room</h5>
                     <p>Use selected prior scene information when the goal changes.</p>
-                    <a class="replay-watch" href="static/videos/lifelong-04.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Start a new search from a remembered room">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/lifelong-04-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Start a new search from a remembered room">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-05.jpg" data-src="static/videos/lifelong-05.mp4" aria-label="Use a remembered mirror as a landmark"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-05-rgbbev.jpg" data-src="static/videos/lifelong-05-rgbbev.mp4" aria-label="Use a remembered mirror as a landmark"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">GOAT-Bench <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">GOAT-Bench · RGB BEV demo · 3 BEV point requests</p>
                     <h5>Use a remembered mirror as a landmark</h5>
                     <p>Carry forward a known location while following a later goal.</p>
-                    <a class="replay-watch" href="static/videos/lifelong-05.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Use a remembered mirror as a landmark">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/lifelong-05-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Use a remembered mirror as a landmark">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-02-rgbbev.jpg" data-src="static/videos/lifelong-02-rgbbev.mp4" aria-label="Find the marble-patterned refrigerator"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">GOAT-Bench · RGB BEV demo · 1 BEV point request</p>
+                    <h5>Find the marble-patterned refrigerator</h5>
+                    <p>Use scene knowledge gathered under earlier goals to guide a later search.</p>
+                    <a class="replay-watch" href="static/videos/lifelong-02-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Find the marble-patterned refrigerator">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/lifelong-03-rgbbev.jpg" data-src="static/videos/lifelong-03-rgbbev.mp4" aria-label="Locate a picture from scene memory"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">GOAT-Bench · RGB BEV demo · 1 BEV point request</p>
+                    <h5>Locate a picture from scene memory</h5>
+                    <p>Retrieve scene information relevant to the new target.</p>
+                    <a class="replay-watch" href="static/videos/lifelong-03-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Locate a picture from scene memory">Open full-size video</a>
                   </div>
                 </article>
               </div>
@@ -622,55 +627,55 @@
           </div>
           <section class="replay-strip" id="replay-eqa" data-replay-strip aria-labelledby="result-eqa-title replay-eqa-title">
             <div class="replay-strip-heading">
-              <h4 class="title is-5" id="replay-eqa-title">Episode replays</h4>
+              <h4 class="title is-5" id="replay-eqa-title">Demos</h4>
               <button type="button" class="button is-small replay-autoplay" data-replay-toggle aria-controls="replay-eqa-track">Pause autoplay</button>
             </div>
             <div class="replay-window">
               <button type="button" class="replay-arrow replay-arrow-prev" data-replay-prev aria-label="Previous embodied question answering example" aria-controls="replay-eqa-track"></button>
               <div class="replay-track" id="replay-eqa-track" data-replay-track tabindex="0" role="region" aria-label="Embodied question answering videos">
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-01.jpg" data-src="static/videos/eqa-01.mp4" aria-label="Count the kitchen pendant lights"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-04-rgbbev.jpg" data-src="static/videos/eqa-04-rgbbev.mp4" aria-label="Check whether the bedroom blanket is folded"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM-EQA <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Count the kitchen pendant lights</h5>
-                    <p>Move around the kitchen island to gather another view of the lights.</p>
-                    <a class="replay-watch" href="static/videos/eqa-01.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Count the kitchen pendant lights">Open full-size video</a>
+                    <p class="replay-card-meta">HM-EQA · RGB BEV demo · 12 BEV point requests</p>
+                    <h5>Check whether the bedroom blanket is folded</h5>
+                    <p>The agent searches for evidence across the room, then answers using the observed bed and blanket.</p>
+                    <a class="replay-watch" href="static/videos/eqa-04-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Check whether the bedroom blanket is folded">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-02.jpg" data-src="static/videos/eqa-02.mp4" aria-label="Identify fruit on the kitchen island"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-05-rgbbev.jpg" data-src="static/videos/eqa-05-rgbbev.mp4" aria-label="Compare the pool table and bar counter"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">HM-EQA <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Identify fruit on the kitchen island</h5>
-                    <p>Inspect the island from different viewpoints and retain useful evidence.</p>
-                    <a class="replay-watch" href="static/videos/eqa-02.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Identify fruit on the kitchen island">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-03.jpg" data-src="static/videos/eqa-03.mp4" aria-label="Count the sports balls on a hallway rack"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">HM-EQA <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Count the sports balls on a hallway rack</h5>
-                    <p>Move to gather evidence that resolves the count.</p>
-                    <a class="replay-watch" href="static/videos/eqa-03.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Count the sports balls on a hallway rack">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-04.jpg" data-src="static/videos/eqa-04.mp4" aria-label="Locate the woven basket in the kitchen"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">HM-EQA <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Locate the woven basket in the kitchen</h5>
-                    <p>Ground the question in a new view of the kitchen.</p>
-                    <a class="replay-watch" href="static/videos/eqa-04.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Locate the woven basket in the kitchen">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-05.jpg" data-src="static/videos/eqa-05.mp4" aria-label="Compare the pool table and bar counter"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">MT-HM3D <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">MT-HM3D · RGB BEV demo · 10 BEV point requests</p>
                     <h5>Compare the pool table and bar counter</h5>
                     <p>Gather spatial evidence to answer whether the objects are in the same room.</p>
-                    <a class="replay-watch" href="static/videos/eqa-05.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Compare the pool table and bar counter">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/eqa-05-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Compare the pool table and bar counter">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-02-rgbbev.jpg" data-src="static/videos/eqa-02-rgbbev.mp4" aria-label="Identify fruit in the kitchen"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">HM-EQA · RGB BEV demo · 4 BEV point requests</p>
+                    <h5>Identify fruit in the kitchen</h5>
+                    <p>The agent uses BEV points to gather views that support its answer about the fruit.</p>
+                    <a class="replay-watch" href="static/videos/eqa-02-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Identify fruit in the kitchen">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-03-rgbbev.jpg" data-src="static/videos/eqa-03-rgbbev.mp4" aria-label="Count the sports balls on a hallway rack"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">HM-EQA · RGB BEV demo</p>
+                    <h5>Count the sports balls on a hallway rack</h5>
+                    <p>Move to gather evidence that resolves the count.</p>
+                    <a class="replay-watch" href="static/videos/eqa-03-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Count the sports balls on a hallway rack">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/eqa-01-rgbbev.jpg" data-src="static/videos/eqa-01-rgbbev.mp4" aria-label="Count the kitchen pendant lights"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">HM-EQA · RGB BEV demo</p>
+                    <h5>Count the kitchen pendant lights</h5>
+                    <p>Move around the kitchen island to gather another view of the lights.</p>
+                    <a class="replay-watch" href="static/videos/eqa-01-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Count the kitchen pendant lights">Open full-size video</a>
                   </div>
                 </article>
               </div>
@@ -683,7 +688,7 @@
               <p class="eqa-memory-case-meta">HM-EQA · Episode 0182</p>
               <h4 class="title is-5" id="hmeqa-memory-case-title">How many sports balls are stored on the rack in the hallway?</h4>
               <p>At D27, the model saves paired POV and overhead views of the rack as <code>m09</code>. The views return in the model inputs at D28 and D29. At D29, the model submits the correct answer, <strong>C · Three</strong>, and successfully deletes <code>m09</code> in the same decision.</p>
-              <p><a href="static/videos/eqa-03.mp4#t=39.5,47.375" class="text-link">Watch the save, answer, and deletion</a></p>
+              <p><a href="static/videos/eqa-03-rgbbev.mp4#t=42.5,47.375" class="text-link">Watch the save, answer, and deletion</a></p>
             </div>
             <figure class="eqa-memory-case-figure">
               <img src="static/figures/memory-hmeqa-keyframe.webp" width="768" height="384" alt="The saved first-person and overhead views of the hallway rack, stored as m09" loading="lazy">
@@ -712,55 +717,55 @@
           </div>
           <section class="replay-strip" id="replay-interaction" data-replay-strip aria-labelledby="result-spatialworld-title replay-interaction-title">
             <div class="replay-strip-heading">
-              <h4 class="title is-5" id="replay-interaction-title">Episode replays</h4>
+              <h4 class="title is-5" id="replay-interaction-title">Demos</h4>
               <button type="button" class="button is-small replay-autoplay" data-replay-toggle aria-controls="replay-interaction-track">Pause autoplay</button>
             </div>
             <div class="replay-window">
               <button type="button" class="replay-arrow replay-arrow-prev" data-replay-prev aria-label="Previous interaction tasks example" aria-controls="replay-interaction-track"></button>
               <div class="replay-track" id="replay-interaction-track" data-replay-track tabindex="0" role="region" aria-label="Interaction tasks videos">
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-01.jpg" data-src="static/videos/interaction-01.mp4" aria-label="Bring a tomato to the bedside"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-02-rgbbev.jpg" data-src="static/videos/interaction-02-rgbbev.mp4" aria-label="Move a vase to the bedroom"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">ProcTHOR <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Bring a tomato to the bedside</h5>
-                    <p>Write a bedside annotation, pick up the tomato, and use the stored location on the return.</p>
-                    <a class="replay-watch" href="static/videos/interaction-01.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Bring a tomato to the bedside">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-02.jpg" data-src="static/videos/interaction-02.mp4" aria-label="Move a vase to the bedroom"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">ProcTHOR <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">ProcTHOR · RGB BEV demo · 19 BEV point requests</p>
                     <h5>Move a vase to the bedroom</h5>
                     <p>Record the bedroom, carry the vase, and use the recorded action views to complete delivery.</p>
-                    <a class="replay-watch" href="static/videos/interaction-02.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Move a vase to the bedroom">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/interaction-02-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Move a vase to the bedroom">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-03.jpg" data-src="static/videos/interaction-03.mp4" aria-label="Cook an egg in a pan"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-04-rgbbev.jpg" data-src="static/videos/interaction-04-rgbbev.mp4" aria-label="Bring bread outside and turn off the lights"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">AI2-THOR <span aria-hidden="true">·</span> Decision replay</p>
-                    <h5>Cook an egg in a pan</h5>
-                    <p>The replay shows the original observations and how actions change the state of the egg and stove.</p>
-                    <a class="replay-watch" href="static/videos/interaction-03.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Cook an egg in a pan">Open full-size video</a>
-                  </div>
-                </article>
-                <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-04.jpg" data-src="static/videos/interaction-04.mp4" aria-label="Bring bread outside and turn off the lights"></video>
-                  <div class="replay-card-body">
-                    <p class="replay-card-meta">AI2-THOR <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">AI2-THOR · RGB BEV demo · 14 BEV point requests</p>
                     <h5>Bring bread outside and turn off the lights</h5>
                     <p>Track a multi-stage goal involving an object and a change to the environment.</p>
-                    <a class="replay-watch" href="static/videos/interaction-04.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Bring bread outside and turn off the lights">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/interaction-04-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Bring bread outside and turn off the lights">Open full-size video</a>
                   </div>
                 </article>
                 <article class="replay-card">
-                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-05.jpg" data-src="static/videos/interaction-05.mp4" aria-label="Open the laptop and deliver the keychain"></video>
+                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-05-rgbbev.jpg" data-src="static/videos/interaction-05-rgbbev.mp4" aria-label="Open the laptop and deliver the keychain"></video>
                   <div class="replay-card-body">
-                    <p class="replay-card-meta">ProcTHOR <span aria-hidden="true">·</span> Decision replay</p>
+                    <p class="replay-card-meta">ProcTHOR · RGB BEV demo · 14 BEV point requests</p>
                     <h5>Open the laptop and deliver the keychain</h5>
                     <p>Follow the recorded interaction sequence across rooms.</p>
-                    <a class="replay-watch" href="static/videos/interaction-05.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Open the laptop and deliver the keychain">Open full-size video</a>
+                    <a class="replay-watch" href="static/videos/interaction-05-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Open the laptop and deliver the keychain">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-01-rgbbev.jpg" data-src="static/videos/interaction-01-rgbbev.mp4" aria-label="Bring a tomato to the bedside"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">ProcTHOR · RGB BEV demo · 7 BEV point requests</p>
+                    <h5>Bring a tomato to the bedside</h5>
+                    <p>Write a bedside annotation, pick up the tomato, and use the stored location on the return.</p>
+                    <a class="replay-watch" href="static/videos/interaction-01-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Bring a tomato to the bedside">Open full-size video</a>
+                  </div>
+                </article>
+                <article class="replay-card">
+                  <video controls muted loop playsinline preload="none" poster="static/videos/interaction-03-rgbbev.jpg" data-src="static/videos/interaction-03-rgbbev.mp4" aria-label="Cook an egg in a pan"></video>
+                  <div class="replay-card-body">
+                    <p class="replay-card-meta">AI2-THOR · RGB BEV demo · 5 BEV point requests</p>
+                    <h5>Cook an egg in a pan</h5>
+                    <p>The replay shows the original observations and how actions change the state of the egg and stove.</p>
+                    <a class="replay-watch" href="static/videos/interaction-03-rgbbev.mp4" target="_blank" rel="noopener" aria-label="Open full-size video: Cook an egg in a pan">Open full-size video</a>
                   </div>
                 </article>
               </div>
@@ -813,10 +818,10 @@
             </table>
           </div>
           <section class="result-demo-example" id="replay-embodiedeval" aria-labelledby="replay-embodiedeval-title">
-            <h4 class="title is-5" id="replay-embodiedeval-title">EmbodiedEval episode replay</h4>
+            <h4 class="title is-5" id="replay-embodiedeval-title">EmbodiedEval demo</h4>
             <figure class="replay">
-              <video src="static/videos/bowl-replay.mp4" poster="static/videos/bowl-poster.jpg" controls muted playsinline preload="none" aria-label="First-person views at recorded decision steps in EmbodiedEval episode 0042"></video>
-              <figcaption>EmbodiedEval episode 0042 · first-person views at recorded decision steps.</figcaption>
+              <video src="static/videos/bowl-replay-rgbbev.mp4" poster="static/videos/bowl-replay-rgbbev.jpg" controls muted playsinline preload="none" aria-label="First-person views at recorded decision steps in EmbodiedEval episode 0042"></video>
+              <figcaption>EmbodiedEval episode 0042 · Decision-sampled POV and the logged controller trace on RGB BEV · 4 BEV point requests.</figcaption>
             </figure>
           </section>
         </section>
@@ -1073,8 +1078,19 @@
     <section class="section section-tint" id="experiments" aria-labelledby="g1-title">
       <div class="container is-max-desktop">
         <h2 class="title is-3 has-text-centered" id="g1-title">Real-World Deployment</h2>
-        <figure class="replay">
-          <video src="static/videos/g1-full.mp4" poster="static/videos/g1-supplementary-poster.jpg" controls playsinline preload="none" aria-label="Edited supplementary video of the Unitree G1 experiment"></video>
+        <figure class="replay" data-g1-replay>
+          <div class="g1-bev-pair">
+            <video src="static/videos/g1-full.mp4" poster="static/videos/g1-supplementary-poster.jpg" controls playsinline preload="none" aria-label="Edited supplementary video of the Unitree G1 experiment"></video>
+            <div class="g1-bev-companion">
+              <h3>RGB BEV</h3>
+              <img data-g1-map src="static/figures/g1-rgbbev-start.webp" alt="RGB reconstruction of the real-world scene">
+              <img data-g1-map src="static/figures/g1-rgbbev-bed.webp" alt="Registered LiDAR trajectory up to the first bed visit" hidden>
+              <img data-g1-map src="static/figures/g1-rgbbev-produce.webp" alt="Registered LiDAR trajectory up to the produce area" hidden>
+              <img data-g1-map src="static/figures/g1-rgbbev-return.webp" alt="Registered LiDAR trajectory up to the return to the same bed" hidden>
+              <p data-g1-stage>Stage-aligned replay</p>
+              <p class="g1-bev-note">Offline LiDAR trace registered to RGB reconstruction.</p>
+            </div>
+          </div>
           <figcaption><strong>Supplementary video.</strong> First bed visit, produce area, and return to the same bed after the lighting changed.</figcaption>
         </figure>
         <figure class="paper-figure g1-paper-figure">
